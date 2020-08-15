@@ -1,5 +1,8 @@
 function startGame() {
     displayAllCards();
+    displayMyCards();
+    displayMyDeck();
+    drawAvatars();
     loop();
 }
 

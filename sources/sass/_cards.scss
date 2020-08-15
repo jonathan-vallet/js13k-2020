@@ -2,15 +2,18 @@ $card-rarity-size: 14px;
 
 .c-card {
     position: relative;
-    display: inline-block;
-    vertical-align: middle;
-    margin: 10px;
+}
+
+.c-card__content {
     width: 150px;
     height: 220px;
     border-radius: 10px;
     text-align: center;
-    box-shadow: 4px 4px 5px #444;
     border: 2px solid $card-border;
+    backface-visibility: hidden;
+    perspective-origin: 50% 50%;
+    transform-style: preserve-3d;
+    transform-origin: center;
 
     &::before {
         content: '';
@@ -25,26 +28,62 @@ $card-rarity-size: 14px;
         border: 1px solid $card-border;
     }
 
-    &.-warrior {
+    &.-w { // warrior
         background: $warrior-color;
     }
-    &.-mage {
+    &.-m { // mage
         background: $mage-color;
     }
-    &.-thief {
+    &.-t { // thief
         background: $thief-color;
     }
-    &.-assassin {
+    &.-a { // assassin
         background: $assassin-color;
     }
-    &.-protector {
+    &.-p { // protector
         background: $protector-color;
     }
-    &.-heal {
+    &.-h { // heal
         background: $heal-color;
     }
-    &.-rogue {
+    &.-mw { // TODO: faire des classes genre wm pour warrior/mage
+        background: linear-gradient(to bottom, $mage-color 0%,$warrior-color 100%);    
+    }
+    &.-tw {
+        background: linear-gradient(to bottom, $thief-color 0%,$warrior-color 100%);    
+    }
+    &.-aw {
+        background: linear-gradient(to bottom, $assassin-color 0%,$warrior-color 100%);    
+    }
+    &.-pw {
+        background: linear-gradient(to bottom, $protector-color 0%,$warrior-color 100%);    
+    }
+    &.-hw {
+        background: linear-gradient(to bottom, $heal-color 0%,$warrior-color 100%);    
+    }
+    &.-mt {
+        background: linear-gradient(to bottom, $mage-color 0%,$thief-color 100%);    
+    }
+    &.-mp {
+        background: linear-gradient(to bottom, $mage-color 0%,$protector-color 100%);    
+    }
+    &.-hm {
+        background: linear-gradient(to bottom, $heal-color 0%,$mage-color 100%);    
+    }
+    &.-at {
         background: linear-gradient(to bottom, $assassin-color 0%,$thief-color 100%);    
+    }
+    &.-pt {
+        background: linear-gradient(to bottom, $protector-color 0%,$thief-color 100%);    
+    }
+    &.-ht {
+        background: linear-gradient(to bottom, $heal-color 0%,$thief-color 100%);    
+    }
+    &.-ah {
+        background: linear-gradient(to bottom, $assassin-color 0%,$heal-color 100%);    
+    }
+    &.-hp {
+        background: linear-gradient(to bottom, $heal-color 0%,$protector-color 100%);    
     }
 }
 
@@ -57,7 +96,6 @@ $card-rarity-size: 14px;
     height: $card-rarity-size;
     transform: rotate(-45deg) skew(15deg, 15deg);
     border: 2px solid $card-border;
-    box-shadow: inset 0px 0px 2px 1px rgba(0,0,0,0.75), inset 0px 0px 6px 2px rgba(255,255,255,0.25);
     &.-rarity1 {
         background: white;
     }   

@@ -1,6 +1,10 @@
 $dice-height: 50px;
 
 .c-diceList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-gap: 20px;
+    margin: 50px;
     perspective: 600px;
     
     @media (min-width: 900px) {
@@ -9,9 +13,9 @@ $dice-height: 50px;
 }
 
 .c-dice {
-    position: absolute;
-    top: 400px;
-    left: 200px;
+    //position: absolute;
+    //top: 500px;
+    //left: 200px;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
@@ -41,15 +45,14 @@ $dice-height: 50px;
     height: 100%;
     padding: $dice-height / 8;
     width: 100%;
-    background-color: white;
-    box-shadow: inset -3px 3px 7px rgba(0, 0, 0, 0.3);
+    background: #ccc;
+    border: 1px solid #000;
 }
 
 .c-dice__dot {
     align-self: center;
-    background-color: #676767;
+    background-color: #000;
     border-radius: 50%;
-    box-shadow: inset -2px 2px 4px rgba(0, 0, 0, 0.5);
     display: block;
     height: $dice-height / 5;
     justify-self: center;

@@ -24,7 +24,7 @@ function rollDice() {
     const dice = [...document.querySelectorAll(".c-dice")];
     dice.forEach(die => {
         toggleClasses(die);
-        die.dataset.roll = getRandomNumber(1, 6);
+        die.setAttribute('data-roll', getRandomNumber(1, 6));
     });
 }
 

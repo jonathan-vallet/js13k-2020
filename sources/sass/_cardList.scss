@@ -1,0 +1,25 @@
+.c-cardList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-gap: 20px;
+    .c-card {
+        transition: transform 0.3s ease;
+        perspective: 1000px;
+
+        &:hover {
+            transform: scale(1.3);
+            z-index: 2;
+        }
+    }
+}
+
+#myCardList {
+    .c-card {
+        cursor: pointer;
+
+        &.-disabled {
+            opacity: 0.5;
+            cursor: notAllowed;
+        }
+    }
+}
