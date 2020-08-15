@@ -12,3 +12,32 @@ body {
   background: $background-color;
   box-sizing: border-box;
 }
+
+.avatarList {
+  display: flex;
+  justify-content: center;
+
+  > * {
+    width: (100% / 6);
+    max-width: 200px;
+    transition: transform 0.3s ease;
+    perspective: 1000px;
+
+    &:hover {
+        transform: scale(1.2);
+        z-index: 2;
+    }
+  }
+
+  canvas {
+    width: 100%;
+  }
+}
+
+#mapWrapper {
+  background: #ccc;
+  height: 80vh;
+  width: 80%;
+  margin: 10px 10%;
+  overflow-y: auto;
+}

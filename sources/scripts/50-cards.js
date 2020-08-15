@@ -51,7 +51,7 @@ function displayCard(cardId) {
 
 function getCardTypes(cardId) {
     var cardType = cardId.replace(/\d+/, '');
-    return cardType.length < 2 ? cardType : (cardType[0] < cardType[1] ? cardType[0] + cardType[1] : cardType[1] + cardType[0]);
+    return cardType.length < 2 ? cardType : (cardType[0] == cardType[1] ? cardType[0] : (cardType[0] < cardType[1] ? cardType[0] + cardType[1] : cardType[1] + cardType[0]));
 }
 
 function getClassName(cardType) {
@@ -101,8 +101,8 @@ function getClassName(cardType) {
     };
 }
 
-function addHoverEffect(card) {
-    card.addEventListener('mousemove', event => {
+function addHoverEffect(element) {
+    element.addEventListener('mousemove', event => {
         let bounding = event.currentTarget.getBoundingClientRect();
         let x = Math.max(0, event.pageX - Math.round(bounding.left));
         let y = Math.max(0, event.pageY - window.scrollY - Math.round(bounding.top));
@@ -116,13 +116,13 @@ function addHoverEffect(card) {
         let ratio = hypotenuseCursor / hypotenuseMax;
 
         var maxAngle = 20;
-        card.querySelector('.c-card__content').style.transform = `rotate3d(${posY / hypotenuseCursor}, ${-posX / hypotenuseCursor}, 0, ${ratio * maxAngle}deg)`;
-        card.querySelector('.c-card__content').style.filter = `brightness(${1.2 - y / height / 2})` // 0.6 = offset, brightness will be from 0.6 to 1.6
+        element.querySelector(':first-child').style.transform = `rotate3d(${posY / hypotenuseCursor}, ${-posX / hypotenuseCursor}, 0, ${ratio * maxAngle}deg)`;
+        element.querySelector(':first-child').style.filter = `brightness(${1.2 - y / height / 2})` // 0.6 = offset, brightness will be from 0.6 to 1.6
     });
 
-    card.addEventListener('mouseleave', e => {
-        card.querySelector('.c-card__content').style.transform = '';
-        card.querySelector('.c-card__content').style.filter = '';
+    element.addEventListener('mouseleave', e => {
+        element.querySelector(':first-child').style.transform = '';
+        element.querySelector(':first-child').style.filter = '';
     });
 }
 

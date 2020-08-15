@@ -7,9 +7,6 @@ const TYPE_PROTECTOR = 'p';
 const TYPE_HEAL = 'h';
 const TYPE_ROGUE = 'r';
 
-var PI = Math.PI;
-var CIRCLE_ANGLE = 2 * PI;
-
 var CLASS_LIST = {};
 CLASS_LIST[TYPE_WARRIOR] = {
     n: 'warrior',
@@ -40,3 +37,8 @@ CLASS_LIST[TYPE_HEAL] = {
 var $allcardList = $('allCardList');
 var $myCardList = $('myCardList');
 var $myDeckList = $('myDeckList');
+var $avatarChoiceList1 = $('avatarChoiceList1');
+var $avatarChoiceList2 = $('avatarChoiceList2');
+var $myAvatar = $('myAvatar');
+var $myAvatarName = $('myAvatarName');
+var $map = $('map');

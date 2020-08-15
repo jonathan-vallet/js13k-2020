@@ -1,14 +1,15 @@
 $dice-height: 50px;
 
 .c-diceList {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    grid-gap: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
     margin: 50px;
     perspective: 600px;
-    
-    @media (min-width: 900px) {
-        perspective: 1300px;
+
+    .c-dice {
+        margin: 0 50px;
     }
 }
 

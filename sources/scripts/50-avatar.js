@@ -1,25 +1,50 @@
 function drawAvatars() {
-    for (const [type1, value1] of Object.entries(CLASS_LIST)) {
-        //for (const [type2, value2] of Object.entries(CLASS_LIST)) {
-            let canvas = createAvatar();
-            let ctx = canvas.getContext('2d');
-            // drawBaseAvatar(canvas, ctx, value1.c, value2.c);
-            // drawAvatarArmor(canvas, ctx, type1);
-            // drawAvatarWeapon(canvas, ctx, type2);
-            drawBaseAvatar(canvas, ctx, value1.c, value1.c);
-            drawAvatarArmor(canvas, ctx, type1);
-            drawAvatarWeapon(canvas, ctx, type1);
-        //}
+    for (const [type, value] of Object.entries(CLASS_LIST)) {
+        let canvas = createAvatar(type, type);
+        canvas.setAttribute('data-type', type);
+        canvas.onclick = () => {
+            var newType = canvas.getAttribute('data-type');
+            setMyAvatar(newType, $avatarChoiceList2.getAttribute('data-type'));
+            $avatarChoiceList1.setAttribute('data-type', newType);
+        };
+        $avatarChoiceList1.appendChild(canvas);
     }
+    for (const [type, value] of Object.entries(CLASS_LIST)) {
+        let canvas = createAvatar(type, type);
+        canvas.setAttribute('data-type', type);
+        canvas.onclick = () => {
+            var newType = canvas.getAttribute('data-type');
+            setMyAvatar($avatarChoiceList1.getAttribute('data-type'), newType);
+            $avatarChoiceList2.setAttribute('data-type', newType);
+        };
+        $avatarChoiceList2.appendChild(canvas);
+    }
+
+    setMyAvatar('w', 'w');
 }
 
-function createAvatar() {
+function setMyAvatar(type1, type2) {
+    let canvas = createAvatar(type1, type2);
+    $myAvatar.innerHTML = '';
+    $myAvatar.appendChild(canvas);
+    $myAvatarName.innerText = getClassName(getCardTypes(type1 + type2));
+}
+
+function createAvatar(type1, type2) {
+    let canvasWrapper = createElement('div');
     let canvas = createElement('canvas');
+    let ctx = canvas.getContext('2d');
     const canvasSize = 200;
     canvas.width = canvasSize;
     canvas.height = canvasSize;
-    $('avatarList').appendChild(canvas);
-    return canvas;
+    drawBaseAvatar(canvas, ctx, CLASS_LIST[type1].c, CLASS_LIST[type2].c);
+    drawAvatarArmor(canvas, ctx, type1);
+    drawAvatarWeapon(canvas, ctx, type2);
+
+    addHoverEffect(canvasWrapper);
+
+    canvasWrapper.appendChild(canvas);
+    return canvasWrapper;
 }
 
 function drawBaseAvatar(canvas, ctx, backgroundColor1, backgroundColor2) {
