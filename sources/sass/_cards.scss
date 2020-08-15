@@ -1,0 +1,115 @@
+$card-rarity-size: 14px;
+
+.c-card {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 10px;
+    width: 150px;
+    height: 220px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 4px 4px 5px #444;
+    border: 2px solid $card-border;
+
+    &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+        background: rgba(255, 255, 255, 0.3);   
+        border-radius: 5px;
+        border: 1px solid $card-border;
+    }
+
+    &.-warrior {
+        background: $warrior-color;
+    }
+    &.-mage {
+        background: $mage-color;
+    }
+    &.-thief {
+        background: $thief-color;
+    }
+    &.-assassin {
+        background: $assassin-color;
+    }
+    &.-protector {
+        background: $protector-color;
+    }
+    &.-heal {
+        background: $heal-color;
+    }
+    &.-rogue {
+        background: linear-gradient(to bottom, $assassin-color 0%,$thief-color 100%);    
+    }
+}
+
+.c-card__rarity {
+    position: absolute;
+    display: block;
+    bottom: -#{$card-rarity-size / 2};
+    left: calc(50% - #{$card-rarity-size / 2});
+    width: $card-rarity-size;
+    height: $card-rarity-size;
+    transform: rotate(-45deg) skew(15deg, 15deg);
+    border: 2px solid $card-border;
+    box-shadow: inset 0px 0px 2px 1px rgba(0,0,0,0.75), inset 0px 0px 6px 2px rgba(255,255,255,0.25);
+    &.-rarity1 {
+        background: white;
+    }   
+    &.-rarity2 {
+        background: blue;
+    }   
+    &.-rarity3 {
+        background: purple;
+    }   
+    &.-rarity4 {
+        background: yellow;
+    }   
+}
+
+.c-card__effect {
+    position: absolute;
+    top: 130px;
+    left: 20px;
+    right: 20px;
+    font-size: 14px;   
+    font-variant: small-caps;
+}
+
+.c_card__class {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -1px;
+    font-size: 10px;
+    font-variant: small-caps;
+    color: white;
+}
+
+.c-card__diceList {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;   
+}
+
+.c-card__dice {
+    display: inline-block;
+    vertical-align: middle;
+    height: 50px;
+    line-height: 50px;
+    border: 2px dashed #fff;
+    width: 50px;
+    border-radius: 4px;
+    margin: 0 5px;
+    background: rgba(255, 255, 255, 0.4);
+        
+    .-bonus {
+        opacity: 0.6;
+    }
+}
