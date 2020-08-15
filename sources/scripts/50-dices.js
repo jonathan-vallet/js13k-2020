@@ -1,11 +1,7 @@
-const $ = id=> document.getElementById(id);
-const createElement = type => document.createElement(type);
-
 function generateDice(number) {
-    console.log('generate dice');
     let dice = createElement('ol');
     dice.classList.add('c-dice');
-    dice.classList.add(`-${number === 1 ? 'odd' : 'even'}-roll`);
+    dice.classList.add(`${number === 1 ? '-odd-roll' : '-even-roll'}`);
     dice.setAttribute('data-roll', 1);
     let facesHTML = '';
     for (let faceNumber = 1; faceNumber < 7; ++faceNumber) {
@@ -17,9 +13,11 @@ function generateDice(number) {
     }
     dice.innerHTML = facesHTML;
     document.querySelector('.c-diceList').appendChild(dice);
-    console.log(dice);
 }
 
+generateDice(1);
+generateDice(1);
+generateDice(1);
 generateDice(1);
 
 function rollDice() {

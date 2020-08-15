@@ -13,7 +13,7 @@ function displayCard(card) {
     });
     cardContent += `</div>`;
     cardContent += getCardEffect(card.effect);
-    var cardElement = document.createElement('div');
+    var cardElement = createElement('div');
     cardElement.classList.add('c-card');
     cardElement.classList.add(`-${card.type}`);
     cardElement.innerHTML = cardContent;
@@ -46,22 +46,22 @@ function getCardEffect(effect) {
     var effectText = '';
     switch(split[0]) {
     case 'damage':
-        effectText = `Inflict <strong>${effectValue}</strong> damages`;
+        effectText = `Inflict <b>${effectValue}</b> damages`;
         break;
     case 'poison':
-        effectText = `Inflict <strong>${effectValue}</strong> poison damages`;
+        effectText = `Inflict <b>${effectValue}</b> poison damages`;
         break;
     case 'magic':
-        effectText = `Inflict <strong>${effectValue}</strong> magical damages`;
+        effectText = `Inflict <b>${effectValue}</b> magical damages`;
         break;
     case 'heal':
-        effectText = `Heal <strong>${effectValue}</strong> life points`;
+        effectText = `Heal <b>${effectValue}</b> life points`;
         break;
     case 'split':
-        effectText = `Split dice in <strong>${effectValue}</strong>`;
+        effectText = `Split dice in <b>${effectValue}</b>`;
         break;
     case 'protection':
-        effectText = `Add <strong>${effectValue}</strong> shield`;
+        effectText = `Add <b>${effectValue}</b> shield`;
         break;
     }
     return `<p class="c-card__effect">${effectText}</p>`;
