@@ -3,15 +3,10 @@ function startGame() {
     displayMyCards();
     displayMyDeck();
     drawAvatars();
-    loop();
-}
-
-/*
- * Game loop
- */
-function loop() {
-    // Your game loop
-    requestAnimationFrame(loop);
+    generateDice();
+    generateDice();
+    generateDice();
+    generateDice();
 }
 
 // Let's the game start!

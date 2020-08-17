@@ -1,6 +1,6 @@
 $dice-height: 50px;
 
-.c-diceList {
+#c-diceList {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -14,20 +14,15 @@ $dice-height: 50px;
 }
 
 .c-dice {
-    //position: absolute;
-    //top: 500px;
-    //left: 200px;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
+    width: $dice-height;
     height: $dice-height;
     list-style-type: none;
     transform-style: preserve-3d;
-    width: $dice-height;
-        
-    &.-even-roll {
-        transition: transform 1.5s ease-out;
-    }
+    transition: transform 1.5s ease-out;
+
     &.-odd-roll {
         transition: transform 1.25s ease-out;
     }
@@ -38,9 +33,9 @@ $dice-height: 50px;
     grid-column: 1;
     grid-row: 1;
     grid-template-areas:
-        "one two three"
-        "four five six"
-        "seven eight nine";
+        "a b c"
+        "d e f"
+        "g h i";
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     height: 100%;
@@ -51,34 +46,32 @@ $dice-height: 50px;
 }
 
 .c-dice__dot {
+    display: block;
+    width: $dice-height / 5;
+    height: $dice-height / 5;
     align-self: center;
+    justify-self: center;
     background-color: #000;
     border-radius: 50%;
-    display: block;
-    height: $dice-height / 5;
-    justify-self: center;
-    width: $dice-height / 5;
 }
 
-.-even-roll {
-    &[data-roll="1"] {
-        transform: rotateX(360deg) rotateY(720deg) rotateZ(360deg);
-    }
-    &[data-roll="2"] {
-        transform: rotateX(450deg) rotateY(720deg) rotateZ(360deg);
-    }
-    &[data-roll="3"] {
-        transform: rotateX(360deg) rotateY(630deg) rotateZ(360deg);
-    }
-    &[data-roll="4"] {
-        transform: rotateX(360deg) rotateY(810deg) rotateZ(360deg);
-    }
-    &[data-roll="5"] {
-        transform: rotateX(270deg) rotateY(720deg) rotateZ(360deg);
-    }
-    &[data-roll="6"] {
-        transform: rotateX(360deg) rotateY(900deg) rotateZ(360deg);
-    }
+[data-roll="1"] {
+    transform: rotateX(360deg) rotateY(720deg) rotateZ(360deg);
+}
+[data-roll="2"] {
+    transform: rotateX(450deg) rotateY(720deg) rotateZ(360deg);
+}
+[data-roll="3"] {
+    transform: rotateX(360deg) rotateY(630deg) rotateZ(360deg);
+}
+[data-roll="4"] {
+    transform: rotateX(360deg) rotateY(810deg) rotateZ(360deg);
+}
+[data-roll="5"] {
+    transform: rotateX(270deg) rotateY(720deg) rotateZ(360deg);
+}
+[data-roll="6"] {
+    transform: rotateX(360deg) rotateY(900deg) rotateZ(360deg);
 }
 
 .-odd-roll {
@@ -120,66 +113,29 @@ $dice-height: 50px;
 [data-side="6"] {
     transform: rotate3d(1, 0, 0, 180deg) translateZ($dice-height / 2);
 }
-[data-side="1"] .c-dice__dot:nth-of-type(1) {
-    grid-area: five;
+
+.c-dice__dot:last-child {
+    grid-area: i;
 }
-[data-side="2"] .c-dice__dot:nth-of-type(1) {
-    grid-area: one;
+
+[data-side="4"] .c-dice__dot:nth-child(2),
+[data-side="5"] .c-dice__dot:nth-child(2),
+[data-side="6"] .c-dice__dot:nth-child(2) {
+    grid-area: c;
 }
-[data-side="2"] .c-dice__dot:nth-of-type(2) {
-    grid-area: nine;
+[data-side="6"] .c-dice__dot:nth-child(3) {
+    grid-area: d;
 }
-[data-side="3"] .c-dice__dot:nth-of-type(1) {
-    grid-area: one;
+[data-side="1"] .c-dice__dot,
+[data-side="3"] .c-dice__dot:nth-child(2),
+[data-side="5"] .c-dice__dot:nth-child(3) {
+    grid-area: e;
 }
-[data-side="3"] .c-dice__dot:nth-of-type(2) {
-    grid-area: five;
+[data-side="6"] .c-dice__dot:nth-child(4) {
+    grid-area: f;
 }
-[data-side="3"] .c-dice__dot:nth-of-type(3) {
-    grid-area: nine;
-}
-[data-side="4"] .c-dice__dot:nth-of-type(1) {
-    grid-area: one;
-}
-[data-side="4"] .c-dice__dot:nth-of-type(2) {
-    grid-area: three;
-}
-[data-side="4"] .c-dice__dot:nth-of-type(3) {
-    grid-area: seven;
-}
-[data-side="4"] .c-dice__dot:nth-of-type(4) {
-    grid-area: nine;
-}
-[data-side="5"] .c-dice__dot:nth-of-type(1) {
-    grid-area: one;
-}
-[data-side="5"] .c-dice__dot:nth-of-type(2) {
-    grid-area: three;
-}
-[data-side="5"] .c-dice__dot:nth-of-type(3) {
-    grid-area: five;
-}
-[data-side="5"] .c-dice__dot:nth-of-type(4) {
-    grid-area: seven;
-}
-[data-side="5"] .c-dice__dot:nth-of-type(5) {
-    grid-area: nine;
-}
-[data-side="6"] .c-dice__dot:nth-of-type(1) {
-    grid-area: one;
-}
-[data-side="6"] .c-dice__dot:nth-of-type(2) {
-    grid-area: three;
-}
-[data-side="6"] .c-dice__dot:nth-of-type(3) {
-    grid-area: four;
-}
-[data-side="6"] .c-dice__dot:nth-of-type(4) {
-    grid-area: six;
-}
-[data-side="6"] .c-dice__dot:nth-of-type(5) {
-    grid-area: seven;
-}
-[data-side="6"] .c-dice__dot:nth-of-type(6) {
-    grid-area: nine;
+[data-side="4"] .c-dice__dot:nth-child(3),
+[data-side="5"] .c-dice__dot:nth-child(4),
+[data-side="6"] .c-dice__dot:nth-child(5) {
+    grid-area: g;
 }

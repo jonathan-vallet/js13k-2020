@@ -1,35 +1,23 @@
 function generateDice(number) {
-    console.log('generate dice');
     let dice = createElement('ol');
     dice.classList.add('c-dice');
-    dice.classList.add(`-${number === 1 ? 'odd' : 'even'}-roll`);
-    dice.setAttribute('data-roll', 1);
+    random() > 0.5 && dice.classList.add('-odd-roll');
+    dice.setAttribute('data-roll', getRandomNumber(1, 6));
     let facesHTML = '';
+    let dotsHtml = '';
     for (let faceNumber = 1; faceNumber < 7; ++faceNumber) {
-        facesHTML += `<li class="c-dice__face" data-side="${faceNumber}">`
-        for (let dotNumber = 0; dotNumber < faceNumber; ++dotNumber) {
-            facesHTML += `<span class="c-dice__dot"></span>`;
-        }
-        facesHTML += `</li>`
+        dotsHtml += `<span class="c-dice__dot"></span>`;
+        facesHTML += `<li class="c-dice__face" data-side="${faceNumber}">${dotsHtml}</li>`;
     }
     dice.innerHTML = facesHTML;
-    document.querySelector('.c-diceList').appendChild(dice);
-    console.log(dice);
+    $('c-diceList').appendChild(dice);
 }
 
-generateDice(1);
-
 function rollDice() {
-    const dice = [...document.querySelectorAll(".c-dice")];
-    dice.forEach(die => {
-        toggleClasses(die);
-        die.dataset.roll = getRandomNumber(1, 6);
+    [...document.querySelectorAll(".c-dice")].forEach(die => {
+        die.classList.toggle("-odd-roll");
+        die.setAttribute('data-roll', getRandomNumber(1, 6));
     });
 }
 
-function toggleClasses(die) {
-    die.classList.toggle("-odd-roll");
-    die.classList.toggle("-even-roll");
-}
-
-document.getElementById("roll-button").addEventListener("click", rollDice);
+$("roll-button").addEventListener("click", rollDice);

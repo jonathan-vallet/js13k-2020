@@ -104,10 +104,10 @@ function getClassName(cardType) {
 function addHoverEffect(element) {
     element.addEventListener('mousemove', event => {
         let bounding = event.currentTarget.getBoundingClientRect();
-        let x = Math.max(0, event.pageX - Math.round(bounding.left));
-        let y = Math.max(0, event.pageY - window.scrollY - Math.round(bounding.top));
-        let width = Math.round(bounding.width);
-        let height = Math.round(bounding.height);
+        let x = Math.max(0, event.pageX - ~~(bounding.left));
+        let y = Math.max(0, event.pageY - window.scrollY - ~~(bounding.top));
+        let width = ~~(bounding.width);
+        let height = ~~(bounding.height);
 
         let posX = width / 2 - x;
         let posY = height / 2 - y;
