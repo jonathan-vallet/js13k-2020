@@ -39,7 +39,7 @@ function displayCard(cardId) {
         <span class="c-card__rarity -rarity${card.rarity}"></span>
         <div class="c-card__diceList">`;
     card.dice.split('|').forEach(dice => {
-        cardContent += drawDice(dice);
+        cardContent += drawCardDice(dice);
     });
     cardContent += `</div>${getCardEffect(card.effect)}`;
 
@@ -51,9 +51,11 @@ function displayCard(cardId) {
 
 function getCardTypes(cardId) {
     var cardType = cardId.replace(/\d+/, '');
+    // TODO: voir si on peut optimiser le 'w' ou 'ww'
     return cardType.length < 2 ? cardType : (cardType[0] == cardType[1] ? cardType[0] : (cardType[0] < cardType[1] ? cardType[0] + cardType[1] : cardType[1] + cardType[0]));
 }
 
+// TODO: faire un objet avec {'w': 'warrior'} et renvoyer la valeur correspondant à la clé, tout simplement...
 function getClassName(cardType) {
     switch (cardType) {
         case 'w':
@@ -115,7 +117,7 @@ function addHoverEffect(element) {
         let hypotenuseMax = Math.sqrt(Math.pow(width / 2, 2) + Math.pow(height / 2, 2));
         let ratio = hypotenuseCursor / hypotenuseMax;
 
-        var maxAngle = 20;
+        const maxAngle = 20;
         element.querySelector(':first-child').style.transform = `rotate3d(${posY / hypotenuseCursor}, ${-posX / hypotenuseCursor}, 0, ${ratio * maxAngle}deg)`;
         element.querySelector(':first-child').style.filter = `brightness(${1.2 - y / height / 2})` // 0.6 = offset, brightness will be from 0.6 to 1.6
     });
@@ -126,7 +128,7 @@ function addHoverEffect(element) {
     });
 }
 
-function drawDice(dice) {
+function drawCardDice(dice) {
     var match = dice.match(/([-+*]?)([0-9])/);
     if (match) {
         var pre = '';

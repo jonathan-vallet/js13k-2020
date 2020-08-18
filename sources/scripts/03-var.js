@@ -33,6 +33,30 @@ CLASS_LIST[TYPE_HEAL] = {
     c: '#162'
 }
 
+const STAGE_TYPE_LIST = {
+    'm': { // monster
+        's': '💀' // s for symbol
+    },
+    'e': { // elite
+        's': '👿'
+    },
+    'b': { // boss
+        's': '😈'
+    },
+    't': { // treasure
+        's': '💰'
+    },
+    'r': { // random
+        's': '❓'
+    },
+    's': { // seller / merchant
+        's': '🤑'
+    },
+    'h': { // healer
+        's': '💖'
+    }
+}
+
 // Elements
 var $allcardList = $('allCardList');
 var $myCardList = $('myCardList');
