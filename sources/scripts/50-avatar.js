@@ -15,6 +15,7 @@ function drawAvatars() {
     setMyAvatar('w', 'w');
 }
 
+// Creates avatar from player selection on class selection screen
 function setMyAvatar(type1, type2) {
     let canvas = createAvatar(type1, type2);
     $myAvatar.innerHTML = '';
@@ -23,7 +24,6 @@ function setMyAvatar(type1, type2) {
 
     // TODO: do this when saving
     setFromLS('avatar', type1 + type2);
-    createDeck();
 }
 
 function createAvatar(type1, type2) {

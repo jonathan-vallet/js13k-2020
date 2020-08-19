@@ -13,11 +13,9 @@ function generateDice(number) {
     $('c-diceList').appendChild(dice);
 }
 
-function rollDice() {
+function rollDices() {
     [...$$('.c-dice')].forEach(die => {
         die.classList.toggle('-odd-roll');
         die.setAttribute('data-roll', getRandomNumber(1, 6));
     });
 }
-
-$("roll-button").addEventListener("click", rollDice);

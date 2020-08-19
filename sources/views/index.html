@@ -8,14 +8,13 @@
 </head>
 
 <body>
-  <div class="l-screen -active" id="screen-menu">
+  <div class="l-screen" id="screen-menu">
     <button class="js-screen-link" data-screen="screen-game" id="continueButton">Continue game</button>
     <button class="js-screen-link" data-screen="screen-class-choice">New game</button>
     
     All cards
     <div id="allCardList" class="c-cardList"></div>
-    My cards
-    <div id="myCardList" class="c-cardList"></div>
+    <div id="myCardList" class="c-cardList" style="display: none"></div>
     
     poison: 🤢
     feu: 🥵🔥
@@ -24,6 +23,7 @@
     stun: 😵🥴
     monstres: ☠💀👿😈👹
     impact de dégats: 💢💥
+    heal: ➕
     livre: 📖
     pages: 📜📃
   </div>
@@ -41,18 +41,16 @@
       <canvas id="map"></canvas>
     </div>
   </div>
-  <div class="l-screen" id="screen-game">
+  <div class="l-screen -active" id="screen-game">
     <div class="c-lifeBar__wrapper">
-      <div class="c-lifeBar"></div>
-      <div class="c-lifeBar"></div>
+      <div class="c-lifeBar" id="lifeBar-1"><p></p><p></p><p></p></div>
+      <div class="c-lifeBar" id="lifeBar-2"><p></p><p></p><p></p></div>
     </div>
-    My deck
     <div id="myDeckList" class="c-cardList"></div>
-    <div id="avatarList">
-      
-    </div>
+    <div id="playerAvatar"></div>
+    <div id="opponentAvatar"></div>
     <div id="c-diceList"></div>
-    <button type="button" id="roll-button">Roll Dice</button>
+    <button type="button" id="end-turn-button">End turn</button>
   </div>
   <script src="scripts/game.js" inline></script>
 </body>

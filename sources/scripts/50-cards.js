@@ -133,6 +133,6 @@ function getCardEffect(effectCode) {
 
 function createDeck() {
     // TODO: create from selected classes
-    myDeckList = ['w1', 'w1', 'w1', 'w2']; // TODO: get / save in localstorage
+    myDeckList = ['w1', 'w1', 'w1', 'w2', 'w2', 'm1', 'm1', 'm1', 'm2', 'm2', 'mw1']; // TODO: get / save in localstorage
     setFromLS('deck', myDeckList);
 }

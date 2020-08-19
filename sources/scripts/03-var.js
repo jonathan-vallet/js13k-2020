@@ -91,7 +91,8 @@ var $myAvatar = $('myAvatar');
 var $myAvatarName = $('myAvatarName');
 var $map = $('map');
 var $continueButton = $('continueButton');
+var $playerAvatar = $('playerAvatar');
+var $opponentAvatar = $('opponentAvatar');
 
 // Links
 var $$screenLinkList = $$('.js-screen-link'); // TODO: remplacer par "button" pour éviter d'utiliser une classe?
-var $$lifeBarList = $$('.c-lifeBar');

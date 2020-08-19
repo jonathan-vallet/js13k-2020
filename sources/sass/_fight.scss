@@ -1,0 +1,38 @@
+// TODO: si on a l'animation, ajouter une classe à la place de l'id
+#playerAvatar {
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+
+    p {
+        position: absolute;
+        opacity: 0;
+        font-size: 40px;
+        transform: scale(0);
+        transition: all 0.3s ease;
+    
+        &.-loaded {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+}
+
+#opponentAvatar {
+    position: absolute;
+    top: 100px;
+    right: 50px;
+
+    p {
+        position: absolute;
+        opacity: 0;
+        font-size: 40px;
+        transform: scale(0);
+        transition: all 0.3s ease;
+    
+        &.-loaded {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+}
