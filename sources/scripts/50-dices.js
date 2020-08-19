@@ -14,8 +14,8 @@ function generateDice(number) {
 }
 
 function rollDice() {
-    [...document.querySelectorAll(".c-dice")].forEach(die => {
-        die.classList.toggle("-odd-roll");
+    [...$$('.c-dice')].forEach(die => {
+        die.classList.toggle('-odd-roll');
         die.setAttribute('data-roll', getRandomNumber(1, 6));
     });
 }

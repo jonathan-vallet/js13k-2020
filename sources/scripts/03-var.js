@@ -66,3 +66,6 @@ var $avatarChoiceList2 = $('avatarChoiceList2');
 var $myAvatar = $('myAvatar');
 var $myAvatarName = $('myAvatarName');
 var $map = $('map');
+
+// Links
+var $$screenLinkList = $$('.js-screen-link');
