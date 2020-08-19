@@ -33,6 +33,31 @@ CLASS_LIST[TYPE_HEAL] = {
     c: '#162'
 }
 
+const CLASS_NAME_LIST = {
+    'w': 'warrior',
+    'm': 'mage',
+    't': 'thief',
+    'a': 'assassin',
+    'p': 'protector',
+    'h': 'heal',
+    'mw': 'battlemage',
+    'tw': 'rogue',
+    'aw': 'slayer',
+    'pw': 'paladin',
+    'hw': 'templar',
+    'mt': 'warlock',
+    'am': 'dreamkiller',
+    'mp': 'guardian',
+    'hm': 'runemaster',
+    'at': 'ninja',
+    'pt': 'brigand',
+    'ht': 'trickster',
+    'ap': 'ranger',
+    'ah': 'avenger',
+    'hp': 'sage',
+}
+
+
 const STAGE_TYPE_LIST = {
     'm': { // monster
         's': '💀' // s for symbol
@@ -61,11 +86,12 @@ const STAGE_TYPE_LIST = {
 var $allcardList = $('allCardList');
 var $myCardList = $('myCardList');
 var $myDeckList = $('myDeckList');
-var $avatarChoiceList1 = $('avatarChoiceList1');
-var $avatarChoiceList2 = $('avatarChoiceList2');
+var $avatarChoiceList = $('avatarChoiceList');
 var $myAvatar = $('myAvatar');
 var $myAvatarName = $('myAvatarName');
 var $map = $('map');
+var $continueButton = $('continueButton');
 
 // Links
-var $$screenLinkList = $$('.js-screen-link');
+var $$screenLinkList = $$('.js-screen-link'); // TODO: remplacer par "button" pour éviter d'utiliser une classe?
+var $$lifeBarList = $$('.c-lifeBar');

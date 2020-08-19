@@ -1,5 +1,6 @@
 .c-cardList {
     display: grid;
+    width: 80%;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     grid-gap: 20px;
     .c-card {

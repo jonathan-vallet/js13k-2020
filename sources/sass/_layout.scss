@@ -26,4 +26,15 @@ button {
     font-variant: small-caps;
     text-align: center;
     cursor: pointer;
+
+    &[disabled] {
+        cursor: not-allowed;
+        background: $color-grey;
+    }
+}
+
+p {
+    font-size: 20px;
+    color: $color-white;
+    font-variant: small-caps;
 }

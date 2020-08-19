@@ -46,4 +46,5 @@ cardList[`${TYPE_WARRIOR}${TYPE_PROTECTOR}1`] = {
 };
 
 var myCardList = ['w1', 'w1', 'w1', 'w2']; // TODO: get / save in localstorage
-var myDeckList = ['w1']; // TODO: get / save in localstorage
+var myDeckList = getFromLS('deck') || [];
+console.log(myDeckList);

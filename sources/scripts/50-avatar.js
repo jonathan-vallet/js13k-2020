@@ -1,25 +1,17 @@
+var currentAvatarSelected = 1   ;
+
 function drawAvatars() {
     for (const [type, value] of Object.entries(CLASS_LIST)) {
         let canvas = createAvatar(type, type);
         canvas.setAttribute('data-type', type);
         canvas.onclick = () => {
-            var newType = canvas.getAttribute('data-type');
-            setMyAvatar(newType, $avatarChoiceList2.getAttribute('data-type'));
-            $avatarChoiceList1.setAttribute('data-type', newType);
+            var newType = canvas.getAttribute(`data-type`);
+            $avatarChoiceList.setAttribute(`data-type${++currentAvatarSelected % 2}`, newType);
+            setMyAvatar($avatarChoiceList.getAttribute('data-type0'), $avatarChoiceList.getAttribute('data-type1'));
+            canvas.classList.add(`-choice${currentAvatarSelected % 2}`);
         };
-        $avatarChoiceList1.appendChild(canvas);
+        $avatarChoiceList.appendChild(canvas);
     }
-    for (const [type, value] of Object.entries(CLASS_LIST)) {
-        let canvas = createAvatar(type, type);
-        canvas.setAttribute('data-type', type);
-        canvas.onclick = () => {
-            var newType = canvas.getAttribute('data-type');
-            setMyAvatar($avatarChoiceList1.getAttribute('data-type'), newType);
-            $avatarChoiceList2.setAttribute('data-type', newType);
-        };
-        $avatarChoiceList2.appendChild(canvas);
-    }
-
     setMyAvatar('w', 'w');
 }
 
@@ -27,7 +19,11 @@ function setMyAvatar(type1, type2) {
     let canvas = createAvatar(type1, type2);
     $myAvatar.innerHTML = '';
     $myAvatar.appendChild(canvas);
-    $myAvatarName.innerText = getClassName(getCardTypes(type1 + type2));
+    $myAvatarName.innerText = CLASS_NAME_LIST[getCardTypes(type1 + type2)];
+
+    // TODO: do this when saving
+    setFromLS('avatar', type1 + type2);
+    createDeck();
 }
 
 function createAvatar(type1, type2) {

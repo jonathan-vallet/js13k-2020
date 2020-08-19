@@ -7,6 +7,7 @@ function startGame() {
     generateDice();
     generateDice();
     generateDice();
+    initLifeBar();
 
     [...$$screenLinkList].forEach($link => {
         $link.onclick = () => {
@@ -14,6 +15,11 @@ function startGame() {
             $($link.getAttribute('data-screen')).classList.add('-active');
         }
     });
+
+    // Check continue game
+    if(!getFromLS('avatar')) {
+        $continueButton.setAttribute('disabled', 'disabled');
+    }
 }
 
 // Let's the game start!

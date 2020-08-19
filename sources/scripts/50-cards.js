@@ -35,7 +35,7 @@ function displayCard(cardId) {
     var card = cardList[cardId];
     var cardType = getCardTypes(cardId);
     var cardContent = `<div class="c-card__content -${cardType}">
-        <p class="c-card__class">${getClassName(cardType)}</p>
+        <p class="c-card__class">${CLASS_NAME_LIST[cardType]}</p>
         <span class="c-card__rarity -rarity${card.rarity}"></span>
         <div class="c-card__diceList">`;
     card.dice.split('|').forEach(dice => {
@@ -53,54 +53,6 @@ function getCardTypes(cardId) {
     var cardType = cardId.replace(/\d+/, '');
     // TODO: voir si on peut optimiser le 'w' ou 'ww'
     return cardType.length < 2 ? cardType : (cardType[0] == cardType[1] ? cardType[0] : (cardType[0] < cardType[1] ? cardType[0] + cardType[1] : cardType[1] + cardType[0]));
-}
-
-// TODO: faire un objet avec {'w': 'warrior'} et renvoyer la valeur correspondant à la clé, tout simplement...
-function getClassName(cardType) {
-    switch (cardType) {
-        case 'w':
-            return 'warrior';
-        case 'm':
-            return 'mage';
-        case 't':
-            return 'thief';
-        case 'a':
-            return 'assassin';
-        case 'p':
-            return 'protector';
-        case 'h':
-            return 'heal';
-        case 'mw':
-            return 'battlemage';
-        case 'tw':
-            return 'rogue';
-        case 'aw':
-            return 'slayer';
-        case 'pw':
-            return 'paladin';
-        case 'hw':
-            return 'templar';
-        case 'mt':
-            return 'warlock';
-        case 'am':
-            return 'dreamkiller';
-        case 'mp':
-            return 'guardian';
-        case 'hm':
-            return 'runemaster';
-        case 'at':
-            return 'ninja';
-        case 'pt':
-            return 'brigand';
-        case 'ht':
-            return 'trickster';
-        case 'ap':
-            return 'ranger';
-        case 'ah':
-            return 'avenger';
-        case 'hp':
-            return 'sage';
-    };
 }
 
 function addHoverEffect(element) {
@@ -177,4 +129,10 @@ function getCardEffect(effectCode) {
         }
     });
     return `<p class="c-card__effect">${effectText}</p>`;
+}
+
+function createDeck() {
+    // TODO: create from selected classes
+    myDeckList = ['w1', 'w1', 'w1', 'w2']; // TODO: get / save in localstorage
+    setFromLS('deck', myDeckList);
 }
