@@ -41,17 +41,17 @@ function startFight() {
 }
 
 function generateOpponent() {
-    var keys = Object.keys(CLASS_LIST);
+    var keys = Object.keys(BASE_CLASS_LIST);
     opponentClass = keys[getRandomNumber(0, keys.length - 1)] + keys[getRandomNumber(0, keys.length - 1)];
 }
 
 function showPlayerAvatar() {
     let avatarCode = getFromLS('avatar');
-    $playerAvatar.appendChild(createAvatar(avatarCode[0], avatarCode[1]));
+    $playerAvatar.append(createAvatar(avatarCode[0], avatarCode[1]));
 }
 
 function showOpponentAvatar() {
-    $opponentAvatar.appendChild(createAvatar(opponentClass[0], opponentClass[1]));
+    $opponentAvatar.append(createAvatar(opponentClass[0], opponentClass[1]));
 }
 
 

@@ -34,10 +34,7 @@ function displayMyHand() {
 function displayCard(cardId) {
     var card = cardList[cardId];
     var cardType = getCardTypes(cardId);
-    var cardContent = `<div class="c-card__content -${cardType}">
-        <p class="c-card__class">${CLASS_NAME_LIST[cardType]}</p>
-        <span class="c-card__rarity -rarity${card.rarity}"></span>
-        <div class="c-card__diceList">`;
+    var cardContent = `<div class="c-card__content -${cardType}"><p class="c-card__class">${CLASS_NAME_LIST[cardType]}</p><span class="c-card__rarity -rarity${card.rarity}"></span><div class="c-card__diceList">`;
     card.dice.split('|').forEach(dice => {
         cardContent += drawCardDice(dice);
     });

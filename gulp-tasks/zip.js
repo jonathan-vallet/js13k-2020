@@ -13,6 +13,7 @@ module.exports = function() {
     var replaceList = {
         'c-diceList': 'dl',
         'c-card__card': 'cc',
+        'c-card__content': 'co',
         'c-card__diceList': 'cdl',
         'c-card__dice': 'cd',
         'c-card__dot': 'ct',
@@ -21,6 +22,7 @@ module.exports = function() {
         'c-card__rarity': 'cr',
         'c-card': 'c',
         'c-dice__dot': 'dd',
+        'c-dice__face': 'df',
         'c-dice': 'd',
         '-odd-roll': 'or',
         '-bonus': 'b',
@@ -28,7 +30,19 @@ module.exports = function() {
         '-rarity': 'r',
         'data-roll': 'data-r',
         'data-side': 'data-s',
-        'roll-button': 'rb'
+        'data-type': 'data-t',
+        'data-screen': 'data-sc',
+        'end-turn-button': 'etb',
+        'l-screen': 'ls',
+        'avatarChoiceList': 'acl',
+        'avatarList': 'al',
+        'playerAvatar': 'pa',
+        'opponentAvatar': 'oa',
+        'js-screen-link': 'jsl',
+        'screen-class-choice': 'scc',
+        'screen-game': 'sg',
+        'screen-map': 'sm',
+        'continueButton': 'cb'
     }
 
     var valueList = [];

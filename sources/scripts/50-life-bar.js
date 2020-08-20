@@ -27,12 +27,12 @@ function showImpact(newLifePoints, currentLifePoints, playerId) {
         impact.style.top = `${getRandomNumber(20, 150)}px`;
         impact.style.left = `${getRandomNumber(20, 150)}px`;
         // TODO: factoriser player/opponent pour les cibler avec moins de code
-        playerId === 1 ? $playerAvatar.appendChild(impact) : $opponentAvatar.appendChild(impact);
+        playerId === 1 ? $playerAvatar.append(impact) : $opponentAvatar.append(impact);
         impact.offsetWidth;
         impact.classList.add('-loaded');
         impactList.push(impact);
     }
-    
+
     setTimeout(() => {
         for(var impact of impactList) {
             impact.remove();
