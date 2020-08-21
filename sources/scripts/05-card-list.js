@@ -50,5 +50,5 @@ cardList[`pw1`] = {
     rarity: 1
 };
 
-var myCardList = ['w1', 'w1', 'w1', 'w2']; // TODO: get / save in localstorage
+var myHandList = []; // TODO: get / save in localstorage
 var myDeckList = getFromLS('deck') || [];

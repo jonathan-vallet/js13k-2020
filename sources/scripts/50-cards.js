@@ -6,8 +6,10 @@ function displayAllCards() {
     }
 }
 
+/*
+// TODO: fonction plus utilisée pour le moment, à voir en fin de partie ou avec un menu pour voir son deck entier comme dans slay the Spire
 function displayMyCards() {
-    myCardList.forEach(cardId => {
+    myHandCards.forEach(cardId => {
         var cardElement = displayCard(cardId);
         addHoverEffect(cardElement);
         cardElement.addEventListener('click', () => {
@@ -16,21 +18,14 @@ function displayMyCards() {
         $myCardList.append(cardElement);
     });
 }
-
 function displayMyDeck() {
-    myDeckList.forEach(cardId => {
+    /*myDeckList.forEach(cardId => {
         var cardElement = displayCard(cardId);
         addHoverEffect(cardElement);
-        $myDeckList.append(cardElement);
+        $myHandCards.append(cardElement);
     });
 }
-
-function displayMyHand() {
-    myCardList.forEach(cardIndex => {
-        var cardElement = displayCard(cardList[cardIndex]);
-    });
-}
-
+*/
 function displayCard(cardId) {
     var card = cardList[cardId];
     var cardType = getCardTypes(cardId);

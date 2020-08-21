@@ -61,7 +61,6 @@ const STAGE_TYPE_LIST = {
 // Elements
 var $allcardList = $('allCardList');
 var $myCardList = $('myCardList');
-var $myDeckList = $('myDeckList');
 var $avatarChoiceList = $('avatarChoiceList');
 var $myAvatar = $('myAvatar');
 var $myAvatarName = $('myAvatarName');
@@ -69,6 +68,7 @@ var $map = $('map');
 var $continueButton = $('continueButton');
 var $playerAvatar = $('playerAvatar');
 var $opponentAvatar = $('opponentAvatar');
-
+var $myDeck = $('myDeck');
+var $myHand = $('myHand');
 // Links
 var $$screenLinkList = $$('.js-screen-link'); // TODO: remplacer par "button" pour éviter d'utiliser une classe?

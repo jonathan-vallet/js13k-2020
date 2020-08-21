@@ -12,7 +12,6 @@ function drawAvatars() {
         };
         $avatarChoiceList.append(canvas);
     }
-    setMyAvatar('w', 'w');
 }
 
 // Creates avatar from player selection on class selection screen

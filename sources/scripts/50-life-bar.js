@@ -19,7 +19,6 @@ function updateLifePoints(playerId, value) {
 }
 
 function showImpact(newLifePoints, currentLifePoints, playerId) {
-    console.log('impact number', newLifePoints, currentLifePoints, ~~(Math.abs(newLifePoints - currentLifePoints) / 10));
     let impactList = [];
     for(var index = 0; index < ~~(1 + Math.abs(newLifePoints - currentLifePoints) / 10); ++index) {
         var impact = createElement('p');
