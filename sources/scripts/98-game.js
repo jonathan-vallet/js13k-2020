@@ -29,8 +29,7 @@ function bindEvents() {
     });
 
     // Sets the end of turn
-    $("end-turn-button").addEventListener("click", endTurn);
-
+    $endTurnButton.addEventListener("click", endTurn);
 }
 
 var opponentClass;
@@ -40,6 +39,7 @@ function startFight() {
     // TODO: déterminer le type (élite, mob...)
     initLifeBar();
     shuffleDeck();
+    displayDeck();
     startNextTurn();
     showPlayerAvatar();
     showOpponentAvatar();
@@ -67,34 +67,60 @@ function startNextTurn() {
     }
     document.body.offsetWidth;
     rollDices();
-    displayDeck();
     setTimeout(() => {
         drawCards();
     }, 800);
 }
 
 function endTurn() {
-    startNextTurn();
+    discardHand();
+    setTimeout(() => {
+        startNextTurn();
+    }, 500); // TODO: timeout = au nombre de cartes à défausser
+}
+
+function discardHand() {
+    for(var cardNumber = 0; cardNumber < myHandList.length; ++cardNumber) {
+        setTimeout(() => {
+            discardCard(0);
+        }, cardNumber * 100);
+    }
+}
+
+function discardCard(handCardIndex) {
+    myDiscardList.push(myHandList[handCardIndex]);
+    myHandList.splice(handCardIndex, 1);
+    $myHand.removeChild($myHand.firstElementChild);
 }
 
 function drawCards() {
     // TODO: prendre une carte dans le deck. Elle pase en main. Quand elle est jouée elle passe en défausse. Quand la pioche est vide la défausse devient la pioche et on mélange
-    console.log(myDeckList);
     for(var cardNumber = 0; cardNumber < 5; ++cardNumber) {
         timeoutCardDraw(cardNumber);
     }
 }
 
+// TODO: rempalcer tous les setTimeout par des await/async...
 function timeoutCardDraw(cardNumber) {
     setTimeout(() => {
-        drawCard(myDeckList[cardNumber]);
+        if(!myDeckList.length) {
+            myDeckList = myDiscardList;
+            myDiscardList = [];
+            shuffleDeck();
+            displayDeck();
+        }
+        if(myDeckList.length) { // All deck cards are already in hand
+            drawCard(myDeckList[0]);
+        }
+        console.log('draw card', myDeckList, myDiscardList, myHandList);
     }, cardNumber * 100);
 }
 
 function drawCard(cardId) {
+    myHandList.push(myDeckList[0]);
+    myDeckList.shift();
     $myHand.append(displayCard(cardId));
-    // TODO: prendre une carte dans le deck. Elle pase en main. Quand elle est jouée elle passe en défausse. Quand la pioche est vide la défausse devient la pioche et on mélange
-    removeCardFromDeck();
+    $myDeck.removeChild($myDeck.lastElementChild);
 }
 
 function displayDeck() {
@@ -107,10 +133,6 @@ function displayDeck() {
         $card.offsetWidth;
         $card.style.transform = `translate(${index * 2}px, ${index * 2}px)`;
     });
-}
-
-function removeCardFromDeck() {
-    $myDeck.removeChild($myDeck.lastElementChild);
 }
 
 function shuffleDeck() {

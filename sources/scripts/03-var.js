@@ -70,5 +70,6 @@ var $playerAvatar = $('playerAvatar');
 var $opponentAvatar = $('opponentAvatar');
 var $myDeck = $('myDeck');
 var $myHand = $('myHand');
+var $endTurnButton = $("endTurnButton");
 // Links
 var $$screenLinkList = $$('.js-screen-link'); // TODO: remplacer par "button" pour éviter d'utiliser une classe?

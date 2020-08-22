@@ -32,7 +32,7 @@ module.exports = function() {
         'data-side': 'data-s',
         'data-type': 'data-t',
         'data-screen': 'data-sc',
-        'end-turn-button': 'etb',
+        'endTurnButton': 'etb',
         'l-screen': 'ls',
         'avatarChoiceList': 'acl',
         'avatarList': 'al',
