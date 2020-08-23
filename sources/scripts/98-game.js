@@ -112,7 +112,6 @@ function timeoutCardDraw(cardNumber) {
         if(myDeckList.length) { // All deck cards are already in hand
             drawCard(myDeckList[0]);
         }
-        console.log('draw card', myDeckList, myDiscardList, myHandList);
     }, cardNumber * 100);
 }
 
