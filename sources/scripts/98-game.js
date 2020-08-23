@@ -118,8 +118,15 @@ function timeoutCardDraw(cardNumber) {
 function drawCard(cardId) {
     myHandList.push(myDeckList[0]);
     myDeckList.shift();
-    let card = displayCard(cardId, `hand-card-${$myHand.childElementCount}`);
-    $myHand.append(card);
+    let $card = displayCard(cardId, `hand-card-${$myHand.childElementCount}`);
+    $card.addEventListener('drop', (event) => {
+        console.log('drop');
+    }, false);
+    $card.ondragover = (event) => {
+        console.log('dragover');
+        event.preventDefault();
+    }
+    $myHand.append($card);
     $myDeck.removeChild($myDeck.lastElementChild);
 }
 

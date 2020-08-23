@@ -11,7 +11,14 @@ function generateDice(number) {
     }
     dice.innerHTML = facesHTML;
     dice.ondragstart = (event) => {
-        checkPlayableCards(event.currentTarget.dataset.roll);
+        checkPlayableCards(event.currentTarget.dataset.roll, ($element) => {
+            $element.style.background = 'red';
+        });
+    }
+    dice.ondragend = (event) => {
+        checkPlayableCards(event.currentTarget.dataset.roll, ($element) => {
+            $element.style.background = '';
+        });
     }
     $('c-diceList').append(dice);
 }
@@ -27,13 +34,13 @@ function rollDices() {
     });
 }
 
-function checkPlayableCards(diceValue) {
+function checkPlayableCards(diceValue, callback) {
     myHandList.forEach((cardId, handCardIndex) => {
         let cardDice = cardList[cardId].dice;
         cardDice.split('|').forEach((dice, cardDiceIndex) => {
             let isPlayable = isDicePlayable(diceValue, dice);
             if(isPlayable) {
-                $(`hand-card-${handCardIndex}-${cardDiceIndex}`).style.background = 'red';
+                callback($(`hand-card-${handCardIndex}-${cardDiceIndex}`));
             }
         });
     });
