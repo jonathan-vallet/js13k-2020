@@ -1,38 +1,14 @@
-// Set your global var here
-const TYPE_WARRIOR = 'w';
-const TYPE_MAGE = 'm';
-const TYPE_THIEF = 't';
-const TYPE_ASSASSIN = 'a';
-const TYPE_PROTECTOR = 'p';
-const TYPE_HEAL = 'h';
-const TYPE_ROGUE = 'r';
+// Base class list with colors
+var BASE_CLASS_LIST = {
+    'w': '#942',
+    'm': '#18b',
+    't': '#449',
+    'a': '#777',
+    'p': '#a80',
+    'h': '#162'
+};
 
-var CLASS_LIST = {};
-CLASS_LIST[TYPE_WARRIOR] = {
-    n: 'warrior',
-    c: '#942'
-};
-CLASS_LIST[TYPE_MAGE] = {
-    n: 'mage',
-    c: '#18b'
-};
-CLASS_LIST[TYPE_THIEF] = {
-    n: 'thief',
-    c: '#449'
-};
-CLASS_LIST[TYPE_ASSASSIN] = {
-    n: 'assassin',
-    c: '#777'
-};
-CLASS_LIST[TYPE_PROTECTOR] = {
-    n: 'protector',
-    c: '#a80'
-};
-CLASS_LIST[TYPE_HEAL] = {
-    n: 'heal',
-    c: '#162'
-}
-
+// TODO: voir si avec les noms doubles uniquement je gagne en place
 const CLASS_NAME_LIST = {
     'w': 'warrior',
     'm': 'mage',
@@ -57,7 +33,7 @@ const CLASS_NAME_LIST = {
     'hp': 'sage',
 }
 
-
+// TODO: si je e stock pas d'autre info, virer le "symbol"
 const STAGE_TYPE_LIST = {
     'm': { // monster
         's': '💀' // s for symbol
@@ -85,13 +61,15 @@ const STAGE_TYPE_LIST = {
 // Elements
 var $allcardList = $('allCardList');
 var $myCardList = $('myCardList');
-var $myDeckList = $('myDeckList');
 var $avatarChoiceList = $('avatarChoiceList');
 var $myAvatar = $('myAvatar');
 var $myAvatarName = $('myAvatarName');
 var $map = $('map');
 var $continueButton = $('continueButton');
-
+var $playerAvatar = $('playerAvatar');
+var $opponentAvatar = $('opponentAvatar');
+var $myDeck = $('myDeck');
+var $myHand = $('myHand');
+var $endTurnButton = $("endTurnButton");
 // Links
 var $$screenLinkList = $$('.js-screen-link'); // TODO: remplacer par "button" pour éviter d'utiliser une classe?
-var $$lifeBarList = $$('.c-lifeBar');

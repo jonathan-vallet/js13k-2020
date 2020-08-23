@@ -5,8 +5,8 @@ $card-rarity-size: 14px;
 }
 
 .c-card__content {
-    width: 150px;
-    height: 220px;
+    width: $card-width;
+    height: $card-height;
     border-radius: 10px;
     text-align: center;
     border: 2px solid $card-border;
@@ -97,16 +97,13 @@ $card-rarity-size: 14px;
     transform: rotate(-45deg) skew(15deg, 15deg);
     border: 2px solid $card-border;
     &.-rarity1 {
-        background: white;
+        background: #38e;
     }   
     &.-rarity2 {
-        background: blue;
+        background: #e4f;
     }   
     &.-rarity3 {
-        background: purple;
-    }   
-    &.-rarity4 {
-        background: yellow;
+        background: #fc1;
     }   
 }
 
@@ -117,6 +114,33 @@ $card-rarity-size: 14px;
     right: 20px;
     font-size: 14px;   
     font-variant: small-caps;
+}
+
+.c-card__back {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $card-width;
+    height: $card-height;
+    border-radius: 10px;
+    border: 1px solid $card-border;
+    background-color: #4de;
+    color: #2bc;
+    overflow: hidden;
+    font: bold 150px sans-serif;
+    &:before {
+        content: '4';
+        position: absolute;
+        top: -55px;
+        left: -20px;
+    }
+    &:after {
+        content: '4';
+        position: absolute;
+        bottom: -35px;
+        right: -10px;
+    }
 }
 
 .c-card__class {

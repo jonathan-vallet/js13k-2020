@@ -6,8 +6,10 @@ function displayAllCards() {
     }
 }
 
+/*
+// TODO: fonction plus utilisée pour le moment, à voir en fin de partie ou avec un menu pour voir son deck entier comme dans slay the Spire
 function displayMyCards() {
-    myCardList.forEach(cardId => {
+    myHandCards.forEach(cardId => {
         var cardElement = displayCard(cardId);
         addHoverEffect(cardElement);
         cardElement.addEventListener('click', () => {
@@ -16,28 +18,18 @@ function displayMyCards() {
         $myCardList.append(cardElement);
     });
 }
-
 function displayMyDeck() {
-    myDeckList.forEach(cardId => {
+    /*myDeckList.forEach(cardId => {
         var cardElement = displayCard(cardId);
         addHoverEffect(cardElement);
-        $myDeckList.append(cardElement);
+        $myHandCards.append(cardElement);
     });
 }
-
-function displayMyHand() {
-    myCardList.forEach(cardIndex => {
-        var cardElement = displayCard(cardList[cardIndex]);
-    });
-}
-
+*/
 function displayCard(cardId) {
     var card = cardList[cardId];
     var cardType = getCardTypes(cardId);
-    var cardContent = `<div class="c-card__content -${cardType}">
-        <p class="c-card__class">${CLASS_NAME_LIST[cardType]}</p>
-        <span class="c-card__rarity -rarity${card.rarity}"></span>
-        <div class="c-card__diceList">`;
+    var cardContent = `<div class="c-card__content -${cardType}"><p class="c-card__class">${CLASS_NAME_LIST[cardType]}</p><span class="c-card__rarity -rarity${card.rarity}"></span><div class="c-card__diceList">`;
     card.dice.split('|').forEach(dice => {
         cardContent += drawCardDice(dice);
     });
@@ -133,6 +125,6 @@ function getCardEffect(effectCode) {
 
 function createDeck() {
     // TODO: create from selected classes
-    myDeckList = ['w1', 'w1', 'w1', 'w2']; // TODO: get / save in localstorage
+    myDeckList = ['w1', 'w1', 'w1', 'w2', 'w2', 'm1', 'm1', 'm1', 'm2', 'm2', 'mw1']; // TODO: get / save in localstorage
     setFromLS('deck', myDeckList);
 }

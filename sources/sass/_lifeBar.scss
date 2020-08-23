@@ -21,14 +21,18 @@
         left: 0;
         bottom: 0;
         width: 0;
-        background: #4c4;
-        transition: width 0.3s ease;
+        background: #44c;
+        transition: width 0.5s ease;
     }
 
     :nth-child(2) {
-        background: #44c;
+        background: #c44;
+        transition-duration: 0.3s;
+        transition-delay: 1.3s;
     }
     :last-child {
-        background: #c44;
+        background: #4c4;
+        transition-duration: 1s;
+        transition-delay: 0.5s;
     }
 }

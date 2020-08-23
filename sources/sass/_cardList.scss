@@ -24,3 +24,33 @@
         }
     }
 }
+
+#myDeck {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    width: $card-width;
+    height: $card-height;
+
+    .c-card {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+
+#myHand {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 200px;
+    left: calc(50% - #{($card-width * 5 + 10px * 4) / 2});
+    width: $card-width * 5 + 10px * 4;
+    height: $card-height;
+
+    .c-card {
+        &:not(:last-child) {
+            margin-right: 10px;
+        }
+    }
+}

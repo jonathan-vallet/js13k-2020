@@ -10,14 +10,12 @@ function generateDice(number) {
         facesHTML += `<li class="c-dice__face" data-side="${faceNumber}">${dotsHtml}</li>`;
     }
     dice.innerHTML = facesHTML;
-    $('c-diceList').appendChild(dice);
+    $('c-diceList').append(dice);
 }
 
-function rollDice() {
+function rollDices() {
     [...$$('.c-dice')].forEach(die => {
         die.classList.toggle('-odd-roll');
         die.setAttribute('data-roll', getRandomNumber(1, 6));
     });
 }
-
-$("roll-button").addEventListener("click", rollDice);
