@@ -10,6 +10,9 @@ function generateDice(number) {
         facesHTML += `<li class="c-dice__face" data-side="${faceNumber}">${dotsHtml}</li>`;
     }
     dice.innerHTML = facesHTML;
+    dice.ondragstart = (event) => {
+        checkPlayableCards(event.currentTarget.dataset.roll);
+    }
     $('c-diceList').append(dice);
 }
 
@@ -22,4 +25,38 @@ function rollDices() {
         dragabbleDice && dragabbleDice.removeAttribute('draggable');
         dice.querySelector(`[data-side="${roll}"]`).setAttribute('draggable', 'true');
     });
+}
+
+function checkPlayableCards(diceValue) {
+    myHandList.forEach((cardId, handCardIndex) => {
+        let cardDice = cardList[cardId].dice;
+        cardDice.split('|').forEach((dice, cardDiceIndex) => {
+            let isPlayable = isDicePlayable(diceValue, dice);
+            if(isPlayable) {
+                $(`hand-card-${handCardIndex}-${cardDiceIndex}`).style.background = 'red';
+            }
+        });
+    });
+}
+
+function isDicePlayable(diceValue, cardDice) {
+    var match = cardDice.match(/([-+*]?)([0-9])/);
+    if (match) {
+        let cardDiceValue = match[2];
+        switch (match[1]) {
+            case '-': return diceValue <= cardDiceValue;
+            case '+': return diceValue >= cardDiceValue;
+            default: return cardDiceValue == diceValue;
+        }
+    }
+     if (cardDice === 'double') {
+        // TODO: check if other dice is "played" or not
+        return true;
+    }
+    if(cardDice === 'odd') {
+        return diceValue % 2;
+    }
+    if(cardDice === 'even') {
+        return diceValue % 2 == 0;
+    }
 }

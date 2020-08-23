@@ -118,7 +118,8 @@ function timeoutCardDraw(cardNumber) {
 function drawCard(cardId) {
     myHandList.push(myDeckList[0]);
     myDeckList.shift();
-    $myHand.append(displayCard(cardId));
+    let card = displayCard(cardId, `hand-card-${$myHand.childElementCount}`);
+    $myHand.append(card);
     $myDeck.removeChild($myDeck.lastElementChild);
 }
 

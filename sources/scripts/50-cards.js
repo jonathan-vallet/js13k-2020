@@ -26,17 +26,20 @@ function displayMyDeck() {
     });
 }
 */
-function displayCard(cardId) {
+function displayCard(cardId, cardElementId) {
     var card = cardList[cardId];
     var cardType = getCardTypes(cardId);
     var cardContent = `<div class="c-card__content -${cardType}"><p class="c-card__class">${CLASS_NAME_LIST[cardType]}</p><span class="c-card__rarity -rarity${card.rarity}"></span><div class="c-card__diceList">`;
-    card.dice.split('|').forEach(dice => {
-        cardContent += drawCardDice(dice);
+    card.dice.split('|').forEach((dice, diceIndex) => {
+        cardContent += drawCardDice(dice, cardElementId, diceIndex);
     });
     cardContent += `</div>${getCardEffect(card.effect)}`;
 
     var cardElement = createElement('div');
     cardElement.classList.add('c-card');
+    if(cardElementId) {
+        cardElement.id = cardElementId;
+    }
     cardElement.innerHTML = cardContent;
     return cardElement;
 }
@@ -72,24 +75,23 @@ function addHoverEffect(element) {
     });
 }
 
-function drawCardDice(dice) {
-    var match = dice.match(/([-+*]?)([0-9])/);
+function drawCardDice(dice, diceElementId, diceNumber) {
+    let match = dice.match(/([-+*]?)([0-9])/);
+    let diceContent = dice;
     if (match) {
         var pre = '';
         var suf = '';
-        var className = '';
         switch (match[1]) {
             case '-': suf = 'max'; break;
             case '+': suf = 'min'; break;
-            case '*': pre = '+'; className = '-bonus'; break;
         }
-        return `<p class="c-card__dice ${className}">${pre}${match[2]}${suf}</p>`;
-    } else {
-        if (dice === 'double') {
-            return `<p class="c-card__dice">${dice}</p><p class="c-card__dice">${dice}</p>`;
-        }
-        return `<p class="c-card__dice">${dice}</p>`;
-    }
+        diceContent = pre + match[2] + suf;
+    } 
+    return createDiceElement(dice, diceElementId && `${diceElementId}-${diceNumber}`);
+}
+
+function createDiceElement(content, diceElementId) {
+    return `<p class="c-card__dice"${diceElementId ? ` id=${diceElementId}` : ''}>${content}</p>`;
 }
 
 function getCardEffect(effectCode) {
@@ -97,7 +99,7 @@ function getCardEffect(effectCode) {
     var effectList = effectCode.split(',');
     effectList.forEach((effect, index) => {
         effectText += index > 0 ? `<br>` : '';
-        var split = effect.split('|');
+        var split = effect.split('|')
         var effectValue = split[1];
         switch (split[0]) {
             case 'damage':

@@ -10,7 +10,7 @@ cardList[`w2`] = {
     rarity: 1
 };
 cardList[`m1`] = {
-    dice: '+2',
+    dice: '+2|2',
     effect: 'magic|X',
     rarity: 2
 };
@@ -25,12 +25,12 @@ cardList[`t1`] = {
     rarity: 3
 };
 cardList[`a1`] = {
-    dice: 'double',
+    dice: 'double|double',
     effect: 'poison|3',
     rarity: 3
 };
 cardList[`p1`] = {
-    dice: '-6|*1',
+    dice: '-6|-6',
     effect: 'protection|X',
     rarity: 1
 };
@@ -45,11 +45,7 @@ cardList[`mw1`] = {
     rarity: 1
 };
 cardList[`pw1`] = {
-    dice: '-6|*1',
+    dice: '-6',
     effect: 'protection|X,damage|1',
     rarity: 1
 };
-
-var myDiscardList = [];
-var myHandList = [];
-var myDeckList = getFromLS('deck') || [];

@@ -25,7 +25,6 @@ module.exports = function() {
         'c-dice__face': 'df',
         'c-dice': 'd',
         '-odd-roll': 'or',
-        '-bonus': 'b',
         '-even-roll': 'er',
         '-rarity': 'r',
         'data-roll': 'data-r',
