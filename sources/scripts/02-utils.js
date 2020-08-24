@@ -17,3 +17,9 @@ function getRandomItem(array) {
 function getRandomNumber(min, max) {
     return ~~(random() * (max - min + 1)) + min;
 }
+
+function createElementFromHTML(htmlString) {
+    var div = createElement('div');
+    div.innerHTML = htmlString.trim();
+    return div.firstChild; 
+  }

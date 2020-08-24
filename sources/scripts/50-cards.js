@@ -35,6 +35,7 @@ function displayCard(cardId, cardElementId) {
     });
     cardContent += `</div>${getCardEffect(card.effect)}`;
 
+    // TODO: utiliser createaFromHTML?
     var cardElement = createElement('div');
     cardElement.classList.add('c-card');
     if(cardElementId) {
@@ -87,11 +88,7 @@ function drawCardDice(dice, diceElementId, diceNumber) {
         }
         diceContent = pre + match[2] + suf;
     } 
-    return createDiceElement(dice, diceElementId && `${diceElementId}-${diceNumber}`);
-}
-
-function createDiceElement(content, diceElementId) {
-    return `<p class="c-card__dice"${diceElementId ? ` id=${diceElementId}` : ''}>${content}</p>`;
+    return `<p class="c-card__dice" data-dice="${dice}" ${diceElementId ? ` id=${diceElementId}-${diceNumber}` : ''}>${diceContent}</p>`;
 }
 
 function getCardEffect(effectCode) {
@@ -129,4 +126,11 @@ function createDeck() {
     // TODO: create from selected classes
     myDeckList = ['w1', 'w1', 'w1', 'w2', 'w2', 'm1', 'm1', 'm1', 'm2', 'm2', 'mw1']; // TODO: get / save in localstorage
     setFromLS('deck', myDeckList);
+}
+
+function playCard($card) {
+    $card.classList.add('-played');
+    setTimeout(() => {
+        $card.remove();
+    }, 500);
 }

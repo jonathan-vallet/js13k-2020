@@ -1,5 +1,6 @@
-function generateDice(number) {
+function generateDice() {
     let dice = createElement('ol');
+    let $diceList = $('c-diceList');
     dice.classList.add('c-dice');
     random() > 0.5 && dice.classList.add('-odd-roll');
     let roll = getRandomNumber(1, 6);
@@ -10,17 +11,19 @@ function generateDice(number) {
         facesHTML += `<li class="c-dice__face" data-side="${faceNumber}">${dotsHtml}</li>`;
     }
     dice.innerHTML = facesHTML;
+    dice.id = `dice-${$diceList.childElementCount}` ;
     dice.ondragstart = (event) => {
-        checkPlayableCards(event.currentTarget.dataset.roll, ($element) => {
+        event.dataTransfer.setData("text/plain", event.target.parentNode.id);
+        checkPlayableCards(event.currentTarget.getAttribute('data-roll'), ($element) => {
             $element.style.background = 'red';
         });
     }
     dice.ondragend = (event) => {
-        checkPlayableCards(event.currentTarget.dataset.roll, ($element) => {
+        checkPlayableCards(event.currentTarget.getAttribute('data-roll'), ($element) => {
             $element.style.background = '';
         });
     }
-    $('c-diceList').append(dice);
+    $diceList.append(dice);
 }
 
 function rollDices() {
@@ -38,7 +41,7 @@ function checkPlayableCards(diceValue, callback) {
     myHandList.forEach((cardId, handCardIndex) => {
         let cardDice = cardList[cardId].dice;
         cardDice.split('|').forEach((dice, cardDiceIndex) => {
-            let isPlayable = isDicePlayable(diceValue, dice);
+            let isPlayable = isDicePlayable($(`hand-card-${handCardIndex}-${cardDiceIndex}`), diceValue);
             if(isPlayable) {
                 callback($(`hand-card-${handCardIndex}-${cardDiceIndex}`));
             }
@@ -46,24 +49,25 @@ function checkPlayableCards(diceValue, callback) {
     });
 }
 
-function isDicePlayable(diceValue, cardDice) {
-    var match = cardDice.match(/([-+*]?)([0-9])/);
+function isDicePlayable($cardDice, diceValue) {
+    let cardDiceValue = $cardDice.dataset.dice;
+    var match = cardDiceValue.match(/([-+*]?)([0-9])/);
     if (match) {
-        let cardDiceValue = match[2];
+        cardDiceValue = match[2];
         switch (match[1]) {
             case '-': return diceValue <= cardDiceValue;
             case '+': return diceValue >= cardDiceValue;
             default: return cardDiceValue == diceValue;
         }
     }
-     if (cardDice === 'double') {
+     if (cardDiceValue === 'double') {
         // TODO: check if other dice is "played" or not
         return true;
     }
-    if(cardDice === 'odd') {
+    if(cardDiceValue === 'odd') {
         return diceValue % 2;
     }
-    if(cardDice === 'even') {
+    if(cardDiceValue === 'even') {
         return diceValue % 2 == 0;
     }
 }

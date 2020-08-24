@@ -120,12 +120,29 @@ function drawCard(cardId) {
     myDeckList.shift();
     let $card = displayCard(cardId, `hand-card-${$myHand.childElementCount}`);
     $card.addEventListener('drop', (event) => {
-        console.log('drop');
+        var $cardDiceTarget = event.target;
+        var diceId = event.dataTransfer.getData("text/plain");
+        let $dice = $(diceId);
+        let diceValue = $dice.dataset.roll;
+        
+        if(!event.target.classList.contains('c-card__dice')) {
+            // TODO: if multiple dices, get the first not empty
+            $cardDiceTarget.querySelector('.c-card__dice');
+        }
+        if(isDicePlayable($cardDiceTarget, diceValue)) {
+            $dice.classList.add('-disabled');
+            // TODO: play dice only if card has 2 dices
+            playCard($cardDiceTarget.closest('.c-card'));
+            console.log('play card!!!!!!!!');
+        } else {
+            console.log('not playable dice!!!')
+        }
+        console.log(event, $card, event.target, event.currentTarget);
     }, false);
     $card.ondragover = (event) => {
-        console.log('dragover');
         event.preventDefault();
     }
+
     $myHand.append($card);
     $myDeck.removeChild($myDeck.lastElementChild);
 }
