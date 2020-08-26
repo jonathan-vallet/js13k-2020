@@ -1,9 +1,8 @@
-function generateDice() {
+function generateDice(roll) {
     let dice = createElement('ol');
     let $diceList = $('c-diceList');
     dice.classList.add('c-dice');
     random() > 0.5 && dice.classList.add('-odd-roll');
-    let roll = getRandomNumber(1, 6);
     let facesHTML = '';
     let dotsHtml = '';
     for (let faceNumber = 1; faceNumber < 7; ++faceNumber) {
@@ -12,6 +11,7 @@ function generateDice() {
     }
     dice.innerHTML = facesHTML;
     dice.id = `dice-${$diceList.childElementCount}` ;
+    dice.setAttribute('data-roll', roll || getRandomNumber(1, 6));
     dice.ondragstart = (event) => {
         event.dataTransfer.setData("text/plain", event.target.parentNode.id);
         checkPlayableCards(event.currentTarget.getAttribute('data-roll'), ($element) => {
@@ -24,17 +24,26 @@ function generateDice() {
         });
     }
     $diceList.append(dice);
+    if(roll) {
+        rollDice(dice, roll);
+    }
 }
 
 function rollDices() {
     [...$$$('.c-dice')].forEach(dice => {
-        dice.classList.toggle('-odd-roll');
-        let roll = getRandomNumber(1, 6);
-        dice.setAttribute('data-roll', roll);
-        let dragabbleDice = dice.querySelector(`[draggable]`);
-        dragabbleDice && dragabbleDice.removeAttribute('draggable');
-        dice.querySelector(`[data-side="${roll}"]`).setAttribute('draggable', 'true');
+        rollDice(dice);
     });
+}
+
+function rollDice(dice, roll) {
+    if(!roll) {
+        dice.classList.toggle('-odd-roll');
+        roll = getRandomNumber(1, 6);
+    }
+    dice.setAttribute('data-roll', roll);
+    let dragabbleDice = dice.querySelector(`[draggable]`);
+    dragabbleDice && dragabbleDice.removeAttribute('draggable');
+    dice.querySelector(`[data-side="${roll}"]`).setAttribute('draggable', 'true');
 }
 
 function checkPlayableCards(diceValue, callback) {
@@ -43,7 +52,7 @@ function checkPlayableCards(diceValue, callback) {
         cardDice.split('|').forEach((dice, cardDiceIndex) => {
             let isPlayable = isDicePlayable(handCardIndex, cardDiceIndex, diceValue);
             if(isPlayable) {
-                let $dice = $$(`.c-card__dice[data-hand="${handCardIndex}"][data-dice="${cardDiceIndex}"]`);
+                let $dice = $myHand.querySelector(`[data-hand="${handCardIndex}"] [data-dice="${cardDiceIndex}"]`);
                 callback($dice);
             }
         });

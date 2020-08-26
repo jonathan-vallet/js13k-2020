@@ -7,19 +7,19 @@ function displayAllCards() {
 }
 
 
-function displayCard(cardId, handCardIndex) {
+function displayCard(cardId, handCardIndex = -1) {
     var card = cardList[cardId];
     var cardType = getCardTypes(cardId);
     var cardContent = `<div class="c-card__content -${cardType}"><p class="c-card__class">${CLASS_NAME_LIST[cardType]}</p><span class="c-card__rarity -rarity${card.rarity}"></span><div class="c-card__diceList">`;
     card.dice.split('|').forEach((dice, diceIndex) => {
         cardContent += drawCardDice(dice, handCardIndex, diceIndex);
     });
-    cardContent += `</div>${getCardEffect(card.effect)}`;
+    cardContent += `</div><p class="c-card__effect">${getCardEffect(card.effect)}</p>`;
 
     // TODO: utiliser createaFromHTML?
     var cardElement = createElement('div');
     cardElement.classList.add('c-card');
-    if(handCardIndex) {
+    if(handCardIndex >= 0) {
         cardElement.dataset.hand = handCardIndex;
     }
     cardElement.innerHTML = cardContent;
@@ -58,7 +58,7 @@ function addHoverEffect(element) {
 }
 
 function drawCardDice(dice, handCardIndex = -1, diceNumber) {
-    let dataHand = handCardIndex > 0 ? `data-hand="${handCardIndex}"` : '';
+    let dataHand = handCardIndex >= 0 ? `data-hand="${handCardIndex}"` : '';
     let match = dice.match(/([-+*]?)([0-9])/);
     let diceContent = dice;
     if (match) {
@@ -73,7 +73,7 @@ function drawCardDice(dice, handCardIndex = -1, diceNumber) {
     return `<p class="c-card__dice" ${dataHand} data-dice="${diceNumber}">${diceContent}</p>`;
 }
 
-function getCardEffect(effectCode) {
+function getCardEffect(effectCode, diceValue) {
     var effectText = '';
     var effectList = effectCode.split(',');
     effectList.forEach((effect, index) => {
@@ -107,7 +107,7 @@ function getCardEffect(effectCode) {
                 break;
         }
     });
-    return `<p class="c-card__effect">${effectText}</p>`;
+    return effectText;
 }
 
 function createDeck() {
@@ -117,9 +117,50 @@ function createDeck() {
 }
 
 function playCard($card) {
-    console.log('play', $card);
     $card.classList.add('-played');
+    resolveCardEffect($card);
     setTimeout(() => {
-        $card.remove();
+        discardCard($card.dataset.hand);
     }, 500);
+}
+
+function resolveCardEffect($card) {
+    let cardId = myHandList[$card.dataset.hand];
+    let diceValue = $card.querySelector('[data-dice]').dataset.value;
+    console.log('resolve', $card, cardId, diceValue);
+    let effectCode = cardList[cardId].effect;
+    var effectList = effectCode.split(',');
+    effectList.forEach((effect, index) => {
+        var split = effect.split('|')
+        var effectValue = getEffectValue(split[1], +diceValue);
+        switch (split[0]) {
+            case 'damage':
+                console.log('damage', effectValue);
+                updateLifePoints(2, -effectValue);
+                break;
+            case 'stun':
+                break;
+            case 'updice':
+                generateDice(effectValue);
+                break;
+        }
+    });
+}
+
+function getEffectValue(effectTextValue, diceValue) {
+    let effectValue = 0;
+    let operator = 1;
+    for(let char of effectTextValue) {
+        if(char == 'X') {
+            effectValue += diceValue;
+        }
+        if(char == '-') {
+            operator = -1;
+        }
+        if(!isNaN(char)) {
+            effectValue += operator * +char;
+        }
+    }
+    console.log('getEffectValue', effectTextValue, +diceValue, effectValue);
+    return effectValue;
 }

@@ -89,7 +89,11 @@ function discardHand() {
 function discardCard(handCardIndex) {
     myDiscardList.push(myHandList[handCardIndex]);
     myHandList.splice(handCardIndex, 1);
-    $myHand.removeChild($myHand.firstElementChild);
+    $myHand.removeChild($myHand.children.item(handCardIndex));
+    // Updates index of other cards
+    [...$myHand.querySelectorAll('.c-card')].forEach(($card, index) => {
+        $card.dataset.hand = index;
+    });
 }
 
 function drawCards() {
@@ -130,6 +134,7 @@ function drawCard(cardId) {
         }
         if(isDicePlayable($card.dataset.hand, $cardDiceTarget.dataset.dice, diceValue)) {
             $dice.classList.add('-disabled');
+            $cardDiceTarget.dataset.value = diceValue;
             // TODO: play dice only if card has 2 dices
             playCard($card);
             // resolveCardEffect();
