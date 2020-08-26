@@ -6,40 +6,21 @@ function displayAllCards() {
     }
 }
 
-/*
-// TODO: fonction plus utilisée pour le moment, à voir en fin de partie ou avec un menu pour voir son deck entier comme dans slay the Spire
-function displayMyCards() {
-    myHandCards.forEach(cardId => {
-        var cardElement = displayCard(cardId);
-        addHoverEffect(cardElement);
-        cardElement.addEventListener('click', () => {
-            myDeckList.push(cardId);
-        });
-        $myCardList.append(cardElement);
-    });
-}
-function displayMyDeck() {
-    /*myDeckList.forEach(cardId => {
-        var cardElement = displayCard(cardId);
-        addHoverEffect(cardElement);
-        $myHandCards.append(cardElement);
-    });
-}
-*/
-function displayCard(cardId, cardElementId) {
+
+function displayCard(cardId, handCardIndex) {
     var card = cardList[cardId];
     var cardType = getCardTypes(cardId);
     var cardContent = `<div class="c-card__content -${cardType}"><p class="c-card__class">${CLASS_NAME_LIST[cardType]}</p><span class="c-card__rarity -rarity${card.rarity}"></span><div class="c-card__diceList">`;
     card.dice.split('|').forEach((dice, diceIndex) => {
-        cardContent += drawCardDice(dice, cardElementId, diceIndex);
+        cardContent += drawCardDice(dice, handCardIndex, diceIndex);
     });
     cardContent += `</div>${getCardEffect(card.effect)}`;
 
     // TODO: utiliser createaFromHTML?
     var cardElement = createElement('div');
     cardElement.classList.add('c-card');
-    if(cardElementId) {
-        cardElement.id = cardElementId;
+    if(handCardIndex) {
+        cardElement.dataset.hand = handCardIndex;
     }
     cardElement.innerHTML = cardContent;
     return cardElement;
@@ -52,7 +33,7 @@ function getCardTypes(cardId) {
 }
 
 function addHoverEffect(element) {
-    element.addEventListener('mousemove', event => {
+    element.onmousemove = event => {
         let bounding = event.currentTarget.getBoundingClientRect();
         let x = Math.max(0, event.pageX - ~~(bounding.left));
         let y = Math.max(0, event.pageY - window.scrollY - ~~(bounding.top));
@@ -68,15 +49,16 @@ function addHoverEffect(element) {
         const maxAngle = 20;
         element.querySelector(':first-child').style.transform = `rotate3d(${posY / hypotenuseCursor}, ${-posX / hypotenuseCursor}, 0, ${ratio * maxAngle}deg)`;
         element.querySelector(':first-child').style.filter = `brightness(${1.2 - y / height / 2})` // 0.6 = offset, brightness will be from 0.6 to 1.6
-    });
+    };
 
-    element.addEventListener('mouseleave', e => {
+    element.onmouseleave = () => {
         element.querySelector(':first-child').style.transform = '';
         element.querySelector(':first-child').style.filter = '';
-    });
+    };
 }
 
-function drawCardDice(dice, diceElementId, diceNumber) {
+function drawCardDice(dice, handCardIndex = -1, diceNumber) {
+    let dataHand = handCardIndex > 0 ? `data-hand="${handCardIndex}"` : '';
     let match = dice.match(/([-+*]?)([0-9])/);
     let diceContent = dice;
     if (match) {
@@ -88,7 +70,7 @@ function drawCardDice(dice, diceElementId, diceNumber) {
         }
         diceContent = pre + match[2] + suf;
     } 
-    return `<p class="c-card__dice" data-dice="${dice}" ${diceElementId ? ` id=${diceElementId}-${diceNumber}` : ''}>${diceContent}</p>`;
+    return `<p class="c-card__dice" ${dataHand} data-dice="${diceNumber}">${diceContent}</p>`;
 }
 
 function getCardEffect(effectCode) {
@@ -105,8 +87,14 @@ function getCardEffect(effectCode) {
             case 'poison':
                 effectText += `Inflict <b>${effectValue}</b> poison damages`;
                 break;
-            case 'magic':
-                effectText += `Inflict <b>${effectValue}</b> magical damages`;
+            case 'stun':
+                effectText += `Stun a dice`;
+                break;
+            case 'updice':
+                effectText += `Increase dice value of <b>${effectValue}</b>`;
+                break;
+            case 'fire':
+                effectText += `Fire a dice`;
                 break;
             case 'heal':
                 effectText += `Heal <b>${effectValue}</b> life points`;
@@ -124,11 +112,12 @@ function getCardEffect(effectCode) {
 
 function createDeck() {
     // TODO: create from selected classes
-    myDeckList = ['w1', 'w1', 'w1', 'w2', 'w2', 'm1', 'm1', 'm1', 'm2', 'm2', 'mw1']; // TODO: get / save in localstorage
+    myDeckList = ['w1', 'w1', 'w2', 'w2', 'w3', 'w4', 'w5', 'w6', 'w7', 'm2', 'mw1']; // TODO: get / save in localstorage
     setFromLS('deck', myDeckList);
 }
 
 function playCard($card) {
+    console.log('play', $card);
     $card.classList.add('-played');
     setTimeout(() => {
         $card.remove();

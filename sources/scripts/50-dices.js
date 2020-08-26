@@ -27,7 +27,7 @@ function generateDice() {
 }
 
 function rollDices() {
-    [...$$('.c-dice')].forEach(dice => {
+    [...$$$('.c-dice')].forEach(dice => {
         dice.classList.toggle('-odd-roll');
         let roll = getRandomNumber(1, 6);
         dice.setAttribute('data-roll', roll);
@@ -41,16 +41,17 @@ function checkPlayableCards(diceValue, callback) {
     myHandList.forEach((cardId, handCardIndex) => {
         let cardDice = cardList[cardId].dice;
         cardDice.split('|').forEach((dice, cardDiceIndex) => {
-            let isPlayable = isDicePlayable($(`hand-card-${handCardIndex}-${cardDiceIndex}`), diceValue);
+            let isPlayable = isDicePlayable(handCardIndex, cardDiceIndex, diceValue);
             if(isPlayable) {
-                callback($(`hand-card-${handCardIndex}-${cardDiceIndex}`));
+                let $dice = $$(`.c-card__dice[data-hand="${handCardIndex}"][data-dice="${cardDiceIndex}"]`);
+                callback($dice);
             }
         });
     });
 }
 
-function isDicePlayable($cardDice, diceValue) {
-    let cardDiceValue = $cardDice.dataset.dice;
+function isDicePlayable(handCardIndex, cardDiceIndex, diceValue) {
+    let cardDiceValue = cardList[myHandList[handCardIndex]].dice;
     var match = cardDiceValue.match(/([-+*]?)([0-9])/);
     if (match) {
         cardDiceValue = match[2];

@@ -1,23 +1,48 @@
 var cardList = {};
 cardList[`w1`] = {
     dice: '+4',
-    effect: 'damage|X',
+    effect: 'damage|X-2',
     rarity: 1
 };
 cardList[`w2`] = {
+    dice: '-3',
+    effect: 'damage|X',
+    rarity: 1
+};
+cardList[`w3`] = {
+    dice: '+4',
+    effect: 'damage|X,stun|6',
+    rarity: 2
+};
+cardList[`w4`] = {
+    dice: '6',
+    effect: 'damage|X+2',
+    rarity: 2
+};
+cardList[`w5`] = {
+    dice: '-4',
+    effect: 'updice|X+2',
+    rarity: 2
+};
+cardList[`w6`] = {
+    dice: 'odd',
+    effect: 'damage|3,stun|5',
+    rarity: 1
+};
+cardList[`w7`] = {
     dice: 'even',
-    effect: 'damage|X-1',
+    effect: 'damage|3,|stun|6',
     rarity: 1
 };
 cardList[`m1`] = {
-    dice: '+2|2',
-    effect: 'magic|X',
+    dice: '5',
+    effect: 'damage|5,fire',
     rarity: 2
 };
 cardList[`m2`] = {
-    dice: '-4',
+    dice: '-2',
     effect: 'fire|X',
-    rarity: 2
+    rarity: 1
 };
 cardList[`t1`] = {
     dice: '6',

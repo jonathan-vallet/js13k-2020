@@ -1,10 +1,7 @@
 function startGame() {
     displayAllCards();
     // displayMyCards();
-
     drawAvatars();
-    createDeck();
-
     bindEvents();
 
     // Check continue game
@@ -15,7 +12,7 @@ function startGame() {
 
 function bindEvents() {
     // Sets screen changes for some buttons
-    [...$$screenLinkList].forEach($link => {
+    [...$screenLinkList].forEach($link => {
         $link.onclick = () => {
             document.querySelector('.l-screen.-active').classList.remove('-active');
             let screen = $link.getAttribute('data-screen');
@@ -24,12 +21,13 @@ function bindEvents() {
                 startFight();
             } else if(screen == 'screen-class-choice') {
                 setMyAvatar('w', 'w');
+                createDeck();
             }
         }
     });
 
     // Sets the end of turn
-    $endTurnButton.addEventListener("click", endTurn);
+    $endTurnButton.onclick = () => { endTurn() };
 }
 
 var opponentClass;
@@ -66,6 +64,7 @@ function startNextTurn() {
         generateDice();
     }
     document.body.offsetWidth;
+    [...$diceList.querySelectorAll('.c-dice')].forEach($dice => $dice.classList.remove('-disabled'));
     rollDices();
     setTimeout(() => {
         drawCards();
@@ -118,8 +117,8 @@ function timeoutCardDraw(cardNumber) {
 function drawCard(cardId) {
     myHandList.push(myDeckList[0]);
     myDeckList.shift();
-    let $card = displayCard(cardId, `hand-card-${$myHand.childElementCount}`);
-    $card.addEventListener('drop', (event) => {
+    let $card = displayCard(cardId, $myHand.childElementCount);
+    $card.ondrop = event => {
         var $cardDiceTarget = event.target;
         var diceId = event.dataTransfer.getData("text/plain");
         let $dice = $(diceId);
@@ -129,16 +128,14 @@ function drawCard(cardId) {
             // TODO: if multiple dices, get the first not empty
             $cardDiceTarget.querySelector('.c-card__dice');
         }
-        if(isDicePlayable($cardDiceTarget, diceValue)) {
+        if(isDicePlayable($card.dataset.hand, $cardDiceTarget.dataset.dice, diceValue)) {
             $dice.classList.add('-disabled');
             // TODO: play dice only if card has 2 dices
-            playCard($cardDiceTarget.closest('.c-card'));
-            console.log('play card!!!!!!!!');
-        } else {
-            console.log('not playable dice!!!')
+            playCard($card);
+            // resolveCardEffect();
         }
-        console.log(event, $card, event.target, event.currentTarget);
-    }, false);
+    };
+
     $card.ondragover = (event) => {
         event.preventDefault();
     }
@@ -168,4 +165,3 @@ function shuffleDeck() {
 
 // Let's the game start!
 startGame();
-// init some things while edev

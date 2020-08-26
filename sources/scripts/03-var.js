@@ -72,8 +72,8 @@ var $myDeck = $('myDeck');
 var $myHand = $('myHand');
 var $endTurnButton = $("endTurnButton");
 // Links
-var $$screenLinkList = $$('.js-screen-link'); // TODO: remplacer par "button" pour éviter d'utiliser une classe?
-
+var $screenLinkList = $$$('.js-screen-link'); // TODO: remplacer par "button" pour éviter d'utiliser une classe?
+let $diceList = $('c-diceList');
 
 // Game var. Cards are in deck by default. You draw them in your hand, and discard when played. When deck is empty, shuffle discard to create a new deck list
 var myDiscardList = [];

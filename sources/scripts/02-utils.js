@@ -1,6 +1,7 @@
 // alias functions
 var $ = id => document.getElementById(id);
-var $$ = selector => document.querySelectorAll(selector);
+var $$ = selector => document.querySelector(selector);
+var $$$ = selector => document.querySelectorAll(selector);
 var createElement = type => document.createElement(type);
 var random = () => Math.random();
 var getFromLS = item => JSON.parse(window.localStorage.getItem(item));
@@ -23,3 +24,6 @@ function createElementFromHTML(htmlString) {
     div.innerHTML = htmlString.trim();
     return div.firstChild; 
   }
+
+// wait function to be able to wait for animation end before continuing game
+const wait = ms => new Promise((resolve) => setTimeout(resolve, ms));

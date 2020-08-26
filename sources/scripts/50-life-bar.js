@@ -13,7 +13,7 @@ function updateLifePoints(playerId, value) {
     }
     showImpact(newLifePoints, currentLifePoints, playerId);
     currentLifePoints = newLifePoints;
-    [...$$(`#lifeBar-${playerId} p`)].forEach($lifeBar => {
+    [...$$$(`#lifeBar-${playerId} p`)].forEach($lifeBar => {
         $lifeBar.style.width = `${~~(currentLifePoints / maxLifePoints * 100)}%`;
     });
 }
@@ -39,6 +39,6 @@ function showImpact(newLifePoints, currentLifePoints, playerId) {
     }, 500);
 }
 
-setInterval(() => {
-    updateLifePoints(getRandomNumber(1, 2), getRandomNumber(-50,50));
-}, 2000);
+// setInterval(() => {
+//     updateLifePoints(getRandomNumber(1, 2), getRandomNumber(-50,50));
+// }, 2000);
