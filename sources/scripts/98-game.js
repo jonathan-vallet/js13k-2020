@@ -1,5 +1,6 @@
 function startGame() {
     displayAllCards();
+    generateMap();
     // displayMyCards();
     drawAvatars();
     bindEvents();

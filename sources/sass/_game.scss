@@ -35,9 +35,12 @@ body {
 }
 
 #mapWrapper {
-  background: #ccc;
   height: 2500px;
   width: 80%;
   margin: 10px 10%;
   overflow-y: auto;
+}
+
+#screen-map {
+  background: #0bb;
 }
