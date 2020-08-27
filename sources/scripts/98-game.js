@@ -13,19 +13,20 @@ function startGame() {
 
 function bindEvents() {
     // Sets screen changes for some buttons
-    [...$screenLinkList].forEach($link => {
-        $link.onclick = () => {
+    document.body.onclick = (e) => {
+        if(e.target.classList.contains('js-screen-link')) {
             document.querySelector('.l-screen.-active').classList.remove('-active');
-            let screen = $link.getAttribute('data-screen');
+            let screen = e.target.getAttribute('data-screen');
             $(screen).classList.add('-active');
             if(screen == 'screen-game') {
+                e.target.classList.add('-a');
                 startFight();
             } else if(screen == 'screen-class-choice') {
                 setMyAvatar('w', 'w');
                 createDeck();
             }
         }
-    });
+    }
 
     // Sets the end of turn
     $endTurnButton.onclick = () => { endTurn() };

@@ -35,10 +35,37 @@ body {
 }
 
 #mapWrapper {
-  height: 2500px;
-  width: 80%;
-  margin: 10px 10%;
-  overflow-y: auto;
+  position: relative;
+  height: 2080px;
+  width: 900px;
+  margin: 0 auto;
+
+  p {
+    position: absolute;
+    padding: 5px;
+    font-size: 20px;
+    transition: 1s ease;
+    border-radius: 50%;
+    &:last-child {
+      font-size: 60px;
+    }
+    &[data-level="0"] {
+      cursor: pointer;
+      animation: 2s ease infinite a;
+    }
+    &.-a {
+      border: 2px solid $color-black;
+    }
+  }
+}
+
+@keyframes a {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(2);
+  }
 }
 
 #screen-map {
