@@ -1,0 +1,28 @@
+.a-title {
+    position: relative;
+    background: #f92;
+    box-shadow: 0px 16px 0px -8px #741;
+    color: #741;
+    font: bold small-caps 40px serif;
+    padding: 10px 60px;
+
+    &:before,
+    &:after {
+        content: '';
+        width: 90px;
+        height: 100%;
+        position: absolute;
+        top: 50%;
+        background: #f92;
+        box-shadow: 0px 16px 0px -8px #741;
+        z-index: -1;
+    }
+
+    &:before {
+        left: -55px;
+    }
+
+    &:after {
+        right: -55px;
+    }
+}

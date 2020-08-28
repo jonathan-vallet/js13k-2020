@@ -1,9 +1,12 @@
 * {
   margin: 0;
   padding: 0;
+  color: $color-white;
+  font: small-caps 20px sans-serif;
+
   &, 
-  &::before,
-  &::after {
+  &:before,
+  &:after {
     box-sizing: inherit;
   }
 }

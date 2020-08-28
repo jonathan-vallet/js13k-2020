@@ -48,7 +48,7 @@ function rollDice(dice, roll) {
 
 function checkPlayableCards(diceValue, callback) {
     myHandList.forEach((cardId, handCardIndex) => {
-        let cardDice = cardList[cardId].dice;
+        let cardDice = cardList[cardId].d;
         cardDice.split('|').forEach((dice, cardDiceIndex) => {
             let isPlayable = isDicePlayable(handCardIndex, cardDiceIndex, diceValue);
             if(isPlayable) {
@@ -60,7 +60,7 @@ function checkPlayableCards(diceValue, callback) {
 }
 
 function isDicePlayable(handCardIndex, cardDiceIndex, diceValue) {
-    let cardDiceValue = cardList[myHandList[handCardIndex]].dice;
+    let cardDiceValue = cardList[myHandList[handCardIndex]].d;
     var match = cardDiceValue.match(/([-+*]?)([0-9])/);
     if (match) {
         cardDiceValue = match[2];

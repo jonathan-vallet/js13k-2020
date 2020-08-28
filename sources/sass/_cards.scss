@@ -20,7 +20,7 @@ $card-rarity-size: 14px;
     transform-style: preserve-3d;
     transform-origin: center;
 
-    &::before {
+    &:before {
         content: '';
         display: block;
         position: absolute;
@@ -117,8 +117,7 @@ $card-rarity-size: 14px;
     top: 130px;
     left: 20px;
     right: 20px;
-    font-size: 14px;   
-    font-variant: small-caps;
+    font: 14px;   
 }
 
 .c-card__back {
@@ -154,7 +153,6 @@ $card-rarity-size: 14px;
     right: 0;
     top: -1px;
     font-size: 10px;
-    font-variant: small-caps;
 }
 
 .c-card__diceList {

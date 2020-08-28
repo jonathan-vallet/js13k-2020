@@ -10,11 +10,11 @@ function displayAllCards() {
 function displayCard(cardId, handCardIndex = -1) {
     var card = cardList[cardId];
     var cardType = getCardTypes(cardId);
-    var cardContent = `<div class="c-card__content -${cardType}"><p class="c-card__class">${CLASS_NAME_LIST[cardType]}</p><span class="c-card__rarity -rarity${card.rarity}"></span><div class="c-card__diceList">`;
-    card.dice.split('|').forEach((dice, diceIndex) => {
+    var cardContent = `<div class="c-card__content -${cardType}"><p class="c-card__class">${CLASS_NAME_LIST[cardType]}</p><span class="c-card__rarity -rarity${card.r}"></span><div class="c-card__diceList">`;
+    card.d.split('|').forEach((dice, diceIndex) => {
         cardContent += drawCardDice(dice, handCardIndex, diceIndex);
     });
-    cardContent += `</div><p class="c-card__effect">${getCardEffect(card.effect)}</p>`;
+    cardContent += `</div><p class="c-card__effect">${getCardEffect(card.e)}</p>`;
 
     // TODO: utiliser createaFromHTML?
     var cardElement = createElement('div');
@@ -47,13 +47,13 @@ function addHoverEffect(element) {
         let ratio = hypotenuseCursor / hypotenuseMax;
 
         const maxAngle = 20;
-        element.querySelector(':first-child').style.transform = `rotate3d(${posY / hypotenuseCursor}, ${-posX / hypotenuseCursor}, 0, ${ratio * maxAngle}deg)`;
-        element.querySelector(':first-child').style.filter = `brightness(${1.2 - y / height / 2})` // 0.6 = offset, brightness will be from 0.6 to 1.6
+        element.firstChild.style.transform = `rotate3d(${posY / hypotenuseCursor}, ${-posX / hypotenuseCursor}, 0, ${ratio * maxAngle}deg)`;
+        element.firstChild.style.filter = `brightness(${1.2 - y / height / 2})` // 0.6 = offset, brightness will be from 0.6 to 1.6
     };
 
     element.onmouseleave = () => {
-        element.querySelector(':first-child').style.transform = '';
-        element.querySelector(':first-child').style.filter = '';
+        element.firstChild.style.transform = '';
+        element.firstChild.style.filter = '';
     };
 }
 
@@ -127,15 +127,13 @@ function playCard($card) {
 function resolveCardEffect($card) {
     let cardId = myHandList[$card.dataset.hand];
     let diceValue = $card.querySelector('[data-dice]').dataset.value;
-    console.log('resolve', $card, cardId, diceValue);
-    let effectCode = cardList[cardId].effect;
+    let effectCode = cardList[cardId].e;
     var effectList = effectCode.split(',');
     effectList.forEach((effect, index) => {
         var split = effect.split('|')
         var effectValue = getEffectValue(split[1], +diceValue);
         switch (split[0]) {
             case 'damage':
-                console.log('damage', effectValue);
                 updateLifePoints(2, -effectValue);
                 break;
             case 'stun':
@@ -157,10 +155,12 @@ function getEffectValue(effectTextValue, diceValue) {
         if(char == '-') {
             operator = -1;
         }
+        if(char == '*') {
+            operator = diceValue;
+        }
         if(!isNaN(char)) {
             effectValue += operator * +char;
         }
     }
-    console.log('getEffectValue', effectTextValue, +diceValue, effectValue);
     return effectValue;
 }
