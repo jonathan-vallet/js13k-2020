@@ -6,10 +6,11 @@ function drawAvatars() {
         canvas.setAttribute('data-type', type);
         canvas.onclick = () => {
             var newType = canvas.getAttribute(`data-type`);
-            $avatarChoiceList.setAttribute(`data-type${++currentAvatarSelected % 2}`, newType);
-            setMyAvatar($avatarChoiceList.getAttribute('data-type0'), $avatarChoiceList.getAttribute('data-type1'));
+            $avatarChoiceList.setAttribute(`data-t${++currentAvatarSelected % 2}`, newType);
+            setMyAvatar($avatarChoiceList.dataset.t0, $avatarChoiceList.dataset.t1);
             canvas.classList.add(`-choice${currentAvatarSelected % 2}`);
         };
+
         $avatarChoiceList.append(canvas);
     }
 }
@@ -19,7 +20,6 @@ function setMyAvatar(type1, type2) {
     let canvas = createAvatar(type1, type2);
     $myAvatar.innerHTML = '';
     $myAvatar.append(canvas);
-    $myAvatarName.innerText = CLASS_NAME_LIST[getCardTypes(type1 + type2)];
 
     // TODO: do this when saving
     setFromLS('avatar', type1 + type2);
@@ -39,6 +39,7 @@ function createAvatar(type1, type2) {
     addHoverEffect(canvasWrapper);
 
     canvasWrapper.append(canvas);
+    canvasWrapper.insertAdjacentHTML('beforeend', `<p>${CLASS_NAME_LIST[getCardTypes(type1 + type2)]}</p>`);
     return canvasWrapper;
 }
 

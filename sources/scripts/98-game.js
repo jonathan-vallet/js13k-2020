@@ -18,10 +18,16 @@ function bindEvents() {
             document.querySelector('.l-screen.-active').classList.remove('-active');
             let screen = e.target.getAttribute('data-screen');
             $(screen).classList.add('-active');
+            if(screen == 'screen-map') {
+                setTimeout(() => {
+                    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                }, 500)
+            }
             if(screen == 'screen-game') {
                 e.target.classList.add('-a');
                 startFight();
-            } else if(screen == 'screen-class-choice') {
+            }
+            if(screen == 'screen-class-choice') {
                 setMyAvatar('w', 'w');
                 createDeck();
             }

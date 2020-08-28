@@ -11,7 +11,21 @@ module.exports = function() {
     const zipConfig = config.tasks.zip;
 
     var replaceList = {
+        // Element ids
+        'allCardList': 'acl',
+        'myCardList': 'mcl',
+        'avatarChoiceList': 'ach',
+        'myAvatar': 'ma',
+        'continueButton': 'cb',
+        'playerAvatar': 'pa',
+        'opponentAvatar': 'oa',
+        'myDeck': 'md',
+        'myHand': 'mh',
+        'endTurnButton': 'etb',
+        'mapWrapper': 'mw',
+        // Dices
         'c-diceList': 'dl',
+        // Cards
         'c-card__card': 'cc',
         'c-card__content': 'co',
         'c-card__diceList': 'cdl',
@@ -25,20 +39,15 @@ module.exports = function() {
         'c-dice__face': 'df',
         'c-dice': 'd',
         '-odd-roll': 'or',
-        '-even-roll': 'er',
         '-rarity': 'r',
-        'data-screen': 'data-sc',
-        'endTurnButton': 'etb',
-        'l-screen': 'ls',
-        'avatarChoiceList': 'acl',
-        'avatarList': 'al',
-        'playerAvatar': 'pa',
-        'opponentAvatar': 'oa',
-        'js-screen-link': 'jsl',
+        // Screens
         'screen-class-choice': 'scc',
         'screen-game': 'sg',
         'screen-map': 'sm',
-        'continueButton': 'cb'
+        'data-screen': 'data-sc',
+        'l-screen': 'ls',
+        // Avatar
+        'js-screen-link': 'jsl',
     }
 
     var valueList = [];

@@ -1,0 +1,31 @@
+#screen-map {
+    background: #0bb;
+}
+
+#mapWrapper {
+    position: relative;
+
+    p {
+        position: absolute;
+        padding: 5px;
+        font-size: 20px;
+        transition: 1s ease;
+        border-radius: 50%;
+        &:last-child {
+            font-size: 60px;
+        }
+        &[data-level="0"] {
+            cursor: pointer;
+            animation: 2s ease infinite a;
+        }
+        &.-a {
+            border: 2px solid $color-black;
+        }
+    }
+}
+
+@keyframes a {
+    50% {
+        transform: scale(2);
+    }
+}

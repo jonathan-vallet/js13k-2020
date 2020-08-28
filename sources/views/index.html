@@ -8,34 +8,21 @@
 </head>
 
 <body>
-  <div class="l-screen" id="screen-menu">
+  <div class="l-screen -active" id="screen-menu">
     <button class="js-screen-link" data-screen="screen-game" id="continueButton">Continue game</button>
     <button class="js-screen-link" data-screen="screen-class-choice">New game</button>
     
-    All cards
-    <div id="allCardList" class="c-cardList"></div>
+    <div id="allCardList" class="c-cardList" style="display: none"></div>
     <div id="myCardList" class="c-cardList" style="display: none"></div>
-    
-    poison: 🤢
-    feu: 🥵🔥
-    glace: 🥶❄
-    proection: 🛡
-    stun: 😵🥴
-    monstres: ☠💀👿😈👹
-    impact de dégats: 💢💥
-    heal: ➕
-    livre: 📖
-    pages: 📜📃
   </div>
   <div class="l-screen" id="screen-class-choice">
     <p>Create you hero: pick up 2 classes</p>
-    <div id="avatarChoiceList" class="avatarList" data-type0="w" data-type1="w"></div>
+    <div id="avatarChoiceList" data-t0="w" data-t1="w"></div>
     <p>You are:</p>
     <div id="myAvatar"></div>
-    <p id="myAvatarName"></p>
     <button class="js-screen-link" data-screen="screen-map">Start game</button>
   </div>
-  <div class="l-screen -active" id="screen-map">
+  <div class="l-screen" id="screen-map">
     <div id="mapWrapper">
       <canvas id="map"></canvas>
     </div>

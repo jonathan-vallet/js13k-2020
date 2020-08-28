@@ -1,9 +1,7 @@
-var LEVEL_STAGE_NUMBER = 15;
-var stageList = [];
-
 function generateMap() {
-    stageList.push([{ e: 'm' }, { e: 'm' }, { e: 'm' }]); // First stage is a choice of 3 monsters
-    for (let index = 1; index < LEVEL_STAGE_NUMBER; ++index) {
+    stageList.push([{ e: 'm' }, { e: 'm' }, { e: 'm' }]); // First stage encounter is a choice of 3 monsters
+    let index = 0;
+    while(++index < LEVEL_STAGE_NUMBER) {
         stageList.push(generateStage());
     }
     stageList.push([{ e: 'b' }]); // Last stage is a boss
@@ -14,7 +12,8 @@ function generateMap() {
 function generateStage() {
     var roomNumber = getRandomNumber(3, 4); // 3 or 4 rooms per stage max
     var stage = [];
-    for (let roomIndex = 0; roomIndex < roomNumber; ++roomIndex) {
+    let roomIndex = 0;
+    while(roomIndex++ < roomNumber) {
         stage.push({ 'e': getRandomItem(Array.from('mmmmmeetrrrsh')) });
     }
     return stage;
@@ -24,16 +23,16 @@ function generateStage() {
 function linkStages() {
     for (let y in stageList) {
         y = +y;
-        var stage = stageList[y];
-        var nextStage = stageList[y + 1];
+        let stage = stageList[y];
+        let nextStage = stageList[y + 1];
         if (nextStage) {
-            var currentMinRoom = 0;
+            let currentMinRoom = 0;
             for (let x in stage) {
                 x = +x;
                 var room = stage[x];
                 room.l = [];
 
-                if (x === stage.length - 1) {
+                if (x >= stage.length - 1) {
                     // always link to last room
                     while(currentMinRoom < nextStage.length) {
                         room.l.push(currentMinRoom++);
@@ -59,25 +58,24 @@ function drawMap() {
     let ySpace = 130;
     let firstLineCoordinateList = [];
     let lastLineCoordinateList = [];
-    ctx.filter = "grayscale(50%)";
     $map.width = xSpace * 6; // 4 room + 1 space each side
     $map.height = ySpace * (LEVEL_STAGE_NUMBER + 1);
 
+    // Fill grass background
     ctx.fillStyle = '#7e7';
     ctx.fillRect(0, 0, $map.width, $map.height);
 
     // Draw every room of every stage on a grid with a random move
     for (let [y, stage] of Object.entries(stageList)) {
-        let fontSize = y == (stageList.length - 1) ? 60 : 20;
-        ctx.font = `${fontSize}px serif`;
         y = +y;
         for (let [x, room] of Object.entries(stage)) {
             x = +x;
-            var xPosition = ~~(xSpace * (x + 3.2 + random() * 0.6 - stage.length / 2));
-            var yPosition = ~~($map.height - (ySpace * (y + 0.6 - random() * 0.4)));
+            let xPosition = ~~(xSpace * (x + 3.2 + random() * 0.6 - stage.length / 2));
+            let yPosition = ~~($map.height - (ySpace * (y + 0.6 - random() * 0.4)));
+            let fontSize = y == (stageList.length - 1) ? 60 : 25;
             room.x = xPosition;
             room.y = yPosition;
-            $mapWrapper.insertAdjacentHTML('beforeend', `<p style="left:${xPosition - fontSize - 3}px;top:${yPosition - fontSize}px" data-level="${y}" class="js-screen-link" data-screen="screen-game">${STAGE_TYPE_LIST[room.e].s}</p>`);
+            $mapWrapper.insertAdjacentHTML('beforeend', `<p style="left:${xPosition - fontSize}px;top:${yPosition - fontSize}px" data-level="${y}" class="js-screen-link" data-screen="screen-game">${STAGE_TYPE_LIST[room.e]}</p>`);
             if(x === 0) {
                 firstLineCoordinateList.push({x: xPosition, y: yPosition});
             }
@@ -87,46 +85,10 @@ function drawMap() {
         }
     }
 
-    // Draw surroundings
-    // TODO: essayer de factoriser les lignes de avant/après
-    ['#ffa', '#cff', '#7cc', '#0bb'].forEach((color, layoutIndex) => {
-        ctx.beginPath();
-        ctx.moveTo(firstLineCoordinateList[0].x + getRandomNumber(-5, 5) - layoutIndex * 8, 2500);
-        for(let index in firstLineCoordinateList) {
-            let offset = (4 - layoutIndex) * 5 + (layoutIndex == 0 ? 50 + (index == stageList.length - 1 ? 200 : 0) : 0);
-            let x = firstLineCoordinateList[index].x - offset - getRandomNumber(0, 5);
-            let y = firstLineCoordinateList[index].y + getRandomNumber(-5, 5);
-            ctx.lineTo(x, y);
-            firstLineCoordinateList[index].x = x;
-            firstLineCoordinateList[index].y = y;
-        }
-        ctx.lineTo(firstLineCoordinateList[firstLineCoordinateList.length - 1 ].x + getRandomNumber(-5, 5) - layoutIndex * 5, 0);
-        ctx.lineTo(0, 0);
-        ctx.lineTo(0, 2500);
-        ctx.fillStyle = color;
-        ctx.fill();
-
-        ctx.beginPath();
-        ctx.moveTo(lastLineCoordinateList[0].x + getRandomNumber(-5, 5) + layoutIndex * 5, 2500);
-        for(let index in lastLineCoordinateList) {
-            let offset = (4 - layoutIndex) * 6 + (layoutIndex == 0 ? 30 + (index == stageList.length - 1 ? 200 : 0) : 0);
-            let x = lastLineCoordinateList[index].x + offset - getRandomNumber(0, 5);
-            let y = lastLineCoordinateList[index].y + getRandomNumber(-5, 5);
-            ctx.lineTo(x, y);
-            lastLineCoordinateList[index].x = x;
-            lastLineCoordinateList[index].y = y;
-        }
-        ctx.lineTo(lastLineCoordinateList[lastLineCoordinateList.length - 1].x - getRandomNumber(0, 5) + layoutIndex * 5, 0);
-        ctx.lineTo($map.width, 0);
-        ctx.lineTo($map.width, 2500);
-        ctx.fillStyle = color;
-        ctx.fill();
-    });
-
     // Draw lines between rooms
     for (let [y, stage] of Object.entries(stageList)) {
         y = +y;
-        var nextStage = stageList[y + 1];
+        let nextStage = stageList[y + 1];
         if (nextStage) {
             for (let [x, room] of Object.entries(stage)) {
                 x = +x;
@@ -142,4 +104,32 @@ function drawMap() {
             }
         }
     }
+
+    // Draw surroundings
+    ['#ffa', '#cff', '#7cc', '#0bb'].forEach((color, layoutIndex) => {
+        for(let side = -1; side <= 1; side +=2) {
+            let sideCoordinateList = firstLineCoordinateList;
+            let startX = 0;
+            if(side > 0) {
+                sideCoordinateList = lastLineCoordinateList;
+                startX = $map.width;
+            }
+
+            ctx.beginPath();
+            ctx.fillStyle = color;
+            ctx.moveTo(sideCoordinateList[0].x + getRandomNumber(-5, 5) - layoutIndex * 8, 2500);
+            for(let index in sideCoordinateList) {
+                let offset = (4 - layoutIndex) * 8 + (layoutIndex == 0 ? 50 + (index == stageList.length - 1 ? 200 : 0) : 0);
+                let x = sideCoordinateList[index].x + side * (offset - getRandomNumber(0, 5));
+                let y = sideCoordinateList[index].y + getRandomNumber(-5, 5);
+                ctx.lineTo(x, y);
+                sideCoordinateList[index].x = x;
+                sideCoordinateList[index].y = y;
+            }
+            ctx.lineTo(sideCoordinateList[sideCoordinateList.length - 1 ].x + getRandomNumber(-5, 5) + side * layoutIndex * 5, 0);
+            ctx.lineTo(startX, 0);
+            ctx.lineTo(startX, $map.height);
+            ctx.fill();
+        }
+    });
 }

@@ -35,27 +35,13 @@ const CLASS_NAME_LIST = {
 
 // TODO: si je e stock pas d'autre info, virer le "symbol"
 const STAGE_TYPE_LIST = {
-    'm': { // monster
-        's': '💀' // s for symbol
-    },
-    'e': { // elite
-        's': '👿'
-    },
-    'b': { // boss
-        's': '😈'
-    },
-    't': { // treasure
-        's': '💰'
-    },
-    'r': { // random
-        's': '❓'
-    },
-    's': { // seller / merchant
-        's': '🤑'
-    },
-    'h': { // healer
-        's': '💖'
-    }
+    'm': '💀', // monster
+    'e': '👿', // elite
+    'b': '😈', // boss
+    't': '💰', // treasure
+    'r': '❓', // random
+    's': '🤑', // seller / merchant
+    'h': '💖' // healer
 }
 
 // Elements
@@ -63,7 +49,6 @@ var $allcardList = $('allCardList');
 var $myCardList = $('myCardList');
 var $avatarChoiceList = $('avatarChoiceList');
 var $myAvatar = $('myAvatar');
-var $myAvatarName = $('myAvatarName');
 var $map = $('map');
 var $continueButton = $('continueButton');
 var $playerAvatar = $('playerAvatar');
@@ -79,3 +64,7 @@ let $diceList = $('c-diceList');
 var myDiscardList = [];
 var myHandList = [];
 var myDeckList = getFromLS('deck') || [];
+
+// Map
+var LEVEL_STAGE_NUMBER = 12;
+var stageList = [];

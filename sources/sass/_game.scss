@@ -11,9 +11,10 @@
 body {
   background: $background-color;
   box-sizing: border-box;
+  text-align: center;
 }
 
-.avatarList {
+#avatarChoiceList {
   display: flex;
   justify-content: center;
 
@@ -32,42 +33,4 @@ body {
   canvas {
     width: 100%;
   }
-}
-
-#mapWrapper {
-  position: relative;
-  height: 2080px;
-  width: 900px;
-  margin: 0 auto;
-
-  p {
-    position: absolute;
-    padding: 5px;
-    font-size: 20px;
-    transition: 1s ease;
-    border-radius: 50%;
-    &:last-child {
-      font-size: 60px;
-    }
-    &[data-level="0"] {
-      cursor: pointer;
-      animation: 2s ease infinite a;
-    }
-    &.-a {
-      border: 2px solid $color-black;
-    }
-  }
-}
-
-@keyframes a {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(2);
-  }
-}
-
-#screen-map {
-  background: #0bb;
 }
