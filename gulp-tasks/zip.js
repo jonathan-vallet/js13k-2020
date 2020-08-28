@@ -74,7 +74,7 @@ module.exports = function() {
         }
 
         return task.pipe(zip(zipConfig.filename))
-            .pipe(advzip())
+            .pipe(advzip({optimizationLevel: 4}))
             .pipe(gulp.dest(zipConfig.destination))
             .pipe(checkFileSize({
                 fileSizeLimit: 16384
