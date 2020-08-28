@@ -40,6 +40,7 @@ module.exports = function() {
         'c-dice': 'd',
         '-odd-roll': 'or',
         '-rarity': 'r',
+        '-played': 'p',
         // Screens
         'screen-class-choice': 'scc',
         'screen-game': 'sg',
@@ -77,7 +78,7 @@ module.exports = function() {
             .pipe(advzip({optimizationLevel: 4}))
             .pipe(gulp.dest(zipConfig.destination))
             .pipe(checkFileSize({
-                fileSizeLimit: 16384
+                fileSizeLimit: 1024 * 13 * 2
             }));
     });
 };

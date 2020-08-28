@@ -51,6 +51,8 @@ var $avatarChoiceList = $('avatarChoiceList');
 var $myAvatar = $('myAvatar');
 var $map = $('map');
 var $continueButton = $('continueButton');
+// TODO: comme pour les life bar, faire 1 par joueur
+// TODO: pour le HTML, peut-être dupliquer tout ce qui est data-player=1 en 2 au chargement du jeu?
 var $playerAvatar = $('playerAvatar');
 var $opponentAvatar = $('opponentAvatar');
 var $myDeck = $('myDeck');
@@ -68,3 +70,17 @@ var myDeckList = getFromLS('deck') || [];
 // Map
 var LEVEL_STAGE_NUMBER = 12;
 var stageList = [];
+
+// 0: player, 1: opponent
+var playerList = [
+    {
+        id: 1,
+        m: 100, // max life points
+        l: 0, // currentlifepoints
+    },
+    {
+        id: 2,
+        m: 15, // max life points
+        l: 0, // currentlifepoints
+    }
+];

@@ -15,22 +15,7 @@ function bindEvents() {
     // Sets screen changes for some buttons
     document.body.onclick = (e) => {
         if(e.target.classList.contains('js-screen-link')) {
-            document.querySelector('.l-screen.-active').classList.remove('-active');
-            let screen = e.target.getAttribute('data-screen');
-            $(screen).classList.add('-active');
-            if(screen == 'screen-map') {
-                setTimeout(() => {
-                    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-                }, 500)
-            }
-            if(screen == 'screen-game') {
-                e.target.classList.add('-a');
-                startFight();
-            }
-            if(screen == 'screen-class-choice') {
-                setMyAvatar('w', 'w');
-                createDeck();
-            }
+            showScreen(e.target.getAttribute('data-screen'));
         }
     }
 
@@ -38,31 +23,68 @@ function bindEvents() {
     $endTurnButton.onclick = () => { endTurn() };
 }
 
-var opponentClass;
+function showScreen(screen) {
+    document.querySelector('.l-screen.-active').classList.remove('-active');
+    $(screen).classList.add('-active');
+    if(screen == 'screen-map') {
+        setTimeout(() => {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }, 500)
+    }
+    if(screen == 'screen-game') {
+        startFight();
+    }
+    if(screen == 'screen-class-choice') {
+        setMyAvatar('w', 'w');
+        createDeck();
+    }
+    if(screen == 'screen-reward') {
+        generateRewards();
+    }
+}
+
 var currentTurn = 0;
+var currentStage = 0;
 function startFight() {
     generateOpponent();
+    // TODO: update to max only at first figt
+    updateLifePoints(playerList[0], playerList[0].m);
     // TODO: déterminer le type (élite, mob...)
-    initLifeBar();
     shuffleDeck();
     displayDeck();
     startNextTurn();
     showPlayerAvatar();
-    showOpponentAvatar();
+}
+
+function endFight() {
+    ++currentStage;
+    if(playerList[0].l <= 0) {
+        console.log('you lose');
+    } else {
+        showScreen('screen-reward');
+    }
+}
+
+function generateRewards() {
+    console.log('nexx step: add a card to deck');
 }
 
 function generateOpponent() {
-    var keys = Object.keys(BASE_CLASS_LIST);
-    opponentClass = keys[getRandomNumber(0, keys.length - 1)] + keys[getRandomNumber(0, keys.length - 1)];
+    var classIdList = Object.keys(BASE_CLASS_LIST);
+    // Generates a random class for opponent;
+    playerList[1].c = classIdList[getRandomNumber(0, classIdList.length - 1)] + classIdList[getRandomNumber(0, classIdList.length - 1)];
+    // Draws opponent avatar
+    $opponentAvatar.firstChild && $opponentAvatar.firstChild.remove();
+    $opponentAvatar.append(createAvatar(playerList[1].c[0], playerList[1].c[1]));
+    // Sets opponent life points from stage and monster type (monster, elite, boss)
+    playerList[1].m = 20;
+    updateLifePoints(playerList[1], playerList[1].m);
 }
 
 function showPlayerAvatar() {
     let avatarCode = getFromLS('avatar');
+    $playerAvatar.firstChild && $playerAvatar.firstChild.remove();
     $playerAvatar.append(createAvatar(avatarCode[0], avatarCode[1]));
-}
-
-function showOpponentAvatar() {
-    $opponentAvatar.append(createAvatar(opponentClass[0], opponentClass[1]));
 }
 
 function startNextTurn() {
@@ -135,10 +157,10 @@ function drawCard(cardId) {
         var diceId = event.dataTransfer.getData("text/plain");
         let $dice = $(diceId);
         let diceValue = $dice.dataset.roll;
-        
-        if(!event.target.classList.contains('c-card__dice')) {
+        console.log('drop', diceValue);
+        if(!$cardDiceTarget.classList.contains('c-card__dice')) {
             // TODO: if multiple dices, get the first not empty
-            $cardDiceTarget.querySelector('.c-card__dice');
+            $cardDiceTarget = $cardDiceTarget.closest('.c-card').querySelector('.c-card__dice');
         }
         if(isDicePlayable($card.dataset.hand, $cardDiceTarget.dataset.dice, diceValue)) {
             $dice.classList.add('-disabled');

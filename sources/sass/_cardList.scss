@@ -32,7 +32,7 @@
     display: flex;
     justify-content: center;
     position: absolute;
-    bottom: 200px;
+    top: calc(50% - #{$card-height / 2});
     left: calc(50% - #{($card-width * 5 + 10px * 4) / 2});
     width: $card-width * 5 + 10px * 4;
     height: $card-height;

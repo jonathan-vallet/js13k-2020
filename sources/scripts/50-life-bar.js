@@ -1,32 +1,27 @@
-var maxLifePoints = 100;
-var currentLifePoints = 0;
-function initLifeBar() {
-    updateLifePoints(1, maxLifePoints);
-    updateLifePoints(2, maxLifePoints);
-}
-
 // negative value: damages, positive: heal
-function updateLifePoints(playerId, value) {
-    let newLifePoints = Math.max(0, Math.min(100, currentLifePoints + value));
-    if(newLifePoints <= 0) {
-        console.log('you lose!');
-    }
-    showImpact(newLifePoints, currentLifePoints, playerId);
-    currentLifePoints = newLifePoints;
-    [...$$$(`#lifeBar-${playerId} p`)].forEach($lifeBar => {
-        $lifeBar.style.width = `${~~(currentLifePoints / maxLifePoints * 100)}%`;
+function updateLifePoints(player, value) {
+    console.log(player, value);
+    let newLifePoints = Math.max(0, Math.min(100, player.l + value));
+    showImpact(newLifePoints, player);
+    player.l = newLifePoints;
+    $$(`.c-life[data-p="${player.id}"] b`).innerText = `${player.l}/${player.m}`;
+    [...$$$(`.c-life[data-p="${player.id}"] p`)].forEach($lifeBar => {
+        $lifeBar.style.width = `${~~(player.l / player.m * 100)}%`;
     });
+    if(newLifePoints <= 0) {
+        endFight();
+    }
 }
 
-function showImpact(newLifePoints, currentLifePoints, playerId) {
+function showImpact(newLifePoints, player) {
     let impactList = [];
-    for(var index = 0; index < ~~(1 + Math.abs(newLifePoints - currentLifePoints) / 10); ++index) {
+    for(var index = 0; index < ~~(1 + Math.abs(newLifePoints - player.l) / 10); ++index) {
         var impact = createElement('p');
-        impact.innerText = newLifePoints > currentLifePoints ? '➕' : '💢';
+        impact.innerText = newLifePoints > player.l ? '➕' : '💢';
         impact.style.top = `${getRandomNumber(20, 150)}px`;
         impact.style.left = `${getRandomNumber(20, 150)}px`;
         // TODO: factoriser player/opponent pour les cibler avec moins de code
-        playerId === 1 ? $playerAvatar.append(impact) : $opponentAvatar.append(impact);
+        player.id === 1 ? $playerAvatar.append(impact) : $opponentAvatar.append(impact);
         impact.offsetWidth;
         impact.classList.add('-loaded');
         impactList.push(impact);

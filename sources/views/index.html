@@ -26,16 +26,25 @@
     </div>
   </div>
   <div class="l-screen" id="screen-game">
-    <div class="c-lifeBar__wrapper">
-      <div class="c-lifeBar" id="lifeBar-1"><p></p><p></p><p></p></div>
-      <div class="c-lifeBar" id="lifeBar-2"><p></p><p></p><p></p></div>
-    </div>
+      <div class="c-life" data-p="1">
+        <div class="c-life__bar"><p></p><p></p><p></p></div>
+        <b>100/100</b>
+      </div>
+      <div class="c-life" data-p="2">
+        <div class="c-life__bar"><p></p><p></p><p></p></div>
+        <b>100/100</b>
+      </div>
     <div id="myHand"></div>
     <div id="myDeck"></div>
     <div id="playerAvatar"></div>
     <div id="opponentAvatar"></div>
     <div id="c-diceList"></div>
     <button type="button" id="endTurnButton">End turn</button>
+  </div>
+  <div class="l-screen" id="screen-reward">
+    <p class="a-title">Choose a card</p>
+    <div id="rewardCardList" class="c-cardList"></div>
+    <button class="js-screen-link" data-screen="screen-map">Skip</button>
   </div>
   <script src="scripts/game.js" inline></script>
 </body>

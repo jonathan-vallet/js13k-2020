@@ -1,0 +1,44 @@
+.c-life {
+    position: absolute;
+
+    &[data-p="1"] {
+        bottom: 190px;
+        left: 220px;
+    }
+    &[data-p="2"] {
+        top: 120px;
+        right: 220px;
+        .c-life__bar {
+            transform: scaleX(-1);
+        }
+    }
+    
+    p {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        background: #44c;
+        transition: width 0.5s ease;
+    }
+
+    :nth-child(2) {
+        background: #c44;
+        transition-duration: 0.3s;
+        transition-delay: 1.3s;
+    }
+    :nth-child(3) {
+        background: #4c4;
+        transition-duration: 1s;
+        transition-delay: 0.5s;
+    }
+}
+
+.c-life__bar {
+    position: relative;
+    width: 400px;
+    height: 40px;
+    background: $color-grey;
+    border: 1px solid $color-black;
+}

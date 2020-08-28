@@ -1,18 +1,5 @@
 $dice-height: 50px;
 
-#c-diceList {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin: 50px;
-    perspective: 600px;
-
-    .c-dice {
-        margin: 0 50px;
-    }
-}
-
 .c-dice {
     display: grid;
     grid-template-columns: 1fr;
@@ -22,6 +9,7 @@ $dice-height: 50px;
     list-style-type: none;
     transform-style: preserve-3d;
     transition: transform 1.5s ease-out;
+    margin: 0 20px;
 
     &.-odd-roll {
         transition: transform 1.25s ease-out;
