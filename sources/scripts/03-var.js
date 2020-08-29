@@ -46,7 +46,7 @@ const STAGE_TYPE_LIST = {
 
 // Elements
 var $allcardList = $('allCardList');
-var $myCardList = $('myCardList');
+var $myDeckList = $('myDeckList');
 var $avatarChoiceList = $('avatarChoiceList');
 var $myAvatar = $('myAvatar');
 var $map = $('map');
@@ -88,8 +88,10 @@ let player = new Proxy({
     id: 1,
     m: 100, // max life points
     l: 0, // currentlifepoints
+    s: '' // screen (if step is game, class selection, floor selection...)
     /*
     c: class
+    d: deck
     g: gold
     f: current floor
     t: current turn in fight

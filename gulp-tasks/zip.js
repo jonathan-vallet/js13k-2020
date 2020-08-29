@@ -13,7 +13,7 @@ module.exports = function() {
     var replaceList = {
         // Element ids
         'allCardList': 'acl',
-        'myCardList': 'mcl',
+        'myDeckList': 'mcl',
         'avatarChoiceList': 'ach',
         'myAvatar': 'ma',
         'continueButton': 'cb',

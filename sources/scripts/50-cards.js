@@ -6,6 +6,14 @@ function displayAllCards() {
     }
 }
 
+function displayMyDeck() {
+    $myDeckList.innerHTML = '';
+    for (const cardId of Object.values(player.d)) {
+        var cardElement = displayCard(cardId);
+        addHoverEffect(cardElement);
+        $myDeckList.append(cardElement);
+    }
+}
 
 function displayCard(cardId, handCardIndex = -1) {
     var card = cardList[cardId];
@@ -113,6 +121,7 @@ function getCardEffect(effectCode, diceValue) {
 function createDeck() {
     // TODO: create from selected classes
     myDeckList = ['w1', 'w1', 'w2', 'w2', 'w3', 'w4', 'w5', 'w6', 'w7', 'm2', 'mw1']; // TODO: get / save in localstorage
+    player.d = ['w1', 'w1', 'w2', 'w2', 'w3', 'w4', 'w5', 'w6', 'w7', 'm2', 'mw1'];
     setFromLS('deck', myDeckList);
 }
 

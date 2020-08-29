@@ -1,10 +1,11 @@
 .a-title {
     position: relative;
+    margin-bottom: 50px;
+    padding: 10px 60px;
     background: $title-background;
-    box-shadow: 0px 16px 0px -8px ;
+    box-shadow: 0px 16px 0px -8px;
     color: #741;
     font: bold small-caps 40px serif;
-    padding: 10px 60px;
 
     &:before,
     &:after {
