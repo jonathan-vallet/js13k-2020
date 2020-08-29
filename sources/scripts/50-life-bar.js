@@ -1,6 +1,5 @@
 // negative value: damages, positive: heal
 function updateLifePoints(player, value) {
-    console.log(player, value);
     let newLifePoints = Math.max(0, Math.min(100, player.l + value));
     showImpact(newLifePoints, player);
     player.l = newLifePoints;
@@ -8,6 +7,7 @@ function updateLifePoints(player, value) {
     [...$$$(`.c-life[data-p="${player.id}"] p`)].forEach($lifeBar => {
         $lifeBar.style.width = `${~~(player.l / player.m * 100)}%`;
     });
+    
     if(newLifePoints <= 0) {
         endFight();
     }
@@ -33,7 +33,3 @@ function showImpact(newLifePoints, player) {
         }
     }, 500);
 }
-
-// setInterval(() => {
-//     updateLifePoints(getRandomNumber(1, 2), getRandomNumber(-50,50));
-// }, 2000);

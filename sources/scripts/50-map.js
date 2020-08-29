@@ -75,7 +75,7 @@ function drawMap() {
             let fontSize = y == (stageList.length - 1) ? 60 : 25;
             room.x = xPosition;
             room.y = yPosition;
-            $mapWrapper.insertAdjacentHTML('beforeend', `<p style="left:${xPosition - fontSize}px;top:${yPosition - fontSize}px" data-level="${y}" class="js-screen-link" data-screen="screen-game">${STAGE_TYPE_LIST[room.e]}</p>`);
+            $mapWrapper.insertAdjacentHTML('beforeend', `<p style="left:${xPosition - fontSize}px;top:${yPosition - fontSize}px" data-floor="${y}" data-x="${x}" class="js-screen-link" data-screen="screen-game">${STAGE_TYPE_LIST[room.e]}</p>`);
             if(x === 0) {
                 firstLineCoordinateList.push({x: xPosition, y: yPosition});
             }

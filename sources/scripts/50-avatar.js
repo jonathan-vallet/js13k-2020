@@ -20,9 +20,10 @@ function setMyAvatar(type1, type2) {
     let canvas = createAvatar(type1, type2);
     $myAvatar.innerHTML = '';
     $myAvatar.append(canvas);
+    player.c = type1 + type2;
 
     // TODO: do this when saving
-    setFromLS('avatar', type1 + type2);
+    //TODO: set player in LS in generic methodsetFromLS('avatar', type1 + type2);
 }
 
 function createAvatar(type1, type2) {
@@ -39,8 +40,12 @@ function createAvatar(type1, type2) {
     addHoverEffect(canvasWrapper);
 
     canvasWrapper.append(canvas);
-    canvasWrapper.insertAdjacentHTML('beforeend', `<p>${CLASS_NAME_LIST[getCardTypes(type1 + type2)]}</p>`);
+    canvasWrapper.insertAdjacentHTML('beforeend', `<p>${getClassName(type1 + type2)}</p>`);
     return canvasWrapper;
+}
+
+function getClassName(classCode) {
+    return CLASS_NAME_LIST[getCardTypes(classCode)];
 }
 
 function drawBaseAvatar(canvas, ctx, backgroundColor1, backgroundColor2) {

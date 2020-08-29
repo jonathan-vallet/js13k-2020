@@ -6,6 +6,7 @@ function startGame() {
     bindEvents();
 
     // Check continue game
+    // TODO: Vérifier l'objet player (et redirgier vers la bonne étape en cours, stockée dans le LS aussi, ou suivant la valeur de certains champs?)
     if(!getFromLS('avatar')) {
         $continueButton.setAttribute('disabled', 'disabled');
     }
@@ -15,6 +16,16 @@ function bindEvents() {
     // Sets screen changes for some buttons
     document.body.onclick = (e) => {
         if(e.target.classList.contains('js-screen-link')) {
+            if(e.target.hasAttribute('data-floor')) {
+                let floor = e.target.getAttribute('data-floor');
+                if(floor != player.f) {
+                    return;
+                }
+                [...$$$(`[data-floor="${floor}"]`)].forEach($floor => {
+                    $floor.classList.remove('-active');
+                });
+                e.target.classList.add('-selected');
+            }
             showScreen(e.target.getAttribute('data-screen'));
         }
     }
@@ -26,16 +37,33 @@ function bindEvents() {
 function showScreen(screen) {
     document.querySelector('.l-screen.-active').classList.remove('-active');
     $(screen).classList.add('-active');
+
     if(screen == 'screen-map') {
+        if(player.f == 0) {
+            [...$$$(`[data-floor="${player.f}"]`)].forEach($floor => {
+                    $floor.classList.add('-active');
+            });
+        } else {
+            $lastFloor = $$(`[data-floor="${player.f - 1}"].-selected`);
+            console.log(stageList, player.f - 1, stageList[player.f - 1], $lastFloor.getAttribute('data-x'), stageList[player.f - 1][$lastFloor.getAttribute('data-x')])
+            for(let stageX of stageList[player.f - 1][$lastFloor.getAttribute('data-x')].l) {
+                console.log(stageX);
+                $$(`[data-floor="${player.f}"][data-x="${stageX}"]`).classList.add('-active');
+            }
+        }
         setTimeout(() => {
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         }, 500)
     }
     if(screen == 'screen-game') {
+        // TODO: une variable pour savoir si on est en combat ou l'étape actuelle, pour ne pas redémarrer un combat si on affiche la map pendnat le combat
         startFight();
     }
     if(screen == 'screen-class-choice') {
+        // new game, inits player data
         setMyAvatar('w', 'w');
+        player.g = 100;
+        player.f = 0;
         createDeck();
     }
     if(screen == 'screen-reward') {
@@ -43,13 +71,12 @@ function showScreen(screen) {
     }
 }
 
-var currentTurn = 0;
-var currentStage = 0;
 function startFight() {
-    generateOpponent();
+    ++player.f;
+    player.t = 0;
     // TODO: update to max only at first figt
-    updateLifePoints(playerList[0], playerList[0].m);
-    // TODO: déterminer le type (élite, mob...)
+    updateLifePoints(player, player.m);
+    generateOpponent();
     shuffleDeck();
     displayDeck();
     startNextTurn();
@@ -57,8 +84,7 @@ function startFight() {
 }
 
 function endFight() {
-    ++currentStage;
-    if(playerList[0].l <= 0) {
+    if(player.l <= 0) {
         console.log('you lose');
     } else {
         showScreen('screen-reward');
@@ -70,29 +96,32 @@ function generateRewards() {
 }
 
 function generateOpponent() {
+    // TODO: déterminer le type (élite, mob...)
     var classIdList = Object.keys(BASE_CLASS_LIST);
     // Generates a random class for opponent;
-    playerList[1].c = classIdList[getRandomNumber(0, classIdList.length - 1)] + classIdList[getRandomNumber(0, classIdList.length - 1)];
+    opponent.c = classIdList[getRandomNumber(0, classIdList.length - 1)] + classIdList[getRandomNumber(0, classIdList.length - 1)];
     // Draws opponent avatar
     $opponentAvatar.firstChild && $opponentAvatar.firstChild.remove();
-    $opponentAvatar.append(createAvatar(playerList[1].c[0], playerList[1].c[1]));
+    $opponentAvatar.append(createAvatar(opponent.c[0], opponent.c[1]));
     // Sets opponent life points from stage and monster type (monster, elite, boss)
-    playerList[1].m = 20;
-    updateLifePoints(playerList[1], playerList[1].m);
+    opponent.m = 20;
+    updateLifePoints(opponent, opponent.m);
 }
 
 function showPlayerAvatar() {
-    let avatarCode = getFromLS('avatar');
+    let avatarCode = player.c;
     $playerAvatar.firstChild && $playerAvatar.firstChild.remove();
     $playerAvatar.append(createAvatar(avatarCode[0], avatarCode[1]));
 }
 
 function startNextTurn() {
-    ++currentTurn;
-    // Générer un nouveau dé suivant le tour
-    if([1, 2, 3, 4, 6].includes(currentTurn)) {
+    ++player.t;
+    // Removes all dices and generate new ones
+    $diceList.innerHTML = '';
+    for(let diceNumber = 0; diceNumber < Math.min(5, player.t); ++diceNumber) {
         generateDice();
     }
+    
     document.body.offsetWidth;
     [...$diceList.querySelectorAll('.c-dice')].forEach($dice => $dice.classList.remove('-disabled'));
     rollDices();

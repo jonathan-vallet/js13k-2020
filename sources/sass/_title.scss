@@ -1,7 +1,7 @@
 .a-title {
     position: relative;
-    background: #f92;
-    box-shadow: 0px 16px 0px -8px #741;
+    background: $title-background;
+    box-shadow: 0px 16px 0px -8px ;
     color: #741;
     font: bold small-caps 40px serif;
     padding: 10px 60px;
@@ -13,8 +13,8 @@
         height: 100%;
         position: absolute;
         top: 50%;
-        background: #f92;
-        box-shadow: 0px 16px 0px -8px #741;
+        background: $title-background;
+        box-shadow: inherit;
         z-index: -1;
     }
 

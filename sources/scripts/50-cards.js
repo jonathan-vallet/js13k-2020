@@ -134,10 +134,13 @@ function resolveCardEffect($card) {
         var effectValue = getEffectValue(split[1], +diceValue);
         switch (split[0]) {
             case 'damage':
-                updateLifePoints(playerList[1], -effectValue);
+                updateLifePoints(opponent, -effectValue);
                 break;
             case 'stun':
                 break;
+            case 'heal':
+                updateLifePoints(player, effectValue);
+                
             case 'updice':
                 generateDice(effectValue);
                 break;
@@ -163,6 +166,5 @@ function getEffectValue(effectTextValue, diceValue) {
             effectValue += operator * +char;
         }
     }
-    console.log(effectValue);
     return effectValue;
 }

@@ -1,6 +1,5 @@
 function generateDice(roll) {
     let dice = createElement('ol');
-    let $diceList = $('c-diceList');
     dice.classList.add('c-dice');
     random() > 0.5 && dice.classList.add('-odd-roll');
     let facesHTML = '';
@@ -15,12 +14,12 @@ function generateDice(roll) {
     dice.ondragstart = (event) => {
         event.dataTransfer.setData("text/plain", event.target.parentNode.id);
         checkPlayableCards(event.currentTarget.getAttribute('data-roll'), ($element) => {
-            $element.style.background = 'red';
+            $element.classList.add('-active');
         });
     }
     dice.ondragend = (event) => {
         checkPlayableCards(event.currentTarget.getAttribute('data-roll'), ($element) => {
-            $element.style.background = '';
+            $element.classList.remove('-active');
         });
     }
     $diceList.append(dice);

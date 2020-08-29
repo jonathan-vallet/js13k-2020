@@ -172,5 +172,8 @@ $card-rarity-size: 14px;
     border-radius: 4px;
     margin: 0 5px;
     font-size: 14px;
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(0, 0, 0, 0.2);
+    &.-active {
+        background: rgba(0, 0, 0, 0.5);
+    }
 }

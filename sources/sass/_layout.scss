@@ -1,12 +1,19 @@
 .l-screen {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
     width: 100%;
     min-height: 100vh;
+    background: $background-color;
+    z-index: 3;
     &:not(.-active) {
         display: none;
+    }
+    &:not(.-underBar) {
+        z-index: 1;
+        padding-top: 67px;
     }
 }
 
@@ -18,10 +25,10 @@ button {
     padding: 10px 40px;
     max-width: 350px;
     min-height: $cta-height;
-    background: $color-black;
+    background: $title-background;
     border: 0;
     border-radius: 5px;
-    color: $color-white;
+    color: $title-color;
     font-size: 18px;
     cursor: pointer;
 

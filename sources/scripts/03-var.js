@@ -10,27 +10,27 @@ var BASE_CLASS_LIST = {
 
 // TODO: voir si avec les noms doubles uniquement je gagne en place
 const CLASS_NAME_LIST = {
-    'w': 'warrior',
-    'm': 'mage',
-    't': 'thief',
-    'a': 'assassin',
-    'p': 'protector',
-    'h': 'heal',
-    'mw': 'battlemage',
-    'tw': 'rogue',
-    'aw': 'slayer',
-    'pw': 'paladin',
-    'hw': 'templar',
-    'mt': 'warlock',
-    'am': 'dreamkiller',
-    'mp': 'guardian',
-    'hm': 'runemaster',
-    'at': 'ninja',
-    'pt': 'brigand',
-    'ht': 'trickster',
-    'ap': 'ranger',
-    'ah': 'avenger',
-    'hp': 'sage',
+    'w': 'Warrior',
+    'm': 'Mage',
+    't': 'Thief',
+    'a': 'Assassin',
+    'p': 'Protector',
+    'h': 'Heal',
+    'mw': 'Battlemage',
+    'tw': 'Rogue',
+    'aw': 'Slayer',
+    'pw': 'Paladin',
+    'hw': 'Templar',
+    'mt': 'Warlock',
+    'am': 'Dreamkiller',
+    'mp': 'Guardian',
+    'hm': 'Runemaster',
+    'at': 'Ninja',
+    'pt': 'Brigand',
+    'ht': 'Trickster',
+    'ap': 'Ranger',
+    'ah': 'Avenger',
+    'hp': 'Sage',
 }
 
 // TODO: si je e stock pas d'autre info, virer le "symbol"
@@ -71,16 +71,32 @@ var myDeckList = getFromLS('deck') || [];
 var LEVEL_STAGE_NUMBER = 12;
 var stageList = [];
 
-// 0: player, 1: opponent
-var playerList = [
-    {
-        id: 1,
-        m: 100, // max life points
-        l: 0, // currentlifepoints
-    },
-    {
-        id: 2,
-        m: 15, // max life points
-        l: 0, // currentlifepoints
+let playersProxy = {
+    set: function(obj, prop, newValue) {
+        obj[prop] = newValue;
+        console.log('set', obj, prop, newValue);
+        if(obj.id == 1) {
+            $('playerClass').innerText = getClassName(player.c);
+            $('playerLife').innerText = `💖 ${player.l}/${player.m}`;
+            $('playerGold').innerText = `💰 ${player.g}`;
+            $('playerFloor').innerText = `👣 ${player.f}`;
+        }
     }
-];
+};
+
+let player = new Proxy({
+    id: 1,
+    m: 100, // max life points
+    l: 0, // currentlifepoints
+    /*
+    c: class
+    g: gold
+    f: current floor
+    t: current turn in fight
+    */
+}, playersProxy);
+let opponent = new Proxy({
+    id: 2,
+    m: 15, // max life points
+    l: 0, // currentlifepoints
+}, playersProxy);

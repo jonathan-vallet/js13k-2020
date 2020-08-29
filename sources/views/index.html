@@ -5,7 +5,7 @@
   <link type="text/css" rel="stylesheet" href="css/style.css" inline />
 </head>
 <body>
-  <div class="l-screen -active" id="screen-menu">
+  <div class="l-screen -underBar -active" id="screen-menu">
     <p class="a-title">Cardice</p>
     <button class="js-screen-link" data-screen="screen-game" id="continueButton">Continue game</button>
     <button class="js-screen-link" data-screen="screen-class-choice">New game</button>
@@ -13,7 +13,7 @@
     <div id="allCardList" class="c-cardList" style="display: none"></div>
     <div id="myCardList" class="c-cardList" style="display: none"></div>
   </div>
-  <div class="l-screen" id="screen-class-choice">
+  <div class="l-screen -underBar" id="screen-class-choice">
     <p>Create you hero: pick up 2 classes</p>
     <div id="avatarChoiceList" data-t0="w" data-t1="w"></div>
     <p>You are:</p>
@@ -24,6 +24,18 @@
     <div id="mapWrapper">
       <canvas id="map"></canvas>
     </div>
+  </div>
+  <div id="c-userBar">
+    <ul>
+      <li id="playerClass"></li>
+      <li id="playerLife"></li>
+      <li id="playerGold"></li>
+      <li id="playerFloor"></li>
+    </ul>
+    <p>
+      <button class="js-screen-link" data-screen="screen-my-deck">My deck</button>
+      <button class="js-screen-link" data-screen="screen-settings">Settings</button>
+    </p>
   </div>
   <div class="l-screen" id="screen-game">
       <div class="c-life" data-p="1">
