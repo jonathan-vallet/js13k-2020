@@ -2,8 +2,10 @@ function generateMap() {
     stageList.push([{ e: 'm' }, { e: 'm' }, { e: 'm' }]); // First stage encounter is a choice of 3 monsters
     let index = 0;
     while(++index < LEVEL_STAGE_NUMBER) {
+        // TODO: improve stage repartitions. add a treasure in middle of the way?
         stageList.push(generateStage());
     }
+    stageList.push([{ e: 'h' }, { e: 'h' }, { e: 'h' }]); // Adds a heal room before boss
     stageList.push([{ e: 'b' }]); // Last stage is a boss
     linkStages();
     drawMap();
@@ -59,7 +61,7 @@ function drawMap() {
     let firstLineCoordinateList = [];
     let lastLineCoordinateList = [];
     $map.width = xSpace * 6; // 4 room + 1 space each side
-    $map.height = ySpace * (LEVEL_STAGE_NUMBER + 1);
+    $map.height = ySpace * (LEVEL_STAGE_NUMBER + 3);
 
     // Fill grass background
     ctx.fillStyle = '#7e7';
@@ -71,11 +73,20 @@ function drawMap() {
         for (let [x, room] of Object.entries(stage)) {
             x = +x;
             let xPosition = ~~(xSpace * (x + 3.2 + random() * 0.6 - stage.length / 2));
-            let yPosition = ~~($map.height - (ySpace * (y + 0.6 - random() * 0.4)));
+            // Adds space for smaller stages to avoid big gap between level width
+            if(stage.length == 3) {
+                if(x == 0) { xPosition -= 70; }
+                if(x == 2) { xPosition += 70; }
+            }
+            let yPosition = ~~($map.height - (ySpace * (y + 1.1 - random() * 0.4)));
             let fontSize = y == (stageList.length - 1) ? 60 : 25;
             room.x = xPosition;
             room.y = yPosition;
-            $mapWrapper.insertAdjacentHTML('beforeend', `<p style="left:${xPosition - fontSize}px;top:${yPosition - fontSize}px" data-floor="${y}" data-x="${x}" class="js-screen-link" data-screen="screen-game">${STAGE_TYPE_LIST[room.e]}</p>`);
+            let screenLink = 'screen-game';
+            if(room.e == 'h') { // heal room
+                screenLink = 'screen-heal';
+            }
+            $mapWrapper.insertAdjacentHTML('beforeend', `<p style="left:${xPosition - fontSize}px;top:${yPosition - fontSize}px" data-floor="${y}" data-x="${x}" class="js-screen-link" data-screen="${screenLink}">${STAGE_TYPE_LIST[room.e]}</p>`);
             if(x === 0) {
                 firstLineCoordinateList.push({x: xPosition, y: yPosition});
             }

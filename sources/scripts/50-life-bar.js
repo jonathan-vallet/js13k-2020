@@ -1,6 +1,6 @@
 // negative value: damage, positive: heal
 function updateLifePoints(player, value) {
-    let newLifePoints = Math.max(0, Math.min(100, player.l + value));
+    let newLifePoints = Math.max(0, Math.min(100, player.l + ~~value));
     showImpact(newLifePoints, player);
     player.l = newLifePoints;
     $$(`.c-life[data-p="${player.id}"] b`).innerText = `${player.l}/${player.m}`;

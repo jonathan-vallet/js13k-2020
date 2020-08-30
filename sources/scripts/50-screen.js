@@ -29,6 +29,10 @@ function showScreen(screen) {
     if(screen == 'screen-my-deck') {
         displayMyDeck();
     }
+    if(screen == 'screen-heal') {
+        // Heal player of 30% of missing life
+        updateLifePoints(player, player.m * 0.3);
+    }
     if(screen == 'screen-card-add') {
         displayRewardCards();
     }
