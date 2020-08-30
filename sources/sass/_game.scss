@@ -43,7 +43,7 @@ body {
   right: 300px;
 }
 
-#c-diceList {
+#c-dieList {
   position: absolute;
   bottom: 50px;
   left: 300px;
@@ -53,4 +53,8 @@ body {
   justify-content: center;
   flex-wrap: wrap;
   perspective: 600px;
+}
+
+#rewardCardList {
+  width: 490px;
 }

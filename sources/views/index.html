@@ -1,7 +1,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Cardices</title>
+  <title>Cardice</title>
   <link type="text/css" rel="stylesheet" href="css/style.css" inline />
 </head>
 <body>
@@ -49,7 +49,7 @@
     <div id="myDeck"></div>
     <div id="playerAvatar"></div>
     <div id="opponentAvatar"></div>
-    <div id="c-diceList"></div>
+    <div id="c-dieList"></div>
     <button type="button" id="endTurnButton">End turn</button>
   </div>
   <div class="l-screen" id="screen-my-deck">
@@ -58,6 +58,11 @@
     <button class="js-screen-link" data-screen="screen-game">Back</button>
   </div>
   <div class="l-screen" id="screen-reward">
+    <p class="a-title">Some rewards!</p>
+    <p class="c-reward__gold">💰: 50</p>
+    <button class="js-screen-link" data-screen="screen-card-add">Add a card to your deck</button>
+  </div>
+  <div class="l-screen" id="screen-card-add">
     <p class="a-title">Choose a card</p>
     <div id="rewardCardList" class="c-cardList"></div>
     <button class="js-screen-link" data-screen="screen-map">Skip</button>

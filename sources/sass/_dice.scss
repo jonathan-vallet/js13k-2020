@@ -1,11 +1,11 @@
-$dice-height: 50px;
+$die-height: 50px;
 
-.c-dice {
+.c-die {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
-    width: $dice-height;
-    height: $dice-height;
+    width: $die-height;
+    height: $die-height;
     list-style-type: none;
     transform-style: preserve-3d;
     transition: transform 1.5s ease-out;
@@ -14,16 +14,9 @@ $dice-height: 50px;
     &.-odd-roll {
         transition: transform 1.25s ease-out;
     }
-
-    &.-disabled {
-        .c-dice__face {
-            background: #666;
-        }
-        pointer-events: none;
-    }
 }
 
-.c-dice__face {
+.c-die__face {
     display: grid;
     grid-column: 1;
     grid-row: 1;
@@ -34,16 +27,16 @@ $dice-height: 50px;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     height: 100%;
-    padding: $dice-height / 8;
+    padding: $die-height / 8;
     width: 100%;
     background: #ccc;
     border: 1px solid #000;
 }
 
-.c-dice__dot {
+.c-die__dot {
     display: block;
-    width: $dice-height / 5;
-    height: $dice-height / 5;
+    width: $die-height / 5;
+    height: $die-height / 5;
     align-self: center;
     justify-self: center;
     background-color: #000;
@@ -91,46 +84,46 @@ $dice-height: 50px;
 }
 
 [data-side="1"] {
-    transform: rotate3d(0, 0, 0, 90deg) translateZ($dice-height / 2);
+    transform: rotate3d(0, 0, 0, 90deg) translateZ($die-height / 2);
 }
 [data-side="2"] {
-    transform: rotate3d(-1, 0, 0, 90deg) translateZ($dice-height / 2);
+    transform: rotate3d(-1, 0, 0, 90deg) translateZ($die-height / 2);
 }
 [data-side="3"] {
-    transform: rotate3d(0, 1, 0, 90deg) translateZ($dice-height / 2);
+    transform: rotate3d(0, 1, 0, 90deg) translateZ($die-height / 2);
 }
 [data-side="4"] {
-    transform: rotate3d(0, -1, 0, 90deg) translateZ($dice-height / 2);
+    transform: rotate3d(0, -1, 0, 90deg) translateZ($die-height / 2);
 }
 [data-side="5"] {
-    transform: rotate3d(1, 0, 0, 90deg) translateZ($dice-height / 2);
+    transform: rotate3d(1, 0, 0, 90deg) translateZ($die-height / 2);
 }
 [data-side="6"] {
-    transform: rotate3d(1, 0, 0, 180deg) translateZ($dice-height / 2);
+    transform: rotate3d(1, 0, 0, 180deg) translateZ($die-height / 2);
 }
 
-.c-dice__dot:last-child {
+.c-die__dot:last-child {
     grid-area: i;
 }
 
-[data-side="4"] .c-dice__dot:nth-child(2),
-[data-side="5"] .c-dice__dot:nth-child(2),
-[data-side="6"] .c-dice__dot:nth-child(2) {
+[data-side="4"] .c-die__dot:nth-child(2),
+[data-side="5"] .c-die__dot:nth-child(2),
+[data-side="6"] .c-die__dot:nth-child(2) {
     grid-area: c;
 }
-[data-side="6"] .c-dice__dot:nth-child(3) {
+[data-side="6"] .c-die__dot:nth-child(3) {
     grid-area: d;
 }
-[data-side="1"] .c-dice__dot,
-[data-side="3"] .c-dice__dot:nth-child(2),
-[data-side="5"] .c-dice__dot:nth-child(3) {
+[data-side="1"] .c-die__dot,
+[data-side="3"] .c-die__dot:nth-child(2),
+[data-side="5"] .c-die__dot:nth-child(3) {
     grid-area: e;
 }
-[data-side="6"] .c-dice__dot:nth-child(4) {
+[data-side="6"] .c-die__dot:nth-child(4) {
     grid-area: f;
 }
-[data-side="4"] .c-dice__dot:nth-child(3),
-[data-side="5"] .c-dice__dot:nth-child(4),
-[data-side="6"] .c-dice__dot:nth-child(5) {
+[data-side="4"] .c-die__dot:nth-child(3),
+[data-side="5"] .c-die__dot:nth-child(4),
+[data-side="6"] .c-die__dot:nth-child(5) {
     grid-area: g;
 }

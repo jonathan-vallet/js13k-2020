@@ -1,6 +1,6 @@
 var cardList = {};
 /*
-d: dice
+d: die
 e: effect
 r: rarity
 */
@@ -26,7 +26,7 @@ cardList[`w4`] = {
 };
 cardList[`w5`] = {
     d: '-4',
-    e: 'updice|X+2',
+    e: 'updie|X+2',
     r: 2
 };
 cardList[`w6`] = {

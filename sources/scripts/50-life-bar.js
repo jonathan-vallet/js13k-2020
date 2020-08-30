@@ -1,4 +1,4 @@
-// negative value: damages, positive: heal
+// negative value: damage, positive: heal
 function updateLifePoints(player, value) {
     let newLifePoints = Math.max(0, Math.min(100, player.l + value));
     showImpact(newLifePoints, player);

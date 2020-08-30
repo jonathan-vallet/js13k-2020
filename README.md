@@ -28,7 +28,7 @@ Create a game mixing "Slay the Spire" and "Dicey dungeons".
 A desktop PVE version (and monetization perhaps) to build a deck and choosing a path like Slay the spire
 A PVP version to build a deck and fight other players
 
-Same system than Slay the spire, except that we have dices, and cards drawn are played using dices depending of several conditions like in Dicey Dungeon.
+Same system than Slay the spire, except that we have dice, and cards drawn are played using dice depending of several conditions like in Dicey Dungeon.
 
 ## TODO list
 

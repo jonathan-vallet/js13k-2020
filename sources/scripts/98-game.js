@@ -18,7 +18,7 @@ function bindEvents() {
         if(e.target.classList.contains('js-screen-link')) {
             if(e.target.hasAttribute('data-floor')) {
                 let floor = e.target.getAttribute('data-floor');
-                if(floor != player.f) {
+                if(!e.target.classList.contains('-active')) {
                     return;
                 }
                 [...$$$(`[data-floor="${floor}"]`)].forEach($floor => {
@@ -34,55 +34,15 @@ function bindEvents() {
     $endTurnButton.onclick = () => { endTurn() };
 }
 
-function showScreen(screen) {
-    document.querySelector('.l-screen.-active').classList.remove('-active');
-    $(screen).classList.add('-active');
-
-    if(screen == 'screen-map') {
-        if(player.f != 'map') {
-            player.s = 'map';
-            if(player.f == 0) {
-                [...$$$(`[data-floor="${player.f}"]`)].forEach($floor => {
-                        $floor.classList.add('-active');
-                });
-            } else {
-                $lastFloor = $$(`[data-floor="${player.f - 1}"].-selected`);
-                console.log(stageList, player.f - 1, stageList[player.f - 1], $lastFloor.getAttribute('data-x'), stageList[player.f - 1][$lastFloor.getAttribute('data-x')])
-                for(let stageX of stageList[player.f - 1][$lastFloor.getAttribute('data-x')].l) {
-                    console.log(stageX);
-                    $$(`[data-floor="${player.f}"][data-x="${stageX}"]`).classList.add('-active');
-                }
-            }
-        }
-        setTimeout(() => {
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        }, 500);
-    }
-    if(screen == 'screen-game') {
-        if(player.s != 'game') {
-            player.s = 'game';
-            startFight();
-        }
-    }
-    if(screen == 'screen-my-deck') {
-        displayMyDeck();
-    }
-    if(screen == 'screen-class-choice') {
-        // new game, inits player data
-        setMyAvatar('w', 'w');
-        player.g = 100;
-        player.f = 0;
-        createDeck();
-    }
-    if(screen == 'screen-reward') {
-        generateRewards();
-    }
-}
-
 function startFight() {
     ++player.f;
     player.t = 0;
-    // TODO: update to max only at first figt
+    // Sets life to max at first floor only
+    player.f == 0 && updateLifePoints(player, player.m);
+    myDeckList = [...player.d];
+    myHandList = [];
+    myDiscardList = [];
+    $myHand.innerHTML = '';
     updateLifePoints(player, player.m);
     generateOpponent();
     shuffleDeck();
@@ -99,12 +59,8 @@ function endFight() {
     }
 }
 
-function generateRewards() {
-    console.log('nexx step: add a card to deck');
-}
-
 function generateOpponent() {
-    // TODO: déterminer le type (élite, mob...)
+    // TODO: déterminer le type (élite, mob...) depuis stageList
     var classIdList = Object.keys(BASE_CLASS_LIST);
     // Generates a random class for opponent;
     opponent.c = classIdList[getRandomNumber(0, classIdList.length - 1)] + classIdList[getRandomNumber(0, classIdList.length - 1)];
@@ -112,7 +68,7 @@ function generateOpponent() {
     $opponentAvatar.firstChild && $opponentAvatar.firstChild.remove();
     $opponentAvatar.append(createAvatar(opponent.c[0], opponent.c[1]));
     // Sets opponent life points from stage and monster type (monster, elite, boss)
-    opponent.m = 20;
+    opponent.m = 2;
     updateLifePoints(opponent, opponent.m);
 }
 
@@ -123,16 +79,15 @@ function showPlayerAvatar() {
 }
 
 function startNextTurn() {
-    ++player.t;
-    // Removes all dices and generate new ones
-    $diceList.innerHTML = '';
-    for(let diceNumber = 0; diceNumber < Math.min(5, player.t); ++diceNumber) {
-        generateDice();
+    ++player.t; // Increase turn number
+    // Removes all die and generate new ones during 5 firstturns
+    $dieList.innerHTML = '';
+    for(let dieNumber = 0; dieNumber < Math.min(5, player.t); ++dieNumber) {
+        generateDie();
     }
     
     document.body.offsetWidth;
-    [...$diceList.querySelectorAll('.c-dice')].forEach($dice => $dice.classList.remove('-disabled'));
-    rollDices();
+    rollDice();
     setTimeout(() => {
         drawCards();
     }, 800);
@@ -179,7 +134,8 @@ function timeoutCardDraw(cardNumber) {
             shuffleDeck();
             displayDeck();
         }
-        if(myDeckList.length) { // All deck cards are already in hand
+        if(myDeckList.length) { // Checks if cards are not already in hand
+            // TODO: retirer l'argument, on pioche toujours la carte du dessus du deck
             drawCard(myDeckList[0]);
         }
     }, cardNumber * 100);
@@ -190,19 +146,18 @@ function drawCard(cardId) {
     myDeckList.shift();
     let $card = displayCard(cardId, $myHand.childElementCount);
     $card.ondrop = event => {
-        var $cardDiceTarget = event.target;
-        var diceId = event.dataTransfer.getData("text/plain");
-        let $dice = $(diceId);
-        let diceValue = $dice.dataset.roll;
-        console.log('drop', diceValue);
-        if(!$cardDiceTarget.classList.contains('c-card__dice')) {
-            // TODO: if multiple dices, get the first not empty
-            $cardDiceTarget = $cardDiceTarget.closest('.c-card').querySelector('.c-card__dice');
+        var $cardDieTarget = event.target;
+        var dieId = event.dataTransfer.getData("text/plain");
+        let $die = $(dieId);
+        let dieValue = $die.dataset.roll;
+        if(!$cardDieTarget.classList.contains('c-card__die')) {
+            // TODO: if multiple die, get the first not empty
+            $cardDieTarget = $cardDieTarget.closest('.c-card').querySelector('.c-card__die');
         }
-        if(isDicePlayable($card.dataset.hand, $cardDiceTarget.dataset.dice, diceValue)) {
-            $dice.classList.add('-disabled');
-            $cardDiceTarget.dataset.value = diceValue;
-            // TODO: play dice only if card has 2 dices
+        if(isDiePlayable($card.dataset.hand, $cardDieTarget.dataset.dice, dieValue)) {
+            $die.remove();
+            $cardDieTarget.dataset.value = dieValue;
+            // TODO: play die only if card has 2 die
             playCard($card);
             // resolveCardEffect();
         }
@@ -217,6 +172,7 @@ function drawCard(cardId) {
 }
 
 function displayDeck() {
+    $myDeck.innerHTML = '';
     myDeckList.forEach((cardId, index) => {
         let $card = createElement('div');
         $card.classList.add('c-card')

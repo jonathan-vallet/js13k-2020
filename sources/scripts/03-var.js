@@ -59,13 +59,14 @@ var $myDeck = $('myDeck');
 var $myHand = $('myHand');
 var $endTurnButton = $('endTurnButton');
 var $mapWrapper = $('mapWrapper');
+var $rewardCardList = $('rewardCardList');
 // Links
-let $diceList = $('c-diceList');
+let $dieList = $('c-dieList');
 
 // Game var. Cards are in deck by default. You draw them in your hand, and discard when played. When deck is empty, shuffle discard to create a new deck list
 var myDiscardList = [];
 var myHandList = [];
-var myDeckList = getFromLS('deck') || [];
+var myDeckList = [];
 
 // Map
 var LEVEL_STAGE_NUMBER = 12;
@@ -74,7 +75,6 @@ var stageList = [];
 let playersProxy = {
     set: function(obj, prop, newValue) {
         obj[prop] = newValue;
-        console.log('set', obj, prop, newValue);
         if(obj.id == 1) {
             $('playerClass').innerText = getClassName(player.c);
             $('playerLife').innerText = `💖 ${player.l}/${player.m}`;
