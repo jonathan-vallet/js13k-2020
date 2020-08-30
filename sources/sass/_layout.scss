@@ -37,3 +37,7 @@ button {
         background: $color-grey;
     }
 }
+
+[draggable="true"] {
+    cursor: grab;
+}
