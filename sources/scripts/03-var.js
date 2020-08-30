@@ -103,3 +103,5 @@ let opponent = new Proxy({
     m: 15, // max life points
     l: 0, // currentlifepoints
 }, playersProxy);
+
+let draggedDieId = null; //Save die id when dragged instead of dataTransfer, to be able to check on dragenter

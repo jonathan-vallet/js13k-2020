@@ -41,7 +41,7 @@ cardList[`w7`] = {
 };
 cardList[`m1`] = {
     d: '5',
-    e: 'damage|5,fire',
+    e: 'damage|5,fire|1',
     r: 2
 };
 cardList[`m2`] = {

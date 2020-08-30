@@ -145,10 +145,31 @@ function drawCard(cardId) {
     myHandList.push(myDeckList[0]);
     myDeckList.shift();
     let $card = displayCard(cardId, $myHand.childElementCount);
+    $card.ondragenter = event => {
+        var $cardDieTarget = event.target;
+        let $die = $(draggedDieId);
+        let dieValue = $die.dataset.roll;
+        let $card = $cardDieTarget.closest('.c-card');
+        let dragoverCounter = $card.dataset.dragCounter || 0;
+        $card.dataset.dragCounter = ++dragoverCounter;
+        if(!$cardDieTarget.classList.contains('c-card__die')) {
+            // TODO: if multiple die, get the first not empty
+            $cardDieTarget = $card.querySelector('.c-card__die');
+        }
+        if(isDiePlayable($card.dataset.hand, $cardDieTarget.dataset.dice, dieValue)) {
+            $card.classList.add('-active');
+        }
+    };
+    $card.ondragleave = event => {
+        let dragoverCounter = $card.dataset.dragCounter || 0;
+        $card.dataset.dragCounter = --dragoverCounter;
+        if($card.dataset.dragCounter <= 0) {
+            $card.classList.remove('-active');
+        }
+    };
     $card.ondrop = event => {
         var $cardDieTarget = event.target;
-        var dieId = event.dataTransfer.getData("text/plain");
-        let $die = $(dieId);
+        let $die = $(draggedDieId);
         let dieValue = $die.dataset.roll;
         if(!$cardDieTarget.classList.contains('c-card__die')) {
             // TODO: if multiple die, get the first not empty

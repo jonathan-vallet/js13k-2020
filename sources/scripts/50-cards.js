@@ -124,6 +124,8 @@ function getCardEffect(effectCode, dieValue) {
         effectText += index > 0 ? `<br>` : '';
         var split = effect.split('|')
         var effectValue = split[1];
+        // TODO: retirer la condition, aucune carte n'aura pas 
+        effectValue && effectValue.replace('X', '<i></i>')
         switch (split[0]) {
             case 'damage':
                 effectText += `Inflict <b>${effectValue}</b> damage`;

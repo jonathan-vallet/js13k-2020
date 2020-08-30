@@ -12,7 +12,7 @@ function generateDie(roll) {
     die.id = `die-${$dieList.childElementCount}` ;
     die.setAttribute('data-roll', roll || getRandomNumber(1, 6));
     die.ondragstart = (event) => {
-        event.dataTransfer.setData("text/plain", event.target.parentNode.id);
+        draggedDieId = event.target.parentNode.id;
         checkPlayableCards(event.currentTarget.getAttribute('data-roll'), ($element) => {
             $element.classList.add('-active');
         });

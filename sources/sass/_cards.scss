@@ -8,6 +8,10 @@ $card-rarity-size: 14px;
         opacity: 0;
         pointer-events: none;
     }
+    &.-active {
+        transform: scale(1.2);
+        z-index: 2;
+    }
 }
 
 .c-card__content {
