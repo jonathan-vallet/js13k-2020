@@ -57,7 +57,7 @@ function linkStages() {
 function drawMap() {
     let ctx = $map.getContext('2d');
     let xSpace = 150;
-    let ySpace = 130;
+    let ySpace = MAP_Y_SPACE;
     let firstLineCoordinateList = [];
     let lastLineCoordinateList = [];
     $map.width = xSpace * 6; // 4 room + 1 space each side
@@ -108,6 +108,7 @@ function drawMap() {
                     ctx.beginPath();
                     ctx.lineWidth = 5;
                     ctx.strokeStyle = '#ffa';
+                    ctx.setLineDash([10, 5]);
                     ctx.moveTo(room.x + linkIndex * 10 - 10, room.y - 25);
                     ctx.lineTo(targetRoom.x - 12, targetRoom.y + 10);
                     ctx.stroke();

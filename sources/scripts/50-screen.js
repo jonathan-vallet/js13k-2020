@@ -17,7 +17,7 @@ function showScreen(screen) {
             }
         }
         setTimeout(() => {
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            window.scrollTo({ top: document.body.scrollHeight - window.innerHeight - (player.f - 1) * MAP_Y_SPACE, behavior: 'smooth' });
         }, 500);
     }
     if(screen == 'screen-game') {
@@ -30,6 +30,7 @@ function showScreen(screen) {
         displayMyDeck();
     }
     if(screen == 'screen-heal') {
+        ++player.f;
         // Heal player of 30% of missing life
         updateLifePoints(player, player.m * 0.3);
     }

@@ -9,27 +9,32 @@
         position: absolute;
         padding: 5px;
         font-size: 20px;
-        width: 41px;
+        min-width: 41px;
         text-align: center;
         transition: 1s ease;
         border-radius: 50%;
+        border: 2px solid transparent;
         &:last-child {
             font-size: 60px;
         }
         &.-active {
             cursor: pointer;
             animation: 2s ease infinite a;
-            transform: scale(1.5);
+            transform: scale(1.6);
+            &:hover {
+                background: rgba(0, 0, 0, 0.3);
+            }
         }
         &.-selected {
             border: 2px solid $color-black;
-            transform: scale(2.2);
+            border-color: $color-black;
+            transform: scale(1.8);
         }
     }
 }
 
 @keyframes a {
     50% {
-        transform: scale(2);
+        transform: scale(2.2);
     }
 }

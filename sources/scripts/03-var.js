@@ -70,6 +70,7 @@ var myDeckList = [];
 
 // Map
 var LEVEL_STAGE_NUMBER = 12;
+const MAP_Y_SPACE = 130;
 var stageList = [];
 
 let playersProxy = {
