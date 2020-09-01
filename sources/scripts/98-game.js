@@ -49,6 +49,7 @@ function startFight() {
     displayDeck();
     startNextTurn();
     showPlayerAvatar();
+    initGameBackground();
 }
 
 function endFight() {

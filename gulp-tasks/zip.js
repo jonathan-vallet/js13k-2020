@@ -33,7 +33,6 @@ module.exports = function() {
         'c-card__dot': 'ct',
         'c-card__effect': 'ce',
         'c-card__class': 'cl',
-        'c-card__rarity': 'cr',
         'c-card': 'c',
         'c-die__dot': 'dd',
         'c-die__face': 'df',

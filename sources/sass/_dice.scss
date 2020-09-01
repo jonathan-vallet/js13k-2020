@@ -1,11 +1,11 @@
-$die-height: 50px;
+$die-size: 70px;
 
 .c-die {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
-    width: $die-height;
-    height: $die-height;
+    width: $die-size;
+    height: $die-size;
     list-style-type: none;
     transform-style: preserve-3d;
     transition: transform 1.5s ease-out;
@@ -27,20 +27,43 @@ $die-height: 50px;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     height: 100%;
-    padding: $die-height / 8;
+    padding: $die-size / 8;
     width: 100%;
-    background: #ccc;
-    border: 1px solid #000;
+    background: #fff;
+    border: 1px solid #633;
 }
 
 .c-die__dot {
     display: block;
-    width: $die-height / 5;
-    height: $die-height / 5;
+    position: relative;
+    width: $die-size / 5;
+    height: $die-size / 5;
     align-self: center;
     justify-self: center;
-    background-color: #000;
-    border-radius: 50%;
+    background-color: #633;
+
+    &:before {
+        content: "";
+        width: $die-size / 5;
+        height: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-bottom: #{$die-size / 17.12} solid #633;
+        border-left: #{$die-size / 17.12} solid #fff;
+        border-right: #{$die-size / 17.12} solid #fff;
+      }
+      &:after {
+        content: "";
+        width: $die-size / 5;
+        height: 0;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        border-top: #{$die-size / 17.12} solid #633;
+        border-left: #{$die-size / 17.12} solid #fff;
+        border-right: #{$die-size / 17.12} solid #fff;
+      }
 }
 
 [data-roll="1"] {
@@ -84,22 +107,22 @@ $die-height: 50px;
 }
 
 [data-side="1"] {
-    transform: rotate3d(0, 0, 0, 90deg) translateZ($die-height / 2);
+    transform: rotate3d(0, 0, 0, 90deg) translateZ($die-size / 2);
 }
 [data-side="2"] {
-    transform: rotate3d(-1, 0, 0, 90deg) translateZ($die-height / 2);
+    transform: rotate3d(-1, 0, 0, 90deg) translateZ($die-size / 2);
 }
 [data-side="3"] {
-    transform: rotate3d(0, 1, 0, 90deg) translateZ($die-height / 2);
+    transform: rotate3d(0, 1, 0, 90deg) translateZ($die-size / 2);
 }
 [data-side="4"] {
-    transform: rotate3d(0, -1, 0, 90deg) translateZ($die-height / 2);
+    transform: rotate3d(0, -1, 0, 90deg) translateZ($die-size / 2);
 }
 [data-side="5"] {
-    transform: rotate3d(1, 0, 0, 90deg) translateZ($die-height / 2);
+    transform: rotate3d(1, 0, 0, 90deg) translateZ($die-size / 2);
 }
 [data-side="6"] {
-    transform: rotate3d(1, 0, 0, 180deg) translateZ($die-height / 2);
+    transform: rotate3d(1, 0, 0, 180deg) translateZ($die-size / 2);
 }
 
 .c-die__dot:last-child {

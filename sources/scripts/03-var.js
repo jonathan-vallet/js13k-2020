@@ -60,6 +60,7 @@ var $myHand = $('myHand');
 var $endTurnButton = $('endTurnButton');
 var $mapWrapper = $('mapWrapper');
 var $rewardCardList = $('rewardCardList');
+var $screenGame = $('screen-game');
 // Links
 let $dieList = $('c-dieList');
 
@@ -81,6 +82,9 @@ let playersProxy = {
             $('playerLife').innerText = `💖 ${player.l}/${player.m}`;
             $('playerGold').innerText = `💰 ${player.g}`;
             $('playerFloor').innerText = `👣 ${player.f}`;
+            setFromLS('player', obj);
+        } else {
+            setFromLS('opponent', obj);
         }
     }
 };

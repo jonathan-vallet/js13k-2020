@@ -118,6 +118,7 @@ function drawMap() {
     }
 
     // Draw surroundings
+    // TODO: animate surroundings!
     ['#ffa', '#cff', '#7cc', '#0bb'].forEach((color, layoutIndex) => {
         for(let side = -1; side <= 1; side +=2) {
             let sideCoordinateList = firstLineCoordinateList;

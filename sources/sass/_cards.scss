@@ -12,13 +12,27 @@ $card-rarity-size: 14px;
         transform: scale(1.2);
         z-index: 2;
     }
+
+    b {
+        white-space: nowrap;
+        font-size: 16px;
+    }
+
+    i {
+        display: inline-block;
+        vertical-align: middle;
+        width: 18px;
+        height: 18px;
+        border: 1px dashed #fff;
+        margin-right: 2px;
+        background: rgba(0, 0, 0, 0.2);
+    }
 }
 
 .c-card__content {
     width: $card-width;
     height: $card-height;
-    border-radius: 10px;
-    border: 2px solid $card-border;
+    border: 2px solid #999;
     backface-visibility: hidden;
     perspective-origin: 50% 50%;
     transform-style: preserve-3d;
@@ -33,9 +47,16 @@ $card-rarity-size: 14px;
         right: 10px;
         bottom: 10px;
         background: rgba(255, 255, 255, 0.3);   
-        border-radius: 5px;
         border: 1px solid $card-border;
     }
+
+    // TODO: retirer la rarity en bas si la bordre est mieux
+    &.-rarity2 {
+        border-color: #6ee;
+    }   
+    &.-rarity3 {
+        border-color: #fc5;
+    }   
 
     &.-w { // warrior
         background: $warrior-color;
@@ -118,10 +139,12 @@ $card-rarity-size: 14px;
 
 .c-card__effect {
     position: absolute;
-    top: 130px;
+    top: 155px;
+    transform: translateY(-50%);
     left: 20px;
     right: 20px;
-    font-size: 14px;   
+    font-size: 13px;
+    line-height: 1.5; 
 }
 
 .c-card__back {
@@ -131,7 +154,6 @@ $card-rarity-size: 14px;
     justify-content: center;
     width: $card-width;
     height: $card-height;
-    border-radius: 10px;
     border: 1px solid $card-border;
     background-color: #4de;
     color: #2bc;
@@ -151,31 +173,25 @@ $card-rarity-size: 14px;
     }
 }
 
-.c-card__class {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: -1px;
-    font-size: 10px;
-}
-
 .c-card__dieList {
     position: absolute;
-    top: 50px;
+    top: 40px;
     left: 0;
-    right: 0;   
+    right: 0;
+    display: flex;
+    justify-content: center;
 }
 
 .c-card__die {
-    display: inline-block;
-    vertical-align: middle;
-    height: 50px;
-    line-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
     border: 2px dashed #fff;
-    width: 50px;
-    border-radius: 4px;
     margin: 0 5px;
     font-size: 14px;
+    line-height: 1.2;
     background: rgba(0, 0, 0, 0.2);
     &.-active {
         background: rgba(0, 0, 0, 0.5);

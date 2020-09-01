@@ -1,16 +1,17 @@
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>Cardice</title>
   <link type="text/css" rel="stylesheet" href="css/style.css" inline />
 </head>
+
 <body>
   <div class="l-screen -underBar -active" id="screen-menu">
     <p class="a-title">Cardice</p>
     <button class="js-screen-link" data-screen="screen-game" id="continueButton">Continue game</button>
     <button class="js-screen-link" data-screen="screen-class-choice">New game</button>
-    
-    <div id="allCardList" class="c-cardList" style="display: none"></div>
+    <div id="allCardList" class="c-cardList" style="display: dnone"></div>
   </div>
   <div class="l-screen -underBar" id="screen-class-choice">
     <p>Create you hero: pick up 2 classes</p>
@@ -37,14 +38,23 @@
     </p>
   </div>
   <div class="l-screen" id="screen-game">
-      <div class="c-life" data-p="1">
-        <div class="c-life__bar"><p></p><p></p><p></p></div>
-        <b>100/100</b>
+    <canvas id="game-canvas"></canvas>
+    <div class="c-life" data-p="1">
+      <div class="c-life__bar">
+        <p></p>
+        <p></p>
+        <p></p>
       </div>
-      <div class="c-life" data-p="2">
-        <div class="c-life__bar"><p></p><p></p><p></p></div>
-        <b>100/100</b>
+      <b>100/100</b>
+    </div>
+    <div class="c-life" data-p="2">
+      <div class="c-life__bar">
+        <p></p>
+        <p></p>
+        <p></p>
       </div>
+      <b>100/100</b>
+    </div>
     <div id="myHand"></div>
     <div id="myDeck"></div>
     <div id="playerAvatar"></div>
@@ -74,4 +84,5 @@
   </div>
   <script src="scripts/game.js" inline></script>
 </body>
+
 </html>

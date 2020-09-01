@@ -13,7 +13,7 @@
     }
     &:not(.-underBar) {
         z-index: 1;
-        padding-top: 67px;
+        padding-top: 70px;
     }
 }
 
@@ -27,7 +27,6 @@ button {
     min-height: $cta-height;
     background: $title-background;
     border: 0;
-    border-radius: 5px;
     color: $title-color;
     font-size: 18px;
     cursor: pointer;
