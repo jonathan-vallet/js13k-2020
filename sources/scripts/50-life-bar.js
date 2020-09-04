@@ -3,13 +3,14 @@ function updateLifePoints(player, value) {
     let newLifePoints = Math.max(0, Math.min(100, player.l + ~~value));
     showImpact(newLifePoints, player);
     player.l = newLifePoints;
-    $$(`.c-life[data-p="${player.id}"] b`).innerText = `${player.l}/${player.m}`;
     [...$$$(`.c-life[data-p="${player.id}"] p`)].forEach($lifeBar => {
         $lifeBar.style.width = `${~~(player.l / player.m * 100)}%`;
     });
     
     if(newLifePoints <= 0) {
-        endFight();
+        setTimeout(() => {
+            endFight();
+        }, 1000);
     }
 }
 

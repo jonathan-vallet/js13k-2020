@@ -11,10 +11,20 @@ function generateDie(roll) {
     die.innerHTML = facesHTML;
     die.id = `die-${$dieList.childElementCount}` ;
     die.setAttribute('data-roll', roll || getRandomNumber(1, 6));
+    die.onmouseover = (event) => {
+        checkPlayableCards(event.currentTarget.getAttribute('data-roll'), ($element) => {
+            $element.classList.add('-active');
+        });
+    }
     die.ondragstart = (event) => {
         draggedDieId = event.target.parentNode.id;
         checkPlayableCards(event.currentTarget.getAttribute('data-roll'), ($element) => {
             $element.classList.add('-active');
+        });
+    }
+    die.onmouseleave = (event) => {
+        checkPlayableCards(event.currentTarget.getAttribute('data-roll'), ($element) => {
+            $element.classList.remove('-active');
         });
     }
     die.ondragend = (event) => {
@@ -69,7 +79,11 @@ function isDiePlayable(handCardIndex, cardDieIndex, dieValue) {
             default: return cardDieValue == dieValue;
         }
     }
-     if (cardDieValue === 'double') {
+    if (cardDieValue === '') {
+        // TODO: check if other die is "played" or not
+        return true;
+    }
+    if (cardDieValue === 'double') {
         // TODO: check if other die is "played" or not
         return true;
     }

@@ -77,6 +77,7 @@ var stageList = [];
 let playersProxy = {
     set: function(obj, prop, newValue) {
         obj[prop] = newValue;
+        $$(`.c-life[data-p="${obj.id}"] b`).innerText = `💖 ${obj.l}/${obj.m}`;
         if(obj.id == 1) {
             $('playerClass').innerText = getClassName(player.c);
             $('playerLife').innerText = `💖 ${player.l}/${player.m}`;

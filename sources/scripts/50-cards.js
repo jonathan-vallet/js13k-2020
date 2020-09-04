@@ -132,6 +132,9 @@ function getCardEffect(effectCode, dieValue) {
             case 'damage':
                 effectText += `Do 💢<b>${effectValue}</b> damage`;
                 break;
+            case 'reflect':
+                effectText += `Lose 💖<b>${effectValue}</b> life`;
+                break;
             case 'poison':
                 effectText += `Do 🤢<b>${effectValue}</b> poison`;
                 break;
@@ -186,6 +189,9 @@ function resolveCardEffect($card) {
         switch (split[0]) {
             case 'damage':
                 updateLifePoints(opponent, -effectValue);
+                break;
+            case 'reflect':
+                updateLifePoints(player, -effectValue);
                 break;
             case 'stun':
                 break;

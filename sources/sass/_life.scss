@@ -2,12 +2,14 @@
     position: absolute;
 
     &[data-p="1"] {
-        bottom: 190px;
+        bottom: 90px;
         left: 220px;
+        text-align: left;
     }
     &[data-p="2"] {
-        top: 120px;
+        top: 140px;
         right: 220px;
+        text-align: right;
         .c-life__bar {
             transform: scaleX(-1);
         }
@@ -19,26 +21,29 @@
         left: 0;
         bottom: 0;
         width: 0;
-        background: #44c;
+        background: #77e;
         transition: width 0.5s ease;
+
+        &:nth-child(2) {
+            background: #e77;
+            transition-duration: 0.3s;
+            transition-delay: 1.3s;
+        }
+        &:nth-child(3) {
+            background: #7e7;
+            transition-duration: 1s;
+            transition-delay: 0.5s;
+        }
     }
 
-    :nth-child(2) {
-        background: #c44;
-        transition-duration: 0.3s;
-        transition-delay: 1.3s;
-    }
-    :nth-child(3) {
-        background: #4c4;
-        transition-duration: 1s;
-        transition-delay: 0.5s;
+    b {
+        color: #f93;
     }
 }
 
 .c-life__bar {
     position: relative;
-    width: 400px;
-    height: 40px;
-    background: $color-grey;
-    border: 1px solid $color-black;
+    width: 300px;
+    height: 25px;
+    background: #ccc;
 }

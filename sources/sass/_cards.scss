@@ -50,7 +50,6 @@ $card-rarity-size: 14px;
         border: 1px solid $card-border;
     }
 
-    // TODO: retirer la rarity en bas si la bordre est mieux
     &.-rarity2 {
         border-color: #6ee;
     }   
@@ -117,26 +116,6 @@ $card-rarity-size: 14px;
     }
 }
 
-.c-card__rarity {
-    position: absolute;
-    display: block;
-    bottom: -#{$card-rarity-size / 2};
-    left: calc(50% - #{$card-rarity-size / 2});
-    width: $card-rarity-size;
-    height: $card-rarity-size;
-    transform: rotate(-45deg) skew(15deg, 15deg);
-    border: 2px solid $card-border;
-    &.-rarity1 {
-        background: #38e;
-    }   
-    &.-rarity2 {
-        background: #e4f;
-    }   
-    &.-rarity3 {
-        background: #fc1;
-    }   
-}
-
 .c-card__effect {
     position: absolute;
     top: 155px;
@@ -152,13 +131,13 @@ $card-rarity-size: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: $card-width;
-    height: $card-height;
+    width: 100%;
+    height: 100%;
     border: 1px solid $card-border;
     background-color: #4de;
     color: #2bc;
     overflow: hidden;
-    font: bold 150px sans-serif;
+    font: bold 120px sans-serif;
     &:before {
         content: '4';
         position: absolute;

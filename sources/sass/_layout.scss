@@ -13,7 +13,7 @@
     }
     &:not(.-underBar) {
         z-index: 1;
-        padding-top: 70px;
+        padding-top: $user-bar-height;
     }
 }
 

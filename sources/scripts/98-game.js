@@ -18,6 +18,7 @@ function bindEvents() {
         if(e.target.classList.contains('js-screen-link')) {
             if(e.target.hasAttribute('data-floor')) {
                 let floor = e.target.getAttribute('data-floor');
+                player.fx = e.target.getAttribute('data-x');
                 if(!e.target.classList.contains('-active')) {
                     return;
                 }
@@ -38,18 +39,20 @@ function startFight() {
     ++player.f;
     player.t = 0;
     // Sets life to max at first floor only
-    player.f == 0 && updateLifePoints(player, player.m);
+    if(player.f == 1) {
+        // TODO: if save/reload is active, do it at reload too
+        initGameBackground();
+        updateLifePoints(player, player.m);
+    }
     myDeckList = [...player.d];
     myHandList = [];
     myDiscardList = [];
     $myHand.innerHTML = '';
-    updateLifePoints(player, player.m);
     generateOpponent();
     shuffleDeck();
     displayDeck();
     startNextTurn();
     showPlayerAvatar();
-    initGameBackground();
 }
 
 function endFight() {
@@ -69,7 +72,9 @@ function generateOpponent() {
     $opponentAvatar.firstChild && $opponentAvatar.firstChild.remove();
     $opponentAvatar.append(createAvatar(opponent.c[0], opponent.c[1]));
     // Sets opponent life points from stage and monster type (monster, elite, boss)
-    opponent.m = 2;
+    let multiplier = 1;
+    // TODO: ajouter "l'acte" en plus
+    opponent.m = ~~(Math.log2(player.f + 1) * 14 * multiplier);
     updateLifePoints(opponent, opponent.m);
 }
 

@@ -39,6 +39,10 @@ cardList[`w7`] = {
     e: 'damage|3,stun|6',
     r: 1
 };
+cardList['w8'] = {
+    d: '',
+    e: 'damage|X*2,reflect|X'
+}
 cardList[`m1`] = {
     d: '5',
     e: 'damage|5,fire|1',

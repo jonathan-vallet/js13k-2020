@@ -16,15 +16,17 @@
 
 #myDeck {
     position: absolute;
-    bottom: 50px;
-    right: 50px;
-    width: $card-width;
-    height: $card-height;
+    bottom: 20px;
+    right: 20px;
+    width: $card-width * 0.7;
+    height: $card-height * 0.7;
 
     .c-card {
         position: absolute;
         top: 0;
         left: 0;
+        width: $card-width * 0.7;
+        height: $card-height * 0.7;
     }
 }
 
