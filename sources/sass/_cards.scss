@@ -3,14 +3,14 @@ $card-rarity-size: 14px;
 .c-card {
     position: relative;
     transition: all .5s;
-    &.-played {
-        transform: translateY(-200px);
-        opacity: 0;
-        pointer-events: none;
-    }
     &.-active {
         transform: scale(1.2);
         z-index: 2;
+    }
+    &.-played {
+        transform: scale(1) translateY(-200px);
+        opacity: 0;
+        pointer-events: none;
     }
 
     b {
@@ -173,6 +173,6 @@ $card-rarity-size: 14px;
     line-height: 1.2;
     background: rgba(0, 0, 0, 0.2);
     &.-active {
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(255, 255, 255, 0.2);
     }
 }

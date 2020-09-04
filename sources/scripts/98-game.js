@@ -86,6 +86,7 @@ function showPlayerAvatar() {
 
 function startNextTurn() {
     ++player.t; // Increase turn number
+    player.sh = 0; // Resets shield
     // Removes all die and generate new ones during 5 firstturns
     $dieList.innerHTML = '';
     for(let dieNumber = 0; dieNumber < Math.min(5, player.t); ++dieNumber) {

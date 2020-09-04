@@ -1,5 +1,15 @@
 // negative value: damage, positive: heal
 function updateLifePoints(player, value) {
+    // If damage are taken, check shield before decrease life points
+    if(value < 0 && player.sh) {
+        if(player.sh >= -value) {
+            player.sh += value;
+            return;
+        } else {
+            value += player.sh;
+            player.sh = 0;
+        }
+    }
     let newLifePoints = Math.max(0, Math.min(100, player.l + ~~value));
     showImpact(newLifePoints, player);
     player.l = newLifePoints;
@@ -8,9 +18,7 @@ function updateLifePoints(player, value) {
     });
     
     if(newLifePoints <= 0) {
-        setTimeout(() => {
-            endFight();
-        }, 1000);
+        wait(1500, () => endFight());
     }
 }
 
@@ -28,9 +36,9 @@ function showImpact(newLifePoints, player) {
         impactList.push(impact);
     }
 
-    setTimeout(() => {
+    wait(500, () => {
         for(var impact of impactList) {
             impact.remove();
         }
-    }, 500);
+    });
 }

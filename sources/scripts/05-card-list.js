@@ -64,8 +64,8 @@ cardList[`a1`] = {
     r: 3
 };
 cardList[`p1`] = {
-    d: '|',
-    e: 'protection|X',
+    d: '',
+    e: 'shield|X',
     r: 1
 };
 cardList[`h1`] = {
@@ -91,7 +91,7 @@ cardList[`aw1`] = {
 };
 cardList[`pw1`] = {
     d: '',
-    e: 'odd:protection|X,even:damage|X',
+    e: 'odd:shield|X,even:damage|X',
     r: 1
 };
 cardList[`hw1`] = {
@@ -126,7 +126,7 @@ cardList[`at1`] = {
 };
 cardList[`pt1`] = {
     d: '',
-    e: 'odd:heal|X,even:protection|X',
+    e: 'odd:heal|X,even:shield|X',
     r: 1
 };
 cardList[`ht1`] = {

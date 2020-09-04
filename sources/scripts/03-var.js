@@ -76,8 +76,13 @@ var stageList = [];
 
 let playersProxy = {
     set: function(obj, prop, newValue) {
+        console.log('set', obj, prop, newValue);
         obj[prop] = newValue;
-        $$(`.c-life[data-p="${obj.id}"] b`).innerText = `💖 ${obj.l}/${obj.m}`;
+        let lifeText = `💖 ${obj.l}/${obj.m}`;
+        if(obj.sh) {
+            lifeText += ` 🛡 ${obj.sh}`;
+        }
+        $$(`.c-life[data-p="${obj.id}"] b`).innerText = lifeText;
         if(obj.id == 1) {
             $('playerClass').innerText = getClassName(player.c);
             $('playerLife').innerText = `💖 ${player.l}/${player.m}`;
@@ -94,6 +99,7 @@ let player = new Proxy({
     id: 1,
     m: 100, // max life points
     l: 0, // currentlifepoints
+    sh: 0, // shield
     s: '' // screen (if step is game, class selection, floor selection...)
     /*
     c: class
@@ -101,12 +107,14 @@ let player = new Proxy({
     g: gold
     f: current floor
     t: current turn in fight
+    p: poison
     */
 }, playersProxy);
 let opponent = new Proxy({
     id: 2,
     m: 15, // max life points
-    l: 0, // currentlifepoints
+    l: 0, // currentlifepoints,
+    sh: 3 // shield
 }, playersProxy);
 
 let draggedDieId = null; //Save die id when dragged instead of dataTransfer, to be able to check on dragenter

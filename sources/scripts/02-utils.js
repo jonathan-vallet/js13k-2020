@@ -23,7 +23,13 @@ function createElementFromHTML(htmlString) {
     var div = createElement('div');
     div.innerHTML = htmlString.trim();
     return div.firstChild; 
-  }
+}
 
-// wait function to be able to wait for animation end before continuing game
-const wait = ms => new Promise((resolve) => setTimeout(resolve, ms));
+let gameLoadingState = 0;
+function wait(duration, callback) {
+    ++gameLoadingState;
+    setTimeout(() => {
+        callback();
+        --gameLoadingState;
+    }, duration);
+}

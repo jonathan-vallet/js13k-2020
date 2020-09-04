@@ -153,7 +153,7 @@ function getCardEffect(effectCode, dieValue) {
             case 'split':
                 effectText += `Split die in <b>${effectValue}</b>`;
                 break;
-            case 'protection':
+            case 'shield':
                 effectText += `Add 🛡 <b>${effectValue}</b> shield`;
                 break;
             case 'freeze':
@@ -167,17 +167,15 @@ function getCardEffect(effectCode, dieValue) {
 
 function createDeck() {
     // TODO: create from selected classes
-    player.d = ['w1', 'w1', 'w2', 'w2', 'w3', 'w4', 'w5', 'w6', 'w7', 'm2', 'mw1'];
+    player.d = ['w1', 'p1', 'w2', 'pt1', 'w7', 'm2', 'mw1'];
 }
 
 function playCard($card) {
     $card.classList.add('-played');
     resolveCardEffect($card);
-    setTimeout(() => {
-        discardCard($card.dataset.hand);
-    }, 500);
+    wait(500, () => discardCard($card.dataset.hand));
 }
-
+ 
 function resolveCardEffect($card) {
     let cardId = myHandList[$card.dataset.hand];
     let dieValue = $card.querySelector('[data-die]').dataset.value;
@@ -192,6 +190,10 @@ function resolveCardEffect($card) {
                 break;
             case 'reflect':
                 updateLifePoints(player, -effectValue);
+                break;
+            case 'shield':
+                player.sh += effectValue;
+                console.log(player);
                 break;
             case 'stun':
                 break;
