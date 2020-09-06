@@ -21,6 +21,9 @@ function showScreen(screen) {
         }, 500);
     }
     if(screen == 'screen-game') {
+        if(!player.d) {
+            createDeck(player);
+        }
         if(player.s != 'game') {
             player.s = 'game';
             startFight();
@@ -42,7 +45,6 @@ function showScreen(screen) {
         setMyAvatar('w', 'w');
         player.g = 100;
         player.f = 0;
-        createDeck();
     }
     if(screen == 'screen-reward') {
         // Get gold reward from mob difficulty?

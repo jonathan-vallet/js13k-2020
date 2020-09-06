@@ -119,13 +119,13 @@ function drawCardDie(die, handCardIndex = -1, dieNumber) {
 
 function getCardEffect(effectCode) {
     let effectText = '';
-    console.log(effectCode);
     let effectList = effectCode.split(',');
     effectList.forEach((effect, index) => {
         effectText += index > 0 ? `<br>` : '';
         let split = effect.split('|');
         let split2 = split[0].split(':');
         let effectValue = split[1].replace('X', '<i></i>');
+        effectValue = effectValue.replace('*', 'x');
         let effectCondition = split2.length > 1 ? split2[0] : '';
         let effectType = split2[split2.length - 1 ];
         effectText += effectCondition ? `${effectCondition}: `: '';
@@ -140,13 +140,13 @@ function getCardEffect(effectCode) {
                 effectText += `Do 🤢<b>${effectValue}</b> poison`;
                 break;
             case 'stun':
-                effectText += `Stun 😵 a die`;
+                effectText += `Stun 😵 <b>${effectValue}</b> di${effectValue > 1 && 'c'}e`;
                 break;
             case 'updie':
                 effectText += `Die value <b>${effectValue}</b>`;
                 break;
             case 'fire':
-                effectText += `Fire 🔥 a die`;
+                effectText += `Fire 🔥 <b>${effectValue}</b> di${effectValue > 1 && 'c'}e`;
                 break;
             case 'heal':
                 effectText += `Heal ➕<b>${effectValue}</b> life points`;
@@ -158,7 +158,7 @@ function getCardEffect(effectCode) {
                 effectText += `Add 🛡 <b>${effectValue}</b> shield`;
                 break;
             case 'freeze':
-                effectText += `Freeze ❄ a die`;
+                effectText += `Freeze ❄ <b>${effectValue}</b> di${effectValue > 1 && 'c'}e`;
                 break;
 
         }
@@ -166,9 +166,21 @@ function getCardEffect(effectCode) {
     return effectText;
 }
 
-function createDeck() {
-    // TODO: create from selected classes
-    player.d = ['w1', 'p1', 'w2', 'pt1', 'w7', 'm2', 'mw1'];
+// Generate basic deck from player class combination
+function createDeck(player) {
+    console.log(player, player.c);
+    player.d = [
+        `${player.c[0]}1`,
+        `${player.c[0]}1`,
+        `${player.c[1]}1`,
+        `${player.c[1]}1`,
+        `${player.c[0]}2`,
+        `${player.c[1]}2`,
+        `${player.c[0]}3`,
+        `${player.c[1]}3`,
+        `${getCardTypes(player.c)}1`
+    ]
+    console.log(player.d);
 }
 
 function playCard($card) {
@@ -194,7 +206,9 @@ function resolveCardEffect($card) {
                 break;
             case 'shield':
                 player.sh += effectValue;
-                console.log(player);
+                break;
+            case 'poison':
+                opponent.p += effectValue;
                 break;
             case 'stun':
                 break;

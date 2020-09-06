@@ -78,6 +78,11 @@ function generateOpponent() {
     updateLifePoints(opponent, opponent.m);
 }
 
+function setOpponentTurn() {
+    createDeck(opponent);
+    console.log(opponent);
+}
+
 function showPlayerAvatar() {
     let avatarCode = player.c;
     $playerAvatar.firstChild && $playerAvatar.firstChild.remove();
@@ -85,8 +90,12 @@ function showPlayerAvatar() {
 }
 
 function startNextTurn() {
+    setOpponentTurn();
     ++player.t; // Increase turn number
     player.sh = 0; // Resets shield
+    if(player.p) {
+        updateLifePoints(player, -player.p--);
+    }
     // Removes all die and generate new ones during 5 firstturns
     $dieList.innerHTML = '';
     for(let dieNumber = 0; dieNumber < Math.min(5, player.t); ++dieNumber) {

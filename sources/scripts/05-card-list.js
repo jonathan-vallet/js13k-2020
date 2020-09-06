@@ -57,11 +57,11 @@ let simpleCardList = [
     {c: 'p', r: 3, d: '4|4', e: 'shield|12,damage|4'},
 
     // Heal
-    {c: 'p', r: 1, d: '', e: 'heal|3'},
-    {c: 'p', r: 1, d: '-4', e: 'damage|3'},
-    {c: 'p', r: 1, d: '4+', e: 'damage|X,shield|2'},
-    {c: 'p', r: 2, d: '|', e: 'shield|X'},
-    {c: 'p', r: 3, d: '3|3', e: 'heal|12,damage|3'},
+    {c: 'h', r: 1, d: '', e: 'heal|3'},
+    {c: 'h', r: 1, d: '-4', e: 'damage|3'},
+    {c: 'h', r: 1, d: '4+', e: 'damage|X,shield|2'},
+    {c: 'h', r: 2, d: '|', e: 'shield|X'},
+    {c: 'h', r: 3, d: '3|3', e: 'heal|12,damage|3'},
 
     // Warrior + mage
     {c: 'mw', r: 2, d: '', e: 'damage|3,fire|1,freeze|1'},
@@ -95,7 +95,7 @@ let simpleCardList = [
     {c: 'at', r: 2, d: '', e: 'poison|2,reroll|<'},
 
     // Protector + Thief
-    {c: 'at', r: 2, d: '', e: 'shield|4,reroll|<'},
+    {c: 'pt', r: 2, d: '', e: 'shield|4,reroll|<'},
 
     // Heal + Thief
     {c: 'ht', r: 2, d: '', e: 'heal|3,reroll|<'},
