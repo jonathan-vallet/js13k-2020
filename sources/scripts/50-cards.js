@@ -117,8 +117,9 @@ function drawCardDie(die, handCardIndex = -1, dieNumber) {
     return `<p class="c-card__die" ${dataHand} data-die="${dieNumber}">${dieContent}</p>`;
 }
 
-function getCardEffect(effectCode, dieValue) {
+function getCardEffect(effectCode) {
     let effectText = '';
+    console.log(effectCode);
     let effectList = effectCode.split(',');
     effectList.forEach((effect, index) => {
         effectText += index > 0 ? `<br>` : '';
@@ -142,7 +143,7 @@ function getCardEffect(effectCode, dieValue) {
                 effectText += `Stun 😵 a die`;
                 break;
             case 'updie':
-                effectText += `Increase die value of <b>${effectValue}</b>`;
+                effectText += `Die value <b>${effectValue}</b>`;
                 break;
             case 'fire':
                 effectText += `Fire 🔥 a die`;

@@ -1,151 +1,118 @@
-var cardList = {};
 /*
+c: class
 d: die
 e: effect
 r: rarity
 */
-cardList[`w1`] = {
-    d: '+4',
-    e: 'damage|X-2',
-    r: 1
-};
-cardList[`w2`] = {
-    d: '-3',
-    e: 'damage|X',
-    r: 1
-};
-cardList[`w3`] = {
-    d: '+4',
-    e: 'damage|X,6:stun|1',
-    r: 2
-};
-cardList[`w4`] = {
-    d: '6',
-    e: 'damage|X+2',
-    r: 2
-};
-cardList[`w5`] = {
-    d: '-4',
-    e: 'updie|X+2',
-    r: 2
-};
-cardList[`w6`] = {
-    d: 'odd',
-    e: 'damage|3,stun|6',
-    r: 1
-};
-cardList[`w7`] = {
-    d: 'even',
-    e: 'damage|3,stun|6',
-    r: 1
-};
-cardList['w8'] = {
-    d: '',
-    e: 'damage|X*2,reflect|X'
-}
-cardList[`m1`] = {
-    d: '5',
-    e: 'damage|5,fire|1',
-    r: 2
-};
-cardList[`m2`] = {
-    d: '-2',
-    e: 'fire|X',
-    r: 1
-};
-cardList[`t1`] = {
-    d: '6',
-    e: 'split|2',
-    r: 3
-};
-cardList[`a1`] = {
-    d: 'double|double',
-    e: 'poison|3',
-    r: 3
-};
-cardList[`p1`] = {
-    d: '',
-    e: 'shield|X',
-    r: 1
-};
-cardList[`h1`] = {
-    d: 'odd',
-    e: 'heal|X-1',
-    r: 1
-};
+let simpleCardList = [
+    // Warrior
+    {c: 'w', r: 1, d: '', e: 'damage|X'},
+    {c: 'w', r: 1, d: '-4', e: 'updie|+2'},
+    {c: 'w', r: 1, d: '-4', e: 'damage|X*2,reflect|X'},
+    {c: 'w', r: 1, d: 'odd', e: 'damage|3,stun|1'},
+    {c: 'w', r: 2, d: '+4', e: 'damage|X,6:stun|1'},
+    {c: 'w', r: 2, d: '-4', e: 'damage|X*2'},
+    {c: 'w', r: 2, d: '+4', e: 'damage|X,6:stun|1'},
+    {c: 'w', r: 2, d: '6', e: 'damage|X+2'},
+    {c: 'w', r: 3, d: '6|6', e: 'damage|X,stun|5'},
+    {c: 'w', r: 3, d: '+4', e: 'damage|X*3,reflect|X'},
 
-cardList[`mw1`] = {
-    d: '',
-    e: 'damage|X + 2',
-    r: 1
-};
-cardList[`tw1`] = {
-    d: '',
-    e: 'damage|X',
-    r: 1
-};
-cardList[`aw1`] = {
-    d: '',
-    e: 'damage|X',
-    r: 1
-};
-cardList[`pw1`] = {
-    d: '',
-    e: 'odd:shield|X,even:damage|X',
-    r: 1
-};
-cardList[`hw1`] = {
-    d: '',
-    e: 'odd:damage|X,even:heal|X',
-    r: 1
-};
-cardList[`mt1`] = {
-    d: '',
-    e: 'damage|X',
-    r: 1
-};
-cardList[`am1`] = {
-    d: '',
-    e: 'damage|X',
-    r: 1
-};
-cardList[`mp1`] = {
-    d: '',
-    e: 'damage|X',
-    r: 1
-};
-cardList[`hm1`] = {
-    d: '',
-    e: 'damage|X',
-    r: 1
-};
-cardList[`at1`] = {
-    d: '',
-    e: 'damage|X',
-    r: 1
-};
-cardList[`pt1`] = {
-    d: '',
-    e: 'odd:heal|X,even:shield|X',
-    r: 1
-};
-cardList[`ht1`] = {
-    d: '',
-    e: 'odd:poison|X,even:heal|X',
-    r: 1
-};
-cardList[`at1`] = {
-    d: '',
-    e: 'damage|X',
-    r: 1
-};
-cardList[`ah1`] = {
-    d: '',
-    e: 'damage|X',
-    r: 1
-};
-cardList[`hp1`] = {
-    d: '',
-    e: 'damage|X',
-    r: 1
-};
+    // Mage
+    {c: 'm', r: 1, d: '1', e: 'damage|1,freeze|1'},
+    {c: 'm', r: 1, d: 'odd', e: 'damage|X,freeze|1'},
+    {c: 'm', r: 1, d: 'even', e: 'damage|X,fire|1'},
+    {c: 'm', r: 2, d: '5', e: 'damage|4,fire|1'},
+    {c: 'w', r: 3, d: '1|1', e: 'freeze|5'},
+    {c: 'w', r: 3, d: '5|5', e: 'fire|5'},
+
+
+    // Thief
+    {c: 't', r: 1, d: '-2', e: 'damage|X,reroll|X'},
+    {c: 't', r: 1, d: '+3', e: 'damage|3,reroll|<'},
+    {c: 't', r: 1, d: '1|1', e: 'damage|6'},
+    {c: 't', r: 1, d: '', e: 'updie|+1'},
+    {c: 't', r: 1, d: '', e: 'updie|-1'},
+    {c: 't', r: 1, d: '', e: 'split|2'},
+    {c: 't', r: 1, d: '', e: 'duplicate|X'},
+    {c: 't', r: 2, d: '6', e: 'reroll|1,reroll|1'},
+    {c: 't', r: 3, d: '', e: 'split|3'},
+    {c: 't', r: 3, d: '1|1', e: 'damage|12'},
+
+    // Assassin
+    {c: 'a', r: 1, d: '+4', e: 'poison|1,reroll|1'},
+    {c: 'a', r: 1, d: '-3', e: 'damge|3,poison|1'},
+    {c: 'a', r: 2, d: '-3', e: 'poison|X'},
+    {c: 'a', r: 2, d: '-3', e: 'poison|2,reroll|1'},
+    {c: 'a', r: 2, d: '', e: 'damage|X,2:poison|2'},
+    {c: 'a', r: 3, d: 'even', e: 'damage|poison'}, //TODO: dégat spécifique!
+    {c: 'a', r: 3, d: '2|2', e: 'poison|8'},
+
+    // Protector
+    {c: 'p', r: 1, d: '', e: 'shield|X'},
+    {c: 'p', r: 1, d: '-4', e: 'damage|4'},
+    {c: 'p', r: 1, d: '4+', e: 'damage|X,shield|2'},
+    {c: 'p', r: 2, d: '|', e: 'shield|X'},
+    {c: 'p', r: 3, d: '6', e: 'damage|shield'}, //TODO: dégat spécifique!
+    {c: 'p', r: 3, d: 'even', e: 'damage|shield*2'}, //TODO: dégat spécifique!
+    {c: 'p', r: 3, d: '4|4', e: 'shield|12,damage|4'},
+
+    // Heal
+    {c: 'p', r: 1, d: '', e: 'heal|3'},
+    {c: 'p', r: 1, d: '-4', e: 'damage|3'},
+    {c: 'p', r: 1, d: '4+', e: 'damage|X,shield|2'},
+    {c: 'p', r: 2, d: '|', e: 'shield|X'},
+    {c: 'p', r: 3, d: '3|3', e: 'heal|12,damage|3'},
+
+    // Warrior + mage
+    {c: 'mw', r: 2, d: '', e: 'damage|3,fire|1,freeze|1'},
+
+    // Thief + warrior
+    {c: 'tw', r: 2, d: '', e: 'damage|X,reroll|<'},
+
+    // Assassin + warrior
+    {c: 'aw', r: 2, d: '', e: 'damage|X,poison|2'},
+
+    // Warrior + protector
+    {c: 'pw', r: 1, d: '', e: 'damage|X,shield|4'},
+    {c: 'pw', r:21, d: '', e: 'damage|X,shield|4'},
+
+    // Warrior + heal
+    {c: 'hw', r: 2, d: '', e: 'damage|X,shield|3'},
+
+    // Mage + thief
+    {c: 'mt', r: 2, d: '', e: 'fire|1,freeze|1,reroll|<'},
+
+    // Assassin + mage
+    {c: 'am', r: 2, d: '', e: 'fire|1,freeze|1,poison|2'},
+    
+    // Mage + Protector
+    {c: 'mp', r: 2, d: '', e: 'fire|1,freeze|1,shield|4'},
+
+    // Mage + Heal
+    {c: 'hm', r: 2, d: '', e: 'fire|1,freeze|1,heal|3'},
+
+    // Assassin + Thief
+    {c: 'at', r: 2, d: '', e: 'poison|2,reroll|<'},
+
+    // Protector + Thief
+    {c: 'at', r: 2, d: '', e: 'shield|4,reroll|<'},
+
+    // Heal + Thief
+    {c: 'ht', r: 2, d: '', e: 'heal|3,reroll|<'},
+
+    // Assassin + protector
+    {c: 'ap', r: 2, d: '', e: 'shield|4,poison|2'},
+
+    // Assassin + heal
+    {c: 'ah', r: 2, d: '', e: 'heal|3,poison|2'},
+
+    // Protector + heal
+    {c: 'hp', r: 2, d: '', e: 'heal|3,shield|4'},
+];
+
+let cardList = {};
+let classCardNumber = {};
+for(card of simpleCardList) {
+    classCardNumber[card.c] = classCardNumber[card.c] ? ++classCardNumber[card.c] : 1;
+    cardList[`${card.c}${classCardNumber[card.c]}`] = card;
+}

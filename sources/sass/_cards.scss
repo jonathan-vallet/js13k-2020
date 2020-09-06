@@ -75,7 +75,7 @@ $card-rarity-size: 14px;
     &.-h { // heal
         background: $heal-color;
     }
-    &.-mw { // TODO: faire des classes genre wm pour warrior/mage
+    &.-mw {
         background: linear-gradient(to bottom, $mage-color 0%,$warrior-color 100%);    
     }
     &.-tw {
@@ -93,6 +93,9 @@ $card-rarity-size: 14px;
     &.-mt {
         background: linear-gradient(to bottom, $mage-color 0%,$thief-color 100%);    
     }
+    &.-am {
+        background: linear-gradient(to bottom, $mage-color 0%,$assassin-color 100%);    
+    }
     &.-mp {
         background: linear-gradient(to bottom, $mage-color 0%,$protector-color 100%);    
     }
@@ -101,6 +104,9 @@ $card-rarity-size: 14px;
     }
     &.-at {
         background: linear-gradient(to bottom, $assassin-color 0%,$thief-color 100%);    
+    }
+    &.-ap {
+        background: linear-gradient(to bottom, $assassin-color 0%,$protector-color 100%);    
     }
     &.-pt {
         background: linear-gradient(to bottom, $protector-color 0%,$thief-color 100%);    

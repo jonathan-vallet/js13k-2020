@@ -1,14 +1,13 @@
 // Base class list with colors
 var BASE_CLASS_LIST = {
-    'w': '#942',
-    'm': '#18b',
-    't': '#449',
-    'a': '#777',
-    'p': '#a80',
+    'w': '#e43',
+    'm': '#249',
+    't': '#0aa',
+    'a': '#a28',
+    'p': '#f82',
     'h': '#162'
 };
 
-// TODO: voir si avec les noms doubles uniquement je gagne en place
 const CLASS_NAME_LIST = {
     'w': 'Warrior',
     'm': 'Mage',
@@ -33,7 +32,6 @@ const CLASS_NAME_LIST = {
     'hp': 'Sage',
 }
 
-// TODO: si je e stock pas d'autre info, virer le "symbol"
 const STAGE_TYPE_LIST = {
     'm': '💀', // monster
     'e': '👿', // elite
