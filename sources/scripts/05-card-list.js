@@ -22,9 +22,8 @@ let simpleCardList = [
     {c: 'm', r: 1, d: 'odd', e: 'damage|X,freeze|1'},
     {c: 'm', r: 1, d: 'even', e: 'damage|X,fire|1'},
     {c: 'm', r: 2, d: '5', e: 'damage|4,fire|1'},
-    {c: 'w', r: 3, d: '1|1', e: 'freeze|5'},
-    {c: 'w', r: 3, d: '5|5', e: 'fire|5'},
-
+    {c: 'm', r: 3, d: '1|1', e: 'freeze|5'},
+    {c: 'm', r: 3, d: '5|5', e: 'fire|5'},
 
     // Thief
     {c: 't', r: 1, d: '-2', e: 'damage|X,reroll|X'},

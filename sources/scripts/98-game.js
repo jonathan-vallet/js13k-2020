@@ -32,7 +32,12 @@ function bindEvents() {
     }
 
     // Sets the end of turn
-    $endTurnButton.onclick = () => { endTurn() };
+    $endTurnButton.onclick = () => { 
+        if(gameLoadingState > 0) {
+            return;
+        }
+        endTurn(player);
+    };
 }
 
 function startFight() {
@@ -44,15 +49,16 @@ function startFight() {
         initGameBackground();
         updateLifePoints(player, player.m);
     }
-    myDeckList = [...player.d];
-    myHandList = [];
-    myDiscardList = [];
+    player.deck = [...player.d]; // Clone deck to get separate instance
+    player.hand = [];
+    player.discard = [];
     $myHand.innerHTML = '';
-    generateOpponent();
-    shuffleDeck();
-    displayDeck();
-    startNextTurn();
+    shuffleDeck(player);
+    displayDeck(player);
+    startNextTurn(1);
     showPlayerAvatar();
+    
+    generateOpponent();
 }
 
 function endFight() {
@@ -68,19 +74,24 @@ function generateOpponent() {
     var classIdList = Object.keys(BASE_CLASS_LIST);
     // Generates a random class for opponent;
     opponent.c = classIdList[getRandomNumber(0, classIdList.length - 1)] + classIdList[getRandomNumber(0, classIdList.length - 1)];
+    createDeck(opponent);
+    opponent.deck = [...opponent.d]; // Clone deck to get separate instance
+    opponent.hand = [];
+    opponent.discard = [];
     // Draws opponent avatar
     $opponentAvatar.firstChild && $opponentAvatar.firstChild.remove();
     $opponentAvatar.append(createAvatar(opponent.c[0], opponent.c[1]));
     // Sets opponent life points from stage and monster type (monster, elite, boss)
-    let multiplier = 1;
+    let stageType = stageList[player.f - 1][player.fx].e;
+    let multiplier = stageType == 'b' ? 3 : stageType == 'e' ? 1.5 : 1;
     // TODO: ajouter "l'acte" en plus
     opponent.m = ~~(Math.log2(player.f + 1) * 14 * multiplier);
     updateLifePoints(opponent, opponent.m);
 }
 
 function setOpponentTurn() {
-    createDeck(opponent);
-    console.log(opponent);
+    resolveTurnStart(opponent);
+    wait(2000, () => endTurn(opponent));
 }
 
 function showPlayerAvatar() {
@@ -89,44 +100,48 @@ function showPlayerAvatar() {
     $playerAvatar.append(createAvatar(avatarCode[0], avatarCode[1]));
 }
 
-function startNextTurn() {
-    setOpponentTurn();
+function startNextTurn(guyId) {
+    if(guyId == 2) {
+        setOpponentTurn();
+        return;
+    }
+
     ++player.t; // Increase turn number
-    player.sh = 0; // Resets shield
-    if(player.p) {
-        updateLifePoints(player, -player.p--);
+    resolveTurnStart(player);
+}
+
+function resolveTurnStart(guy) {
+    guy.sh = 0; // Resets shield
+    if(guy.p) { // Apply poison
+        updateLifePoints(guy, -guy.p--);
     }
     // Removes all die and generate new ones during 5 firstturns
     $dieList.innerHTML = '';
     for(let dieNumber = 0; dieNumber < Math.min(5, player.t); ++dieNumber) {
         generateDie();
     }
-    
+
     document.body.offsetWidth;
     rollDice();
-    setTimeout(() => {
-        drawCards();
-    }, 800);
+    wait(300, () => drawCards(guy));
 }
 
-function endTurn() {
-    discardHand();
-    setTimeout(() => {
-        startNextTurn();
-    }, 500); // TODO: timeout = au nombre de cartes à défausser
+function endTurn(guy) {
+    discardHand(guy);
+    wait(500, () => startNextTurn(guy.id % 2 + 1)); // TODO: timeout = au nombre de cartes à défausser
 }
 
-function discardHand() {
-    for(var cardNumber = 0; cardNumber < myHandList.length; ++cardNumber) {
+function discardHand(guy) {
+    for(var cardNumber = 0; cardNumber < guy.hand.length; ++cardNumber) {
         setTimeout(() => {
-            discardCard(0);
+            discardCard(guy, 0);
         }, cardNumber * 100);
     }
 }
 
-function discardCard(handCardIndex) {
-    myDiscardList.push(myHandList[handCardIndex]);
-    myHandList.splice(handCardIndex, 1);
+function discardCard(guy, handCardIndex) {
+    guy.discard.push(guy.hand[handCardIndex]);
+    guy.hand.splice(handCardIndex, 1);
     $myHand.removeChild($myHand.children.item(handCardIndex));
     // Updates index of other cards
     [...$myHand.querySelectorAll('.c-card')].forEach(($card, index) => {
@@ -134,83 +149,83 @@ function discardCard(handCardIndex) {
     });
 }
 
-function drawCards() {
-    // TODO: prendre une carte dans le deck. Elle pase en main. Quand elle est jouée elle passe en défausse. Quand la pioche est vide la défausse devient la pioche et on mélange
+function drawCards(guy) {
     for(var cardNumber = 0; cardNumber < 5; ++cardNumber) {
-        timeoutCardDraw(cardNumber);
+        timeoutCardDraw(guy, cardNumber);
     }
 }
 
-// TODO: rempalcer tous les setTimeout par des await/async...
-function timeoutCardDraw(cardNumber) {
-    setTimeout(() => {
-        if(!myDeckList.length) {
-            myDeckList = myDiscardList;
-            myDiscardList = [];
-            shuffleDeck();
-            displayDeck();
+function timeoutCardDraw(guy, cardNumber) {
+    wait(cardNumber * 100, () => {
+        if(!guy.deck.length) {
+            guy.deck = guy.discard;
+            guy.discard = [];
+            shuffleDeck(guy);
+            displayDeck(guy);
         }
-        if(myDeckList.length) { // Checks if cards are not already in hand
-            // TODO: retirer l'argument, on pioche toujours la carte du dessus du deck
-            drawCard(myDeckList[0]);
+        if(guy.deck.length) { // Checks if cards are not already in hand
+            drawCard(guy);
         }
-    }, cardNumber * 100);
+    });
 }
 
-function drawCard(cardId) {
-    myHandList.push(myDeckList[0]);
-    myDeckList.shift();
+function drawCard(guy) {
+    let cardId = guy.deck[0];
+    guy.hand.push(cardId);
+    guy.deck.shift();
     let $card = displayCard(cardId, $myHand.childElementCount);
-    $card.ondragenter = event => {
-        var $cardDieTarget = event.target;
-        let $die = $(draggedDieId);
-        let dieValue = $die.dataset.roll;
-        let $card = $cardDieTarget.closest('.c-card');
-        let dragoverCounter = $card.dataset.dragCounter || 0;
-        $card.dataset.dragCounter = ++dragoverCounter;
-        if(!$cardDieTarget.classList.contains('c-card__die')) {
-            // TODO: if multiple die, get the first not empty
-            $cardDieTarget = $card.querySelector('.c-card__die');
+    if(guy.id == 1) {
+        $card.ondragenter = event => {
+            var $cardDieTarget = event.target;
+            let $die = $(draggedDieId);
+            let dieValue = $die.dataset.roll;
+            let $card = $cardDieTarget.closest('.c-card');
+            let dragoverCounter = $card.dataset.dragCounter || 0;
+            $card.dataset.dragCounter = ++dragoverCounter;
+            if(!$cardDieTarget.classList.contains('c-card__die')) {
+                // TODO: if multiple die, get the first not empty
+                $cardDieTarget = $card.querySelector('.c-card__die');
+            }
+            if(isDiePlayable(guy, $card.dataset.hand, $cardDieTarget.dataset.dice, dieValue)) {
+                $card.classList.add('-active');
+            }
+        };
+        $card.ondragleave = event => {
+            let dragoverCounter = $card.dataset.dragCounter || 0;
+            $card.dataset.dragCounter = --dragoverCounter;
+            if($card.dataset.dragCounter <= 0) {
+                $card.classList.remove('-active');
+            }
+        };
+        $card.ondrop = event => {
+            var $cardDieTarget = event.target;
+            let $die = $(draggedDieId);
+            let dieValue = $die.dataset.roll;
+            if(!$cardDieTarget.classList.contains('c-card__die')) {
+                // TODO: if multiple die, get the first not empty
+                $cardDieTarget = $cardDieTarget.closest('.c-card').querySelector('.c-card__die');
+            }
+            if(isDiePlayable(guy, $card.dataset.hand, $cardDieTarget.dataset.dice, dieValue)) {
+                $die.remove();
+                $cardDieTarget.dataset.value = dieValue;
+                // TODO: play die only if card has 2 die
+                playCard(guy, $card);
+            }
+        };
+    
+        $card.ondragover = (event) => {
+            event.preventDefault();
         }
-        if(isDiePlayable($card.dataset.hand, $cardDieTarget.dataset.dice, dieValue)) {
-            $card.classList.add('-active');
-        }
-    };
-    $card.ondragleave = event => {
-        let dragoverCounter = $card.dataset.dragCounter || 0;
-        $card.dataset.dragCounter = --dragoverCounter;
-        if($card.dataset.dragCounter <= 0) {
-            $card.classList.remove('-active');
-        }
-    };
-    $card.ondrop = event => {
-        var $cardDieTarget = event.target;
-        let $die = $(draggedDieId);
-        let dieValue = $die.dataset.roll;
-        if(!$cardDieTarget.classList.contains('c-card__die')) {
-            // TODO: if multiple die, get the first not empty
-            $cardDieTarget = $cardDieTarget.closest('.c-card').querySelector('.c-card__die');
-        }
-        if(isDiePlayable($card.dataset.hand, $cardDieTarget.dataset.dice, dieValue)) {
-            $die.remove();
-            $cardDieTarget.dataset.value = dieValue;
-            // TODO: play die only if card has 2 die
-            playCard($card);
-            // resolveCardEffect();
-        }
-    };
 
-    $card.ondragover = (event) => {
-        event.preventDefault();
+        $myDeck.removeChild($myDeck.lastElementChild);
     }
 
     $myHand.append($card);
-    $myDeck.removeChild($myDeck.lastElementChild);
 }
 
-function displayDeck() {
+function displayDeck(guy) {
     $myDeck.innerHTML = '';
-    myDeckList.forEach((cardId, index) => {
+    guy.deck.forEach((cardId, index) => {
         let $card = createElement('div');
         $card.classList.add('c-card')
         $card.innerHTML = `<p class="c-card__back">0</p>`;
@@ -221,10 +236,11 @@ function displayDeck() {
     });
 }
 
-function shuffleDeck() {
-    for (let i = myDeckList.length - 1; i > 0; i--) {
+function shuffleDeck(guy) {
+    console.log('shuffle', guy.id);
+    for (let i = guy.deck.length - 1; i > 0; i--) {
         const j = getRandomNumber(0, i);
-        [myDeckList[i], myDeckList[j]] = [myDeckList[j], myDeckList[i]];
+        [guy.deck[i], guy.deck[j]] = [guy.deck[j], guy.deck[i]];
     }
 }
 

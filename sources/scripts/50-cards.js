@@ -140,13 +140,13 @@ function getCardEffect(effectCode) {
                 effectText += `Do 🤢<b>${effectValue}</b> poison`;
                 break;
             case 'stun':
-                effectText += `Stun 😵 <b>${effectValue}</b> di${effectValue > 1 && 'c'}e`;
+                effectText += `Stun 😵 <b>${effectValue}</b> di${effectValue > 1 ? 'c' : ''}e`;
                 break;
             case 'updie':
                 effectText += `Die value <b>${effectValue}</b>`;
                 break;
             case 'fire':
-                effectText += `Fire 🔥 <b>${effectValue}</b> di${effectValue > 1 && 'c'}e`;
+                effectText += `Fire 🔥 <b>${effectValue}</b> di${effectValue > 1 ? 'c' : ''}e`;
                 break;
             case 'heal':
                 effectText += `Heal ➕<b>${effectValue}</b> life points`;
@@ -158,7 +158,7 @@ function getCardEffect(effectCode) {
                 effectText += `Add 🛡 <b>${effectValue}</b> shield`;
                 break;
             case 'freeze':
-                effectText += `Freeze ❄ <b>${effectValue}</b> di${effectValue > 1 && 'c'}e`;
+                effectText += `Freeze ❄ <b>${effectValue}</b> di${effectValue > 1 ? 'c' : ''}e`;
                 break;
 
         }
@@ -166,31 +166,30 @@ function getCardEffect(effectCode) {
     return effectText;
 }
 
-// Generate basic deck from player class combination
-function createDeck(player) {
-    console.log(player, player.c);
-    player.d = [
-        `${player.c[0]}1`,
-        `${player.c[0]}1`,
-        `${player.c[1]}1`,
-        `${player.c[1]}1`,
-        `${player.c[0]}2`,
-        `${player.c[1]}2`,
-        `${player.c[0]}3`,
-        `${player.c[1]}3`,
-        `${getCardTypes(player.c)}1`
+// Generate basic deck from class combination
+function createDeck(guy) {
+    guy.d = [
+        `${guy.c[0]}1`,
+        `${guy.c[0]}1`,
+        `${guy.c[1]}1`,
+        `${guy.c[1]}1`,
+        `${guy.c[0]}2`,
+        `${guy.c[1]}2`,
+        `${guy.c[0]}3`,
+        `${guy.c[1]}3`,
+        `${getCardTypes(guy.c)}1`
     ]
-    console.log(player.d);
 }
 
-function playCard($card) {
+function playCard(guy, $card) {
     $card.classList.add('-played');
-    resolveCardEffect($card);
-    wait(500, () => discardCard($card.dataset.hand));
+    resolveCardEffect(guy, $card);
+    wait(500, () => discardCard(guy, $card.dataset.hand));
 }
  
-function resolveCardEffect($card) {
-    let cardId = myHandList[$card.dataset.hand];
+function resolveCardEffect(guy, $card) {
+    let guyOpponent = guy.id == 1 ? opponent : player;
+    let cardId = guy.hand[$card.dataset.hand];
     let dieValue = $card.querySelector('[data-die]').dataset.value;
     let effectCode = cardList[cardId].e;
     let effectList = effectCode.split(',');
@@ -199,22 +198,22 @@ function resolveCardEffect($card) {
         let effectValue = getEffectValue(split[1], +dieValue);
         switch (split[0]) {
             case 'damage':
-                updateLifePoints(opponent, -effectValue);
+                updateLifePoints(guyOpponent, -effectValue);
                 break;
             case 'reflect':
-                updateLifePoints(player, -effectValue);
+                updateLifePoints(guy, -effectValue);
                 break;
             case 'shield':
-                player.sh += effectValue;
+                guy.sh += effectValue;
                 break;
             case 'poison':
-                opponent.p += effectValue;
+                guyOpponent.p += effectValue;
                 break;
             case 'stun':
                 break;
             case 'heal':
-                updateLifePoints(player, effectValue);
-                
+                updateLifePoints(guy, effectValue);
+                break;
             case 'updie':
                 generateDie(effectValue);
                 break;

@@ -12,23 +12,29 @@ function generateDie(roll) {
     die.id = `die-${$dieList.childElementCount}` ;
     die.setAttribute('data-roll', roll || getRandomNumber(1, 6));
     die.onmouseover = (event) => {
-        checkPlayableCards(event.currentTarget.getAttribute('data-roll'), ($element) => {
+        if(gameLoadingState > 0) {
+            return;
+        }
+        checkPlayableCards(player, event.currentTarget.getAttribute('data-roll'), ($element) => {
             $element.classList.add('-active');
         });
     }
     die.ondragstart = (event) => {
+        if(gameLoadingState > 0) {
+            return;
+        }
         draggedDieId = event.target.parentNode.id;
-        checkPlayableCards(event.currentTarget.getAttribute('data-roll'), ($element) => {
+        checkPlayableCards(player, event.currentTarget.getAttribute('data-roll'), ($element) => {
             $element.classList.add('-active');
         });
     }
     die.onmouseleave = (event) => {
-        checkPlayableCards(event.currentTarget.getAttribute('data-roll'), ($element) => {
+        checkPlayableCards(player, event.currentTarget.getAttribute('data-roll'), ($element) => {
             $element.classList.remove('-active');
         });
     }
     die.ondragend = (event) => {
-        checkPlayableCards(event.currentTarget.getAttribute('data-roll'), ($element) => {
+        checkPlayableCards(player, event.currentTarget.getAttribute('data-roll'), ($element) => {
             $element.classList.remove('-active');
         });
     }
@@ -55,11 +61,11 @@ function rollDie(die, roll) {
     die.querySelector(`[data-side="${roll}"]`).setAttribute('draggable', 'true');
 }
 
-function checkPlayableCards(dieValue, callback) {
-    myHandList.forEach((cardId, handCardIndex) => {
+function checkPlayableCards(guy, dieValue, callback) {
+    guy.hand.forEach((cardId, handCardIndex) => {
         let cardDie = cardList[cardId].d;
         cardDie.split('|').forEach((die, cardDieIndex) => {
-            let isPlayable = isDiePlayable(handCardIndex, cardDieIndex, dieValue);
+            let isPlayable = isDiePlayable(guy, handCardIndex, cardDieIndex, dieValue);
             if(isPlayable) {
                 let $die = $myHand.querySelector(`[data-hand="${handCardIndex}"] [data-die="${cardDieIndex}"]`);
                 callback($die);
@@ -68,8 +74,8 @@ function checkPlayableCards(dieValue, callback) {
     });
 }
 
-function isDiePlayable(handCardIndex, cardDieIndex, dieValue) {
-    let cardDieValue = cardList[myHandList[handCardIndex]].d;
+function isDiePlayable(guy, handCardIndex, cardDieIndex, dieValue) {
+    let cardDieValue = cardList[guy.hand[handCardIndex]].d;
     var match = cardDieValue.match(/([-+*]?)([0-9])/);
     if (match) {
         cardDieValue = match[2];

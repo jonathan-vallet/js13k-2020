@@ -28,8 +28,14 @@ function createElementFromHTML(htmlString) {
 let gameLoadingState = 0;
 function wait(duration, callback) {
     ++gameLoadingState;
+    if(gameLoadingState == 1) {
+        document.body.classList.add('-loading');
+    }
     setTimeout(() => {
         callback();
         --gameLoadingState;
+        if(gameLoadingState == 0) {
+            document.body.classList.remove('-loading');
+        }
     }, duration);
 }

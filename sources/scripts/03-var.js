@@ -62,11 +62,6 @@ var $screenGame = $('screen-game');
 // Links
 let $dieList = $('c-dieList');
 
-// Game var. Cards are in deck by default. You draw them in your hand, and discard when played. When deck is empty, shuffle discard to create a new deck list
-var myDiscardList = [];
-var myHandList = [];
-var myDeckList = [];
-
 // Map
 var LEVEL_STAGE_NUMBER = 12;
 const MAP_Y_SPACE = 130;
