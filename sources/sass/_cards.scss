@@ -7,6 +7,11 @@ $card-rarity-size: 14px;
         transform: scale(1.2);
         z-index: 2;
     }
+    &.-highlight {
+        .c-card__die {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    }
     &.-played {
         transform: scale(1) translateY(-200px);
         opacity: 0;
@@ -178,7 +183,4 @@ $card-rarity-size: 14px;
     font-size: 14px;
     line-height: 1.2;
     background: rgba(0, 0, 0, 0.2);
-    &.-active {
-        background: rgba(255, 255, 255, 0.2);
-    }
 }

@@ -9,14 +9,14 @@ function generateDie(roll) {
         facesHTML += `<li class="c-die__face" data-side="${faceNumber}">${dotsHtml}</li>`;
     }
     die.innerHTML = facesHTML;
-    die.id = `die-${$dieList.childElementCount}` ;
+    die.id = `die-${++turnDieId}` ;
     die.setAttribute('data-roll', roll || getRandomNumber(1, 6));
     die.onmouseover = (event) => {
         if(gameLoadingState > 0) {
             return;
         }
-        checkPlayableCards(player, event.currentTarget.getAttribute('data-roll'), ($element) => {
-            $element.classList.add('-active');
+        checkPlayableCards(player, event.currentTarget.getAttribute('data-roll'), ($card) => {
+            $card.classList.add('-highlight');
         });
     }
     die.ondragstart = (event) => {
@@ -24,19 +24,19 @@ function generateDie(roll) {
             return;
         }
         draggedDieId = event.target.parentNode.id;
-        checkPlayableCards(player, event.currentTarget.getAttribute('data-roll'), ($element) => {
-            $element.classList.add('-active');
+        checkPlayableCards(player, event.currentTarget.getAttribute('data-roll'), ($card) => {
+            $card.classList.add('-highlight');
         });
     }
     die.onmouseleave = (event) => {
-        checkPlayableCards(player, event.currentTarget.getAttribute('data-roll'), ($element) => {
-            $element.classList.remove('-active');
+        checkPlayableCards(player, event.currentTarget.getAttribute('data-roll'), ($card) => {
+            $card.classList.remove('-highlight');
         });
     }
     die.ondragend = (event) => {
-        checkPlayableCards(player, event.currentTarget.getAttribute('data-roll'), ($element) => {
-            $element.classList.remove('-active');
-        });
+        [...$$$('.c-card.-highlight')].forEach($card => {
+            $card.classList.remove('-highlight');
+        })
     }
     $dieList.append(die);
     if(roll) {
@@ -63,19 +63,86 @@ function rollDie(die, roll) {
 
 function checkPlayableCards(guy, dieValue, callback) {
     guy.hand.forEach((cardId, handCardIndex) => {
-        let cardDie = cardList[cardId].d;
-        cardDie.split('|').forEach((die, cardDieIndex) => {
-            let isPlayable = isDiePlayable(guy, handCardIndex, cardDieIndex, dieValue);
-            if(isPlayable) {
-                let $die = $myHand.querySelector(`[data-hand="${handCardIndex}"] [data-die="${cardDieIndex}"]`);
-                callback($die);
-            }
-        });
+        if(isCardPlayable(cardId, dieValue)) {
+            let $card = $myHand.querySelector(`[data-hand="${handCardIndex}"]`);
+            callback($card);
+        }
     });
 }
 
-function isDiePlayable(guy, handCardIndex, cardDieIndex, dieValue) {
-    let cardDieValue = cardList[guy.hand[handCardIndex]].d;
+function isCardPlayable(cardId, dieValue, dieId = null) {
+    let cardDieList = cardList[cardId].d.split('|');
+    let isPlayable = false;
+    let isDieChecked = false;
+    let secondRemovedDie = null;
+    if(cardDieList.length > 1) {
+        isPlayable = isDiePlayable(cardDieList[0], dieValue);
+        if(isPlayable) {
+            isPlayable = [...$dieList.childNodes].some((die, dieIndex) => {
+                let secondDieValue = die.getAttribute('data-roll');
+                if(!isDieChecked && secondDieValue == dieValue) {
+                    if(die.id != dieId) {
+                        secondRemovedDie = die;
+                    }
+                    isDieChecked = true;
+                    return false;
+                }
+                if(isDiePlayable(cardDieList[1], secondDieValue)) {
+                    if(!secondRemovedDie) {
+                        secondRemovedDie = die;
+                    }
+                }
+                return isDiePlayable(cardDieList[1], secondDieValue);
+            });
+        } else {
+            isPlayable = isDiePlayable(cardDieList[1], dieValue);
+            if(isPlayable) {
+                isPlayable = [...$dieList.childNodes].some(die => {
+                    let secondDieValue = die.getAttribute('data-roll');
+                    if(!isDieChecked && secondDieValue == dieValue) {
+                        if(die.id != dieId) {
+                            secondRemovedDie = die;
+                        }
+                        isDieChecked = true;
+                        return false;
+                    }
+                    if(isDiePlayable(cardDieList[0], secondDieValue)) {
+                        if(!secondRemovedDie) {
+                            secondRemovedDie = die;
+                        }
+                    }
+                    return isDiePlayable(cardDieList[0], secondDieValue);
+                });
+            }
+        }
+    } else if(cardDieList[0] == 'double') {
+        isPlayable = [...$dieList.childNodes].some(die => {
+            let secondDieValue = die.getAttribute('data-roll');
+            if(!isDieChecked && secondDieValue == dieValue) {
+                if(die.id != dieId) {
+                    secondRemovedDie = die;
+                }
+                isDieChecked = true;
+                return false;
+            }
+            if(secondDieValue == dieValue && !secondRemovedDie) {
+                secondRemovedDie = die;
+            }
+            return secondDieValue == dieValue;
+        });
+    } else {
+        isPlayable = isDiePlayable(cardDieList[0], dieValue);
+    }
+    if(dieId) {
+        if(secondRemovedDie) {
+            secondRemovedDie.remove();
+        }
+        $(dieId).remove();
+    }
+    return isPlayable;
+}
+
+function isDiePlayable(cardDieValue, dieValue) {
     var match = cardDieValue.match(/([-+*]?)([0-9])/);
     if (match) {
         cardDieValue = match[2];
@@ -86,11 +153,6 @@ function isDiePlayable(guy, handCardIndex, cardDieIndex, dieValue) {
         }
     }
     if (cardDieValue === '') {
-        // TODO: check if other die is "played" or not
-        return true;
-    }
-    if (cardDieValue === 'double') {
-        // TODO: check if other die is "played" or not
         return true;
     }
     if(cardDieValue === 'odd') {

@@ -91,6 +91,13 @@ function generateOpponent() {
 
 function setOpponentTurn() {
     resolveTurnStart(opponent);
+    console.log(opponent.hand);
+    [...$dieList.childNodes].forEach(die => {
+        console.log('die?', die.getAttribute('data-roll'));
+        checkPlayableCards(opponent, die.getAttribute('data-roll'), $card => {
+            console.log('can play', $card);
+        });
+    });
     wait(2000, () => endTurn(opponent));
 }
 
@@ -111,6 +118,7 @@ function startNextTurn(guyId) {
 }
 
 function resolveTurnStart(guy) {
+    turnDieId = 0; // Resets die id each turn
     guy.sh = 0; // Resets shield
     if(guy.p) { // Apply poison
         updateLifePoints(guy, -guy.p--);
@@ -186,7 +194,7 @@ function drawCard(guy) {
                 // TODO: if multiple die, get the first not empty
                 $cardDieTarget = $card.querySelector('.c-card__die');
             }
-            if(isDiePlayable(guy, $card.dataset.hand, $cardDieTarget.dataset.dice, dieValue)) {
+            if(isCardPlayable(cardId, dieValue)) {
                 $card.classList.add('-active');
             }
         };
@@ -202,14 +210,10 @@ function drawCard(guy) {
             let $die = $(draggedDieId);
             let dieValue = $die.dataset.roll;
             if(!$cardDieTarget.classList.contains('c-card__die')) {
-                // TODO: if multiple die, get the first not empty
                 $cardDieTarget = $cardDieTarget.closest('.c-card').querySelector('.c-card__die');
             }
-            if(isDiePlayable(guy, $card.dataset.hand, $cardDieTarget.dataset.dice, dieValue)) {
-                $die.remove();
-                $cardDieTarget.dataset.value = dieValue;
-                // TODO: play die only if card has 2 die
-                playCard(guy, $card);
+            if(isCardPlayable(cardId, dieValue, draggedDieId)) {
+                playCard(guy, $card, dieValue);
             }
         };
     
@@ -237,7 +241,6 @@ function displayDeck(guy) {
 }
 
 function shuffleDeck(guy) {
-    console.log('shuffle', guy.id);
     for (let i = guy.deck.length - 1; i > 0; i--) {
         const j = getRandomNumber(0, i);
         [guy.deck[i], guy.deck[j]] = [guy.deck[j], guy.deck[i]];

@@ -142,8 +142,8 @@ function getCardEffect(effectCode) {
             case 'stun':
                 effectText += `Stun 😵 <b>${effectValue}</b> di${effectValue > 1 ? 'c' : ''}e`;
                 break;
-            case 'updie':
-                effectText += `Die value <b>${effectValue}</b>`;
+            case 'reroll':
+                effectText += `Roll a <b>${effectValue == '<' ? 'lower' : effectValue}</b> die`;
                 break;
             case 'fire':
                 effectText += `Fire 🔥 <b>${effectValue}</b> di${effectValue > 1 ? 'c' : ''}e`;
@@ -181,21 +181,21 @@ function createDeck(guy) {
     ]
 }
 
-function playCard(guy, $card) {
+function playCard(guy, $card, dieValue) {
     $card.classList.add('-played');
-    resolveCardEffect(guy, $card);
+    resolveCardEffect(guy, $card, dieValue);
     wait(500, () => discardCard(guy, $card.dataset.hand));
 }
  
-function resolveCardEffect(guy, $card) {
+function resolveCardEffect(guy, $card, dieValue) {
     let guyOpponent = guy.id == 1 ? opponent : player;
     let cardId = guy.hand[$card.dataset.hand];
-    let dieValue = $card.querySelector('[data-die]').dataset.value;
     let effectCode = cardList[cardId].e;
     let effectList = effectCode.split(',');
     effectList.forEach((effect, index) => {
         let split = effect.split('|')
-        let effectValue = getEffectValue(split[1], +dieValue);
+        let effectValue = getEffectValue(split[1], +dieValue, guy, guyOpponent);
+        console.log(guy, guyOpponent, effectValue, '??');
         switch (split[0]) {
             case 'damage':
                 updateLifePoints(guyOpponent, -effectValue);
@@ -214,25 +214,35 @@ function resolveCardEffect(guy, $card) {
             case 'heal':
                 updateLifePoints(guy, effectValue);
                 break;
-            case 'updie':
+            case 'reroll':
                 generateDie(effectValue);
                 break;
-        }
+        }   
     });
 }
 
-function getEffectValue(effectTextValue, dieValue) {
+function getEffectValue(effectTextValue, dieValue, guy, guyOpponent) {
     let effectValue = 0;
     let operator = 1;
-    for(let char of effectTextValue) {
+    for(let charIndex = 0; charIndex < effectTextValue.length; ++charIndex) {
+        let char = effectTextValue[charIndex];
         if(char == 'X') {
             effectValue += dieValue;
+        }
+        if(char == 's') { // shield damages
+            effectValue += guy.s;
+        }
+        if(char == 'p') { // poison damages
+            effectValue += guyOpponent.p;
         }
         if(char == '-') {
             operator = -1;
         }
         if(char == '*') {
-            operator = dieValue;
+            effectValue *= effectTextValue[++charIndex];
+        }
+        if(char == '<') {
+            effectValue += getRandomNumber(1, dieValue - 1);
         }
         if(!isNaN(char)) {
             effectValue += operator * +char;

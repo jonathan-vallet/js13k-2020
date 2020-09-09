@@ -66,6 +66,7 @@ let $dieList = $('c-dieList');
 var LEVEL_STAGE_NUMBER = 12;
 const MAP_Y_SPACE = 130;
 var stageList = [];
+let turnDieId = 0; // increament die id during ach turn to be unique
 
 let playersProxy = {
     set: function(obj, prop, newValue) {

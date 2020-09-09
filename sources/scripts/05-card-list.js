@@ -7,7 +7,7 @@ r: rarity
 let simpleCardList = [
     // Warrior
     {c: 'w', r: 1, d: '', e: 'damage|X'},
-    {c: 'w', r: 1, d: '-4', e: 'updie|+2'},
+    {c: 'w', r: 1, d: '-4', e: 'reroll|X+2'},
     {c: 'w', r: 1, d: '-4', e: 'damage|X*2,reflect|X'},
     {c: 'w', r: 1, d: 'odd', e: 'damage|3,stun|1'},
     {c: 'w', r: 2, d: '+4', e: 'damage|X,6:stun|1'},
@@ -26,11 +26,14 @@ let simpleCardList = [
     {c: 'm', r: 3, d: '5|5', e: 'fire|5'},
 
     // Thief
-    {c: 't', r: 1, d: '-2', e: 'damage|X,reroll|X'},
-    {c: 't', r: 1, d: '+3', e: 'damage|3,reroll|<'},
+    // {c: 't', r: 1, d: '-2', e: 'damage|X,reroll|X'},
+    // {c: 't', r: 1, d: '+3', e: 'damage|3,reroll|<'},
+    // {c: 't', r: 1, d: '1|1', e: 'damage|6'},
+    {c: 't', r: 1, d: 'double', e: 'damage|X,reroll|X'},
+    {c: 't', r: 1, d: '3|3', e: 'damage|3,reroll|<'},
     {c: 't', r: 1, d: '1|1', e: 'damage|6'},
-    {c: 't', r: 1, d: '', e: 'updie|+1'},
-    {c: 't', r: 1, d: '', e: 'updie|-1'},
+    {c: 't', r: 1, d: '', e: 'reroll|X+1'},
+    {c: 't', r: 1, d: '', e: 'reroll|X-1'},
     {c: 't', r: 1, d: '', e: 'split|2'},
     {c: 't', r: 1, d: '', e: 'duplicate|X'},
     {c: 't', r: 2, d: '6', e: 'reroll|1,reroll|1'},
@@ -43,7 +46,7 @@ let simpleCardList = [
     {c: 'a', r: 2, d: '-3', e: 'poison|X'},
     {c: 'a', r: 2, d: '-3', e: 'poison|2,reroll|1'},
     {c: 'a', r: 2, d: '', e: 'damage|X,2:poison|2'},
-    {c: 'a', r: 3, d: 'even', e: 'damage|poison'}, //TODO: dégat spécifique!
+    {c: 'a', r: 3, d: 'even', e: 'damage|p'}, //TODO: dégat spécifique!
     {c: 'a', r: 3, d: '2|2', e: 'poison|8'},
 
     // Protector
@@ -51,8 +54,8 @@ let simpleCardList = [
     {c: 'p', r: 1, d: '-4', e: 'damage|4'},
     {c: 'p', r: 1, d: '4+', e: 'damage|X,shield|2'},
     {c: 'p', r: 2, d: '|', e: 'shield|X'},
-    {c: 'p', r: 3, d: '6', e: 'damage|shield'}, //TODO: dégat spécifique!
-    {c: 'p', r: 3, d: 'even', e: 'damage|shield*2'}, //TODO: dégat spécifique!
+    {c: 'p', r: 3, d: '6', e: 'damage|s'}, //TODO: dégat spécifique!
+    {c: 'p', r: 3, d: 'even', e: 'damage|s*2'}, //TODO: dégat spécifique!
     {c: 'p', r: 3, d: '4|4', e: 'shield|12,damage|4'},
 
     // Heal
