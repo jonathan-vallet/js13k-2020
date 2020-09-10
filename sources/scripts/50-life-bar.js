@@ -10,7 +10,7 @@ function updateLifePoints(guy, value) {
             guy.sh = 0;
         }
     }
-    let newLifePoints = Math.max(0, Math.min(100, guy.l + ~~value));
+    let newLifePoints = Math.max(0, Math.min(guy.m, guy.l + ~~value));
     showImpact(newLifePoints, guy);
     guy.l = newLifePoints;
     [...$$$(`.c-life[data-p="${guy.id}"] p`)].forEach($lifeBar => {

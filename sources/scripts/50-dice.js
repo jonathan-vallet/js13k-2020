@@ -62,7 +62,9 @@ function rollDie(die, roll) {
 }
 
 function checkPlayableCards(guy, dieValue, callback) {
+    console.log(guy.hand);
     guy.hand.forEach((cardId, handCardIndex) => {
+        console.log('checkPlayableCards', cardId);
         if(isCardPlayable(cardId, dieValue)) {
             let $card = $myHand.querySelector(`[data-hand="${handCardIndex}"]`);
             callback($card);
@@ -71,6 +73,7 @@ function checkPlayableCards(guy, dieValue, callback) {
 }
 
 function isCardPlayable(cardId, dieValue, dieId = null) {
+    console.log('isCardPlayable', cardId, dieValue, dieId);
     let cardDieList = cardList[cardId].d.split('|');
     let isPlayable = false;
     let isDieChecked = false;

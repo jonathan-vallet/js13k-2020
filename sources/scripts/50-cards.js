@@ -168,17 +168,33 @@ function getCardEffect(effectCode) {
 
 // Generate basic deck from class combination
 function createDeck(guy) {
-    guy.d = [
-        `${guy.c[0]}1`,
-        `${guy.c[0]}1`,
-        `${guy.c[1]}1`,
-        `${guy.c[1]}1`,
-        `${guy.c[0]}2`,
-        `${guy.c[1]}2`,
-        `${guy.c[0]}3`,
-        `${guy.c[1]}3`,
-        `${getCardTypes(guy.c)}1`
-    ]
+    if(guy.id == 1) {
+        // Player deck
+        guy.d = [
+            `${guy.c[0]}1`,
+            `${guy.c[0]}1`,
+            `${guy.c[1]}1`,
+            `${guy.c[1]}1`,
+            `${guy.c[0]}2`,
+            `${guy.c[1]}2`,
+            `${guy.c[0]}3`,
+            `${guy.c[1]}3`,
+            `${getCardTypes(guy.c)}1`
+        ]
+    } else {
+        // Opponent deck
+        guy.d = [
+            `${guy.c[0]}1`,
+            `${guy.c[0]}1`,
+            `${guy.c[1]}1`,
+            `${guy.c[1]}1`,
+            `${guy.c[0]}2`,
+            `${guy.c[0]}2`,
+            `${guy.c[1]}2`,
+            `${guy.c[1]}2`,
+            `${getCardTypes(guy.c)}1`
+        ]
+    }
 }
 
 function playCard(guy, $card, dieValue) {
@@ -210,9 +226,16 @@ function resolveCardEffect(guy, $card, dieValue) {
                 guyOpponent.p += effectValue;
                 break;
             case 'stun':
+                ++guyOpponent.stun;
                 break;
             case 'heal':
                 updateLifePoints(guy, effectValue);
+                break;
+            case 'freeze':
+                ++guyOpponent.freeze;
+                break;
+            case 'burn':
+                ++guyOpponent.burn;
                 break;
             case 'reroll':
                 generateDie(effectValue);

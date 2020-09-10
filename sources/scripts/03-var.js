@@ -79,6 +79,18 @@ let playersProxy = {
         if(obj.p) {
             lifeText += ` 🤢 ${obj.p}`;
         }
+        if(obj.p) {
+            lifeText += ` 🤢 ${obj.p}`;
+        }
+        if(obj.freeze) {
+            lifeText += ` ❄ ${obj.freeze}`;
+        }
+        if(obj.burn) {
+            lifeText += ` 🔥 ${obj.burn}`;
+        }
+        if(obj.stun) {
+            lifeText += ` 😵 ${obj.stun}`;
+        }
         $$(`.c-life[data-p="${obj.id}"] b`).innerText = lifeText;
         if(obj.id == 1) {
             $('playerClass').innerText = getClassName(player.c);
@@ -98,6 +110,9 @@ let player = new Proxy({
     l: 0, // currentlifepoints
     sh: 0, // shield
     p: 0, // poison
+    freeze: 0,
+    burn: 0,
+    stun: 0,
     s: '' // screen (if step is game, class selection, floor selection...)
     /*
     c: class
@@ -113,6 +128,9 @@ let opponent = new Proxy({
     l: 0, // currentlifepoints,
     sh: 3, // shield
     p: 0, // poison
+    freeze: 0,
+    burn: 0,
+    stun: 0,
 }, playersProxy);
 
 let draggedDieId = null; //Save die id when dragged instead of dataTransfer, to be able to check on dragenter

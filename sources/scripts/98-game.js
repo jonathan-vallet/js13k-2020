@@ -91,14 +91,46 @@ function generateOpponent() {
 
 function setOpponentTurn() {
     resolveTurnStart(opponent);
-    console.log(opponent.hand);
+    wait(900, () => playOpponentCard());
+}
+
+function playOpponentCard() {
+    let playableMoveList = {};
     [...$dieList.childNodes].forEach(die => {
-        console.log('die?', die.getAttribute('data-roll'));
+        playableMoveList[die.id] = [];
         checkPlayableCards(opponent, die.getAttribute('data-roll'), $card => {
-            console.log('can play', $card);
+            playableMoveList[die.id].push($card);
         });
     });
-    wait(2000, () => endTurn(opponent));
+
+    // Plays die with lower possibilities first
+    if(!Object.keys(playableMoveList).length) {
+        wait(1500, () => endTurn(opponent));
+        return;
+    }
+
+    let dieToPlay = Object.keys(playableMoveList)[0];
+    let shortestCardList = Object.values(playableMoveList)[0];
+    for (const [die, cardList] of Object.entries(playableMoveList)) {
+        if(cardList.length < shortestCardList.length) {
+            shortestCardList = cardList;
+            dieToPlay = die;
+        }
+    }
+    if(shortestCardList.length) {
+        let cardToPlay = getRandomItem(shortestCardList);
+        wait(1500, () => {
+            let $die = $(dieToPlay);
+            let dieRoll = $die.dataset.roll;
+            console.log(opponent.hand, cardToPlay.dataset.hand);
+            if(isCardPlayable(opponent.hand[cardToPlay.dataset.hand], dieRoll, dieToPlay)) {
+                playCard(opponent, cardToPlay, dieRoll);
+            }
+            playOpponentCard();
+        });
+    } else {
+        endTurn(opponent);
+    }
 }
 
 function showPlayerAvatar() {
