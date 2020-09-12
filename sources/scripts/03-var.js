@@ -49,7 +49,7 @@ var $sellerCardList = $('sellerCardList');
 var $avatarChoiceList = $('avatarChoiceList');
 var $myAvatar = $('myAvatar');
 var $map = $('map');
-var $continueButton = $('continueButton');
+// var $continueButton = $('continueButton');
 // TODO: comme pour les life bar, faire 1 par joueur
 // TODO: pour le HTML, peut-être dupliquer tout ce qui est data-player=1 en 2 au chargement du jeu?
 var $playerAvatar = $('playerAvatar');
@@ -99,9 +99,9 @@ let playersProxy = {
             $('playerLife').innerText = `💖 ${player.l}/${player.m}`;
             $('playerGold').innerText = `💰 ${player.g}`;
             $('playerFloor').innerText = `👣 ${player.f + 1}`;
-            setFromLS('player', obj);
+            // setFromLS('player', obj);
         } else {
-            setFromLS('opponent', obj);
+            // setFromLS('opponent', obj);
         }
     }
 };

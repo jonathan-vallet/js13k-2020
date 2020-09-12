@@ -23,10 +23,10 @@
 
   <div class="l-screen -overBar -active" id="screen-main-menu">
     <p class="a-title">Cardice</p>
+    <p>We cannot find the princess Page... Find your way to defeat the evil monster 😈 and take her back!</p>
     <div class="c-linkList">
-      <button class="js-screen-link" data-screen="screen-rules">Rules</button>
-      <button class="js-screen-link" data-screen="screen-game" id="continueButton">Continue game</button>
       <button class="js-screen-link" data-screen="screen-class-choice">New game</button>
+      <button class="js-screen-link" data-screen="screen-rules">Rules</button>
     </div>
     <div id="allCardList" class="c-cardList" style="display: none"></div>
   </div>
@@ -35,7 +35,7 @@
     <p class="a-title">Menu</p>
     <div class="c-linkList">
       <button class="js-screen-link" data-screen="back">Back</button>
-      <button class="js-screen-link" data-screen="screen-main-menu">Exit to main menu</button>
+      <button class="js-screen-link" data-screen="screen-end">Exit to main menu</button>
     </div>
   </div>
 
@@ -64,9 +64,9 @@
           <li>👿: elite enemy</li>
           <li>😈: Final boss</li>
           <li>💰: Treasure</li>
-          <li>🤑: merchant to buy/sell cards</li>
-          <li>💖: health recovery</li>
-          <li>❓: random event</li>
+          <li>🤑: Buy/sell cards</li>
+          <li>💖: Health recovery</li>
+          <li>❓: Random event</li>
         </ul>
       </li>
       <li>Drag and drop dice on cards to play them</li>
@@ -119,13 +119,13 @@
   <div class="l-screen -overlay" id="screen-reward">
     <p class="a-title">Some rewards!</p>
     <p id="gold-reward"></p>
-    <button class="js-screen-link" data-screen="screen-card-add">Add on a card to your deck</button>
+    <button class="js-screen-link" data-screen="screen-card-add">Add a card to your deck</button>
   </div>
   
   <div class="l-screen -overlay" id="screen-heal">
     <p class="a-title">You are healed!</p>
-    <p>You got 30% of your missing 💖.</p>
-    <button class="js-screen-link" data-screen="screen-map">Continue</button>
+    <p>You are healed of 30% of your missing life 💖.</p>
+    <button class="js-screen-link" data-screen="screen-map">Back to map</button>
   </div>
 
   <div class="l-screen -overlay" id="screen-card-add">
@@ -142,6 +142,21 @@
       <button class="js-screen-link" data-screen="screen-my-deck" id="remove-card-link">Remove a card (💰: 100)</button>
       <button class="js-screen-link" data-screen="screen-map">Back to map</button>
     </div>
+  </div>
+
+  <div class="l-screen -overlay" id="screen-end">
+    <div id="js-victory-content">
+      <p class="a-title">Victory</p>
+      <p>You have found Page! Congratulations!</p>
+    </div>
+    <div id="js-defeat-content">
+    <p class="a-title">Defeat</p>
+    <p >Thank you for playing!</p>
+    </div>
+    <ul id="js-end-score-list">
+    </ul>
+    <p id="js-end-score"></p>
+    <button class="js-screen-link" data-screen="screen-main-menu">Back to menu</button>
   </div>
 
   <script src="scripts/game.js" inline></script>

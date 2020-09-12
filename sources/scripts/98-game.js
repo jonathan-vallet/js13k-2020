@@ -6,10 +6,9 @@ function startGame() {
     bindEvents();
 
     // Check continue game
-    // TODO: Vérifier l'objet player (et redirgier vers la bonne étape en cours, stockée dans le LS aussi, ou suivant la valeur de certains champs?)
-    if(!getFromLS('avatar')) {
-        $continueButton.setAttribute('disabled', 'disabled');
-    }
+    // if(!getFromLS('avatar')) {
+    //     $continueButton.setAttribute('disabled', 'disabled');
+    // }
 }
 
 function bindEvents() {
@@ -47,6 +46,9 @@ function bindEvents() {
 function startFight() {
     ++player.f;
     player.t = 0;
+    if(player.f == 1) {
+        updateLifePoints(player, player.m);
+    }
     // Sets life to max at first floor only
     player.deck = [...player.d]; // Clone deck to get separate instance
     player.hand = [];
@@ -89,7 +91,9 @@ function generateOpponent() {
 
 function setOpponentTurn() {
     resolveTurnStart(opponent);
-    wait(9000, () => playOpponentCard());
+    if(opponent.l > 0) {
+        wait(1000, () => playOpponentCard());
+    }
 }
 
 function playOpponentCard() {
@@ -103,7 +107,7 @@ function playOpponentCard() {
 
     // Plays die with lower possibilities first
     if(!Object.keys(playableMoveList).length) {
-        wait(15000, () => endTurn(opponent));
+        wait(1500, () => endTurn(opponent));
         return;
     }
 

@@ -10,7 +10,6 @@ function generateMap() {
     stageList.push([{ e: 'm' }, { e: 'm' }, { e: 'm' }]); // First stage encounter is a choice of 3 monsters
     let index = 0;
     while(++index < LEVEL_STAGE_NUMBER) {
-        console.log(index % 4 ? 'mmmmmmmeeet' : 'mhhss');
         stageList.push(generateStage(index % 4 ? 'mmmmmmmeeet' : 'mhhss'));
     }
     stageList.push([{ e: 'h' }, { e: 'h' }, { e: 'h' }]); // Adds a heal room before boss
@@ -109,7 +108,6 @@ function drawMap() {
 
             if(!surroundingsCoordinateList[layoutIndex][0]) {
                 let minMax = (layoutIndex == 0 ? 0 : layoutIndex == 1 ? 5 : layoutIndex == 2 ? 3 : 1);
-                console.log(minMax, layoutIndex);
                 surroundingsCoordinateList[layoutIndex][0] = {
                     direction: random() > 0.5 ? -1 : 1,
                     offset: (layoutIndex == 0 ? 80 : layoutIndex == 1 ? 120 : layoutIndex == 2 ? 140 : 180),

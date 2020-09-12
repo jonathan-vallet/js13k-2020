@@ -1,0 +1,12 @@
+#js-end-score-list {
+    max-width: 500px;
+    width: 100%;
+    list-style: none;
+    text-align: left;
+}
+
+#js-end-score-list li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
