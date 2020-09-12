@@ -17,6 +17,15 @@ $card-rarity-size: 14px;
         opacity: 0;
         pointer-events: none;
     }
+    &.-buyable {
+        cursor: pointer;
+    }
+
+    &:not(.-buyable) {
+        .c-card__price {
+            color: #999;
+        }
+    }
 
     b {
         white-space: nowrap;
@@ -79,6 +88,9 @@ $card-rarity-size: 14px;
     }
     &.-h { // heal
         background: $heal-color;
+    }
+    &.-n { // neutral
+        background: $neutral-color;
     }
     &.-mw {
         background: linear-gradient(to bottom, $mage-color 0%,$warrior-color 100%);    

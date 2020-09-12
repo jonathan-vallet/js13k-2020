@@ -17,18 +17,26 @@
     </ul>
     <p>
       <button class="js-screen-link" data-screen="screen-my-deck">My deck</button>
-      <button class="js-screen-link" data-screen="screen-settings">Settings</button>
+      <button class="js-screen-link" data-screen="screen-menu">Menu</button>
     </p>
   </div>
 
-  <div class="l-screen -overBar -active" id="screen-menu">
+  <div class="l-screen -overBar -active" id="screen-main-menu">
     <p class="a-title">Cardice</p>
-    <div>
+    <div class="c-linkList">
       <button class="js-screen-link" data-screen="screen-rules">Rules</button>
       <button class="js-screen-link" data-screen="screen-game" id="continueButton">Continue game</button>
       <button class="js-screen-link" data-screen="screen-class-choice">New game</button>
     </div>
     <div id="allCardList" class="c-cardList" style="display: none"></div>
+  </div>
+
+  <div class="l-screen -overBar -overlay" id="screen-menu">
+    <p class="a-title">Menu</p>
+    <div class="c-linkList">
+      <button class="js-screen-link" data-screen="back">Back</button>
+      <button class="js-screen-link" data-screen="screen-main-menu">Exit to main menu</button>
+    </div>
   </div>
 
   <div class="l-screen -overBar" id="screen-class-choice">
@@ -73,7 +81,7 @@
         </ul>
       </li>
     </ul>
-    <button class="js-screen-link" data-screen="screen-menu">Back</button>
+    <button class="js-screen-link" data-screen="screen-main-menu">Back</button>
   </div>
 
   <div class="l-screen" id="screen-game">
@@ -103,24 +111,37 @@
 
   <div class="l-screen -overlay" id="screen-my-deck">
     <p class="a-title">My deck</p>
+    <p id="my-deck-remove-mention">Click a card to remove it (💰: 100)</p>
     <div id="myDeckList" class="c-cardList"></div>
-    <button class="js-screen-link" data-screen="screen-game">Back</button>
+    <button class="js-screen-link" data-screen="back">Back</button>
   </div>
 
   <div class="l-screen -overlay" id="screen-reward">
     <p class="a-title">Some rewards!</p>
-    <p class="c-reward__gold" id="gold-reward"></p>
-    <button class="js-screen-link" data-screen="screen-card-add">Add a card to your deck</button>
+    <p id="gold-reward"></p>
+    <button class="js-screen-link" data-screen="screen-card-add">Add on a card to your deck</button>
   </div>
+  
   <div class="l-screen -overlay" id="screen-heal">
     <p class="a-title">You are healed!</p>
-    <p class="c-reward__gold">You got 30% of your missing 💖.</p>
+    <p>You got 30% of your missing 💖.</p>
     <button class="js-screen-link" data-screen="screen-map">Continue</button>
   </div>
+
   <div class="l-screen -overlay" id="screen-card-add">
     <p class="a-title">Choose a card</p>
     <div id="rewardCardList" class="c-cardList"></div>
     <button class="js-screen-link" data-screen="screen-map">Skip</button>
+  </div>
+
+  <div class="l-screen -overlay" id="screen-seller">
+    <p class="a-title">Seller</p>
+    <p>Click a card to buy it</p>
+    <div id="sellerCardList" class="c-cardList"></div>
+    <div class="c-linkList">
+      <button class="js-screen-link" data-screen="screen-my-deck" id="remove-card-link">Remove a card (💰: 100)</button>
+      <button class="js-screen-link" data-screen="screen-map">Back to map</button>
+    </div>
   </div>
 
   <script src="scripts/game.js" inline></script>

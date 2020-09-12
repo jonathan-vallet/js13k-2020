@@ -72,9 +72,7 @@ function addDieEffect($die, effect) {
 }
 
 function checkPlayableCards(guy, dieValue, callback) {
-    console.log(guy.hand);
     guy.hand.forEach((cardId, handCardIndex) => {
-        console.log('checkPlayableCards', cardId);
         if(isCardPlayable(cardId, dieValue)) {
             let $card = $myHand.querySelector(`[data-hand="${handCardIndex}"]`);
             callback($card);

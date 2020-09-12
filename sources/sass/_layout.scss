@@ -6,13 +6,14 @@
     justify-content: space-around;
     width: 100%;
     min-height: 100vh;
+    padding: 20px;
     z-index: 3;
     &:not(.-active) {
         display: none;
     }
     &:not(.-overBar) {
         z-index: 1;
-        padding-top: $user-bar-height;
+        padding-top: $user-bar-height + 20px;
     }
     &.-overlay {
         background: rgba($color-black, 0.7);
@@ -41,4 +42,12 @@ button {
 
 [draggable="true"] {
     cursor: grab;
+}
+
+.c-linkList {
+    display: flex;
+    flex-direction: column;
+    > * {
+        margin-bottom: 10px;
+    }
 }

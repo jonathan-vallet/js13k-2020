@@ -10,6 +10,53 @@ function displayMyDeck() {
     displayCardList(player.d, $myDeckList);
 }
 
+function displaySoldCards() {
+    let soldCardList = [];
+    
+    for(cardId in cardList) {
+        if(getCardTypes(cardId) == 'n') {
+            soldCardList.push(cardId);
+        }
+        if(getCardTypes(cardId) == getCardTypes(player.c)) {
+            soldCardList.push(cardId);
+        }
+    }
+
+    displayCardList(soldCardList, $sellerCardList);
+
+    // Adds card price
+    [...$sellerCardList.querySelectorAll('.c-card')].forEach(($card, index) => {
+        let $price = createElement('p');
+        console.log(soldCardList[index], cardList[soldCardList[index]].r);
+        let cardPrice = cardList[soldCardList[index]].r == 1 ? 120 : cardList[soldCardList[index]].r == 2 ? 300: 500;
+        $price.classList.add('c-card__price');
+        $price.innerText = `💰: ${cardPrice}`;
+        if(player.g >= cardPrice) {
+            $card.classList.add('-buyable');
+            $card.onclick = () => {
+                if(player.g >= cardPrice) {
+                    player.g -= cardPrice;
+                    player.d.push(soldCardList[index]);
+                    soldCardList.splice(index, 1);
+                    console.log(soldCardList);
+                    $card.remove();
+                    // Update other cards price
+                    [...$sellerCardList.querySelectorAll('.c-card')].forEach(($card, index) => {
+                        let cardPrice = cardList[soldCardList[index]].r == 1 ? 120 : cardList[soldCardList[index]].r == 2 ? 300: 500;
+                        if(player.g < cardPrice) {
+                            $card.classList.remove('-buyable');
+                        }
+                    });
+                    if(player.g < 100) {
+                        $removeCardLink.setAttribute('disabled', 'disabled');
+                    }
+                }
+            }
+        }
+        $card.append($price);
+    });
+}
+
 function displayRewardCards() {
     // gets 3 random rewards. One of each type, the last from both or double card. No duplicate choice
     let firstRewardList = [];
@@ -27,10 +74,13 @@ function displayRewardCards() {
         }
     }
     let firstReward = getRandomItem(firstRewardList);
-    secondRewardList = secondRewardList.filter(cardId => cardId != firstReward); // In case ser selected a single class, removes first reward from choices
+    secondRewardList = secondRewardList.filter(cardId => cardId != firstReward); // In case player selected a single class, removes first reward from choices
     let secondReward = getRandomItem(secondRewardList);
     thirdRewardList = thirdRewardList.filter(cardId => [firstReward, secondReward].indexOf(cardId) < 0); // Removes selected rewards from choices
-    displayCardList([firstReward, secondReward, getRandomItem(thirdRewardList)], $rewardCardList, addCardToDeck);
+    displayCardList([firstReward, secondReward, getRandomItem(thirdRewardList)], $rewardCardList, () => {
+        player.d.push(cardId);
+        showScreen('screen-map');
+    });
 }
 
 function displayCardList(cardList, $wrapper, callback) {
@@ -44,11 +94,6 @@ function displayCardList(cardList, $wrapper, callback) {
             $card.onclick = () => { callback(cardId); };
         }
     }
-}
-
-function addCardToDeck(cardId) {
-    player.d.push(cardId);
-    showScreen('screen-map');
 }
 
 function displayCard(cardId, handCardIndex = -1) {
@@ -151,7 +196,10 @@ function getCardEffect(effectCode) {
                 effectText += `Heal ➕<b>${effectValue}</b> life points`;
                 break;
             case 'split':
-                effectText += `Split die in <b>${effectValue}</b>`;
+                effectText += `Split die in two`;
+                break;
+            case 'duplicate':
+                effectText += `Duplicate die <b>${effectValue}</b>`;
                 break;
             case 'shield':
                 effectText += `Add 🛡 <b>${effectValue}</b> shield`;
@@ -159,7 +207,6 @@ function getCardEffect(effectCode) {
             case 'freeze':
                 effectText += `Freeze ❄ <b>${effectValue}</b> di${effectValue > 1 ? 'c' : ''}e`;
                 break;
-
         }
     });
     return effectText;
@@ -240,6 +287,16 @@ function resolveCardEffect(guy, $card, dieValue) {
                 console.log('burn?', guyOpponent.burn);
                 break;
             case 'reroll':
+                generateDie(effectValue);
+                break;
+            case 'split':
+                let firstNumber = getRandomNumber(1, effectValue - 1);
+                let secondNumber = effectValue - firstNumber;
+                generateDie(firstNumber);
+                generateDie(secondNumber);
+                break;
+            case 'duplicate':
+                generateDie(effectValue);
                 generateDie(effectValue);
                 break;
         }   

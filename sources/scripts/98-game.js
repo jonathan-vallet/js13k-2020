@@ -16,6 +16,10 @@ function bindEvents() {
     // Sets screen changes for some buttons
     document.body.onclick = (e) => {
         if(e.target.classList.contains('js-screen-link')) {
+            let screen = e.target.getAttribute('data-screen');
+            if(screen == 'back') {
+                screen = `screen-${player.s}`;
+            }
             if(e.target.hasAttribute('data-floor')) {
                 let floor = e.target.getAttribute('data-floor');
                 player.fx = e.target.getAttribute('data-x');
@@ -27,7 +31,7 @@ function bindEvents() {
                 });
                 e.target.classList.add('-selected');
             }
-            showScreen(e.target.getAttribute('data-screen'));
+            showScreen(screen);
         }
     }
 

@@ -188,6 +188,9 @@ function drawRooms() {
             if(room.e == 'h') { // heal room
                 screenLink = 'screen-heal';
             }
+            if(room.e == 's') { // seller room
+                screenLink = 'screen-seller';
+            }
             $mapWrapper.insertAdjacentHTML('beforeend', `<p style="left:${xPosition - fontSize}px;top:${yPosition - fontSize}px" data-floor="${y}" data-x="${x}" class="js-screen-link" data-screen="${screenLink}">${STAGE_TYPE_LIST[room.e]}</p>`);
             if(x === 0) {
                 firstLineCoordinateList.push({x: xPosition, y: yPosition});

@@ -2,7 +2,7 @@
 var BASE_CLASS_LIST = {
     'w': '#e43',
     'm': '#249',
-    't': '#0aa',
+    't': '#0a6',
     'a': '#a28',
     'p': '#f82',
     'h': '#162'
@@ -45,6 +45,7 @@ const STAGE_TYPE_LIST = {
 // Elements
 var $allcardList = $('allCardList');
 var $myDeckList = $('myDeckList');
+var $sellerCardList = $('sellerCardList');
 var $avatarChoiceList = $('avatarChoiceList');
 var $myAvatar = $('myAvatar');
 var $map = $('map');
@@ -60,6 +61,8 @@ var $endTurnButton = $('endTurnButton');
 var $mapWrapper = $('mapWrapper');
 var $rewardCardList = $('rewardCardList');
 var $screenGame = $('screen-game');
+var $removeCardLink = $('remove-card-link');
+
 // Links
 let $dieList = $('c-dieList');
 
@@ -73,7 +76,6 @@ let isMapGenerated = false;
 
 let playersProxy = {
     set: function(obj, prop, newValue) {
-        console.log('set', obj, prop, newValue);
         obj[prop] = newValue;
         let lifeText = `💖 ${obj.l}/${obj.m}`;
         if(obj.sh) {
@@ -96,7 +98,7 @@ let playersProxy = {
             $('playerClass').innerText = getClassName(player.c);
             $('playerLife').innerText = `💖 ${player.l}/${player.m}`;
             $('playerGold').innerText = `💰 ${player.g}`;
-            $('playerFloor').innerText = `👣 ${player.f}`;
+            $('playerFloor').innerText = `👣 ${player.f + 1}`;
             setFromLS('player', obj);
         } else {
             setFromLS('opponent', obj);
@@ -113,12 +115,12 @@ let player = new Proxy({
     freeze: 0,
     burn: 0,
     stun: 0,
+    g: 1000, // gold
+    f: 0, // current floor
     s: '' // screen (if step is game, class selection, floor selection...)
     /*
     c: class
     d: deck
-    g: gold
-    f: current floor
     t: current turn in fight
     */
 }, playersProxy);
@@ -126,7 +128,7 @@ let opponent = new Proxy({
     id: 2,
     m: 15, // max life points
     l: 0, // currentlifepoints,
-    sh: 3, // shield
+    sh: 0, // shield
     p: 0, // poison
     freeze: 0,
     burn: 0,

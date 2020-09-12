@@ -6,6 +6,9 @@ function showScreen(screen) {
     if(screen == 'screen-map') {
         if(player.s != 'map') {
             player.s = 'map';
+            if(!player.d) {
+                createDeck(player);
+            }
             if(!isMapGenerated) {
                 generateMap();
                 isMapGenerated = true;
@@ -26,16 +29,39 @@ function showScreen(screen) {
         }, 500);
     }
     if(screen == 'screen-game') {
-        if(!player.d) {
-            createDeck(player);
-        }
         if(player.s != 'game') {
             player.s = 'game';
             startFight();
         }
     }
     if(screen == 'screen-my-deck') {
+        $('my-deck-remove-mention').style.display = 'none';
         displayMyDeck();
+        if(player.s == 'seller' && player.g > 100) {
+            $('my-deck-remove-mention').style.display = '';
+            [...$myDeckList.querySelectorAll('.c-card')].forEach(($card, index) => {
+                $card.onclick = () => {
+                    if(player.g >= 100) {
+                        player.g -= 100;
+                        player.d.splice(index, 1);
+                        $card.remove();
+                    }
+                    showScreen('screen-seller');
+                }
+            });
+        }
+    }
+    if(screen == 'screen-seller') {
+        if(player.s != 'seller') {
+            ++player.f;
+            player.s = 'seller';
+        }
+        if(player.g < 100) {
+            $removeCardLink.setAttribute('disabled', 'disabled');
+        } else {
+            $removeCardLink.removeAttribute('disabled');
+        }
+        displaySoldCards();
     }
     if(screen == 'screen-heal') {
         ++player.f;
@@ -48,8 +74,6 @@ function showScreen(screen) {
     if(screen == 'screen-class-choice') {
         // new game, inits player data
         setMyAvatar('w', 'm');
-        player.g = 100;
-        player.f = 0;
     }
     if(screen == 'screen-reward') {
         // Get gold reward from mob difficulty

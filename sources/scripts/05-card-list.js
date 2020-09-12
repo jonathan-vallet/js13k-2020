@@ -29,12 +29,7 @@ let simpleCardList = [
     {c: 't', r: 1, d: '-2', e: 'damage|X,reroll|X'},
     {c: 't', r: 1, d: '+3', e: 'damage|3,reroll|<'},
     {c: 't', r: 1, d: '1|1', e: 'damage|6'},
-    {c: 't', r: 1, d: '', e: 'reroll|X+1'},
-    {c: 't', r: 1, d: '', e: 'reroll|X-1'},
-    {c: 't', r: 1, d: '', e: 'split|2'},
-    {c: 't', r: 1, d: '', e: 'duplicate|X'},
     {c: 't', r: 2, d: '6', e: 'reroll|1,reroll|1'},
-    {c: 't', r: 3, d: '', e: 'split|3'},
     {c: 't', r: 3, d: '1|1', e: 'damage|12'},
 
     // Assassin
@@ -43,26 +38,33 @@ let simpleCardList = [
     {c: 'a', r: 1, d: '+4', e: 'poison|1,reroll|X'},
     {c: 'a', r: 2, d: '-3', e: 'poison|2,reroll|<'},
     {c: 'a', r: 2, d: '', e: 'damage|X,2:poison|2'},
-    {c: 'a', r: 3, d: 'even', e: 'damage|p'}, //TODO: dégat spécifique!
+    {c: 'a', r: 3, d: 'even', e: 'damage|p'},
     {c: 'a', r: 3, d: '2|2', e: 'poison|8'},
 
     // Protector
     {c: 'p', r: 1, d: '', e: 'shield|X'},
-    {c: 'p', r: 1, d: '4+', e: 'damage|X,shield|2'},
+    {c: 'p', r: 1, d: '-4', e: 'damage|X,shield|2'},
     {c: 'p', r: 1, d: '-4', e: 'damage|4'},
     {c: 'p', r: 2, d: '|', e: 'shield|X'},
-    {c: 'p', r: 3, d: '6', e: 'damage|s'}, //TODO: dégat spécifique!
-    {c: 'p', r: 3, d: 'even', e: 'damage|s*2'}, //TODO: dégat spécifique!
+    {c: 'p', r: 3, d: '6', e: 'damage|s'},
+    {c: 'p', r: 3, d: 'even', e: 'damage|s*2'},
     {c: 'p', r: 3, d: '4|4', e: 'shield|12,damage|4'},
 
     // Heal
     {c: 'h', r: 1, d: '', e: 'heal|3'},
-    {c: 'h', r: 1, d: '4+', e: 'damage|X,heal|2'},
+    {c: 'h', r: 1, d: '-4', e: 'damage|X,heal|2'},
     {c: 'h', r: 1, d: '-4', e: 'damage|3'},
     {c: 'h', r: 2, d: '|', e: 'shield|X'},
     {c: 'h', r: 3, d: '3|3', e: 'heal|12,damage|3'},
 
+    // Neutral
+    {c: 'n', r: 1, d: '-5', e: 'reroll|X+1'},
+    {c: 'n', r: 1, d: '+2', e: 'reroll|X-1'},
+    {c: 'n', r: 2, d: '+2', e: 'split|X'},
+    {c: 'n', r: 3, d: '', e: 'duplicate|X'},
+
     // Warrior + mage
+    {c: 'mw', r: 1, d: '', e: 'odd:damage|3,burn|1,freeze|1'},
     {c: 'mw', r: 2, d: '', e: 'damage|3,burn|1,freeze|1'},
 
     // Thief + warrior
