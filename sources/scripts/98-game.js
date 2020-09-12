@@ -98,19 +98,19 @@ function setOpponentTurn() {
 
 function playOpponentCard() {
     let playableMoveList = {};
-    [...$dieList.childNodes].forEach(die => {
+    [...$dieList.querySelectorAll('.c-die')].forEach(die => {
         playableMoveList[die.id] = [];
         checkPlayableCards(opponent, die.getAttribute('data-roll'), $card => {
             playableMoveList[die.id].push($card);
         });
     });
 
-    // Plays die with lower possibilities first
     if(!Object.keys(playableMoveList).length) {
         wait(1500, () => endTurn(opponent));
         return;
     }
 
+    // Plays die with lower possibilities first
     let dieToPlay = Object.keys(playableMoveList)[0];
     let shortestCardList = Object.values(playableMoveList)[0];
     for (const [die, cardList] of Object.entries(playableMoveList)) {
@@ -124,10 +124,14 @@ function playOpponentCard() {
         wait(1500, () => {
             let $die = $(dieToPlay);
             let dieRoll = $die.dataset.roll;
-            if(isCardPlayable(opponent.hand[cardToPlay.dataset.hand], dieRoll, dieToPlay)) {
-                playCard(opponent, cardToPlay, dieRoll);
+            if(isCardPlayable(opponent.hand[cardToPlay.dataset.hand], dieRoll)) {
+                moveDieToCard($die, cardToPlay);
+                wait(400, () => {
+                    $die.parentNode.remove();
+                    playCard(opponent, cardToPlay, dieRoll);
+                })
             }
-            playOpponentCard();
+            wait(500, playOpponentCard);
         });
     } else {
         endTurn(opponent);
@@ -163,18 +167,24 @@ function resolveTurnStart(guy) {
         generateDie();
     }
 
+    console.log('free?', guy.freeze);
+    guy.freeze = 2;
     if(guy.freeze) {
         // Reduce highest dice to 1
         for(let i = 0; i < guy.freeze; ++i) {
-            let $highestDie = $dieList.firstChild;
-            [...$dieList.childNodes].forEach(($die) => {
-                if($die.dataset.roll < $highestDie.dataset.roll) {
+            let $highestDie = null;
+            [...$dieList.querySelectorAll('.c-die:not([data-freeze]')].forEach(($die) => {
+                if(!$highestDie || $die.dataset.roll < $highestDie.dataset.roll) {
                     $highestDie = $die;
                 }
             });
-            console.log($highestDie);
-            $highestDie.dataset.roll = 1;
-            $effect = addDieEffect($highestDie, '❄');
+            if($highestDie) {
+                wait(0, () => {
+                    rollDie($highestDie, 1)
+                });
+                $highestDie.dataset.freeze = 1;
+                $effect = addDieEffect($highestDie, '❄');
+            }
         }
         guy.freeze = 0;
     }

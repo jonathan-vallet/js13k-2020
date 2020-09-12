@@ -66,6 +66,7 @@ $die-size: 70px;
         border-right: #{$die-size / 17.12} solid #fff;
       }
 }
+
 .c-die__effect {
     position: absolute;
     top: calc(100% + 10px);

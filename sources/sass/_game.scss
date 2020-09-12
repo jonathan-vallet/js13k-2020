@@ -63,28 +63,32 @@ body {
   }
 }
 
-#screen-class-choice {
-  p {
-    text-shadow: 0 0 2px $color-black, 0 0 1px $color-black, 0 0 1px $color-black, 0 0 1px $color-black;
-  }
+#screen-class-choice p,
+.c-die__effect {
+  text-shadow: 0 0 2px $color-black, 0 0 1px $color-black, 0 0 1px $color-black, 0 0 1px $color-black;
 }
 
 #endTurnButton {
   position: absolute;
   bottom: 50px;
-  right: 150px;
+  right: 250px;
 }
 
 #c-dieList {
   position: absolute;
-  bottom: 50px;
-  left: 300px;
-  width: calc(100% - 800px);
+  top: calc(50% + #{$card-height / 2 + 50px});
+  left: calc(50% - 400px);
+  width: 800px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   perspective: 600px;
+
+  > div {
+    position: relative;
+    transition: transform 0.4s ease-in-out;
+  }
 }
 
 #rewardCardList {

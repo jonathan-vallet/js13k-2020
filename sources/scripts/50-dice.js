@@ -1,4 +1,5 @@
 function generateDie(roll) {
+    let dieWrapper = createElement('div');
     let die = createElement('ol');
     die.classList.add('c-die');
     random() > 0.5 && die.classList.add('-odd-roll');
@@ -10,7 +11,8 @@ function generateDie(roll) {
     }
     die.innerHTML = facesHTML;
     die.id = `die-${++turnDieId}` ;
-    die.setAttribute('data-roll', roll || getRandomNumber(1, 6));
+    let dieRoll = roll || getRandomNumber(1, 6);
+    die.setAttribute('data-roll', dieRoll);
     die.onmouseover = (event) => {
         if(gameLoadingState > 0) {
             return;
@@ -38,7 +40,10 @@ function generateDie(roll) {
             $card.classList.remove('-highlight');
         })
     }
-    $dieList.append(die);
+    dieWrapper.append(die);
+    $dieList.append(dieWrapper);
+    dieList.push(dieRoll);
+
     if(roll) {
         rollDie(die, roll);
     }
@@ -50,23 +55,23 @@ function rollDice() {
     });
 }
 
-function rollDie(die, roll) {
+function rollDie($die, roll) {
     if(!roll) {
-        die.classList.toggle('-odd-roll');
+        $die.classList.toggle('-odd-roll');
         roll = getRandomNumber(1, 6);
     }
-    die.setAttribute('data-roll', roll);
-    let dragabbleDie = die.querySelector(`[draggable]`);
+    $die.setAttribute('data-roll', roll);
+    let dragabbleDie = $die.querySelector(`[draggable]`);
     dragabbleDie && dragabbleDie.removeAttribute('draggable');
-    die.querySelector(`[data-side="${roll}"]`).setAttribute('draggable', 'true');
+    $die.querySelector(`[data-side="${roll}"]`).setAttribute('draggable', 'true');
 }
 
 function addDieEffect($die, effect) {
-    let $effect = $die.querySelector('.c-die__effect');
+    let $effect = $die.nextSibling;
     if(!$effect) {
-        $effect = createElement('li');
+        $effect = createElement('p');
         $effect.classList.add('c-die__effect');
-        $die.append($effect);
+        $die.after($effect);
     }
     $effect.innerText += effect;
 }
@@ -88,7 +93,7 @@ function isCardPlayable(cardId, dieValue, dieId = null) {
     if(cardDieList.length > 1) {
         isPlayable = isDiePlayable(cardDieList[0], dieValue);
         if(isPlayable) {
-            isPlayable = [...$dieList.childNodes].some((die, dieIndex) => {
+            isPlayable = [...$dieList.querySelectorAll('.c-die')].some((die, dieIndex) => {
                 let secondDieValue = die.getAttribute('data-roll');
                 if(!isDieChecked && secondDieValue == dieValue) {
                     if(die.id != dieId) {
@@ -107,7 +112,7 @@ function isCardPlayable(cardId, dieValue, dieId = null) {
         } else {
             isPlayable = isDiePlayable(cardDieList[1], dieValue);
             if(isPlayable) {
-                isPlayable = [...$dieList.childNodes].some(die => {
+                isPlayable = [...$dieList.querySelectorAll('.c-die')].some(die => {
                     let secondDieValue = die.getAttribute('data-roll');
                     if(!isDieChecked && secondDieValue == dieValue) {
                         if(die.id != dieId) {
@@ -126,7 +131,7 @@ function isCardPlayable(cardId, dieValue, dieId = null) {
             }
         }
     } else if(cardDieList[0] == 'double') {
-        isPlayable = [...$dieList.childNodes].some(die => {
+        isPlayable = [...$dieList.querySelectorAll('.c-die')].some(die => {
             let secondDieValue = die.getAttribute('data-roll');
             if(!isDieChecked && secondDieValue == dieValue) {
                 if(die.id != dieId) {
@@ -145,9 +150,9 @@ function isCardPlayable(cardId, dieValue, dieId = null) {
     }
     if(dieId) {
         if(secondRemovedDie) {
-            secondRemovedDie.remove();
+            secondRemovedDie.parentNode.remove();
         }
-        $(dieId).remove();
+        $(dieId).parentNode.remove();
     }
     return isPlayable;
 }
@@ -171,4 +176,11 @@ function isDiePlayable(cardDieValue, dieValue) {
     if(cardDieValue === 'even') {
         return dieValue % 2 == 0;
     }
+}
+
+function moveDieToCard($die, $card) {
+    let diePosition = $die.getBoundingClientRect();
+    let cardPosition = $card.getBoundingClientRect();
+    let translate = `translate(${- diePosition.x + cardPosition.x + cardPosition.width / 2}px, ${- diePosition.y + cardPosition.y + cardPosition.height * 0.4}px)`
+    $die.style.transform = translate;
 }

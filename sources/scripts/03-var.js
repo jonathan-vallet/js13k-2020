@@ -65,11 +65,12 @@ var $removeCardLink = $('remove-card-link');
 
 // Links
 let $dieList = $('c-dieList');
+let dieList = [];
 
 // Map
-var LEVEL_STAGE_NUMBER = 15;
+const LEVEL_STAGE_NUMBER = 15;
 const MAP_Y_SPACE = 130;
-var stageList = [];
+let stageList = [];
 let turnDieId = 0; // increament die id during ach turn to be unique
 
 let isMapGenerated = false;

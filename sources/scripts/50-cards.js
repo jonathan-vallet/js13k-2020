@@ -270,18 +270,15 @@ function resolveCardEffect(guy, $card, dieValue) {
                 break;
             case 'stun':
                 ++guyOpponent.stun;
-                console.log('stun?', guyOpponent.stun);
                 break;
             case 'heal':
                 updateLifePoints(guy, effectValue);
                 break;
             case 'freeze':
                 ++guyOpponent.freeze;
-                console.log('freeze?', guyOpponent.freeze);
                 break;
             case 'burn':
                 ++guyOpponent.burn;
-                console.log('burn?', guyOpponent.burn);
                 break;
             case 'reroll':
                 generateDie(effectValue);

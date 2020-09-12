@@ -46,7 +46,7 @@ $card-rarity-size: 14px;
 .c-card__content {
     width: $card-width;
     height: $card-height;
-    border: 2px solid #999;
+    border: 2px solid #bbb;
     backface-visibility: hidden;
     perspective-origin: 50% 50%;
     transform-style: preserve-3d;
@@ -146,7 +146,13 @@ $card-rarity-size: 14px;
     left: 20px;
     right: 20px;
     font-size: 13px;
-    line-height: 1.5; 
+    line-height: 1.5;
+
+    br {
+        display: block;
+        margin-bottom: 10px;
+        content: '';
+    }
 }
 
 .c-card__back {
