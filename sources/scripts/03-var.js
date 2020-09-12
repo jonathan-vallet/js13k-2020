@@ -67,7 +67,7 @@ var $removeCardLink = $('remove-card-link');
 let $dieList = $('c-dieList');
 
 // Map
-var LEVEL_STAGE_NUMBER = 12;
+var LEVEL_STAGE_NUMBER = 15;
 const MAP_Y_SPACE = 130;
 var stageList = [];
 let turnDieId = 0; // increament die id during ach turn to be unique
@@ -109,7 +109,7 @@ let playersProxy = {
 let player = new Proxy({
     id: 1,
     m: 100, // max life points
-    l: 0, // currentlifepoints
+    l: 100, // currentlifepoints
     sh: 0, // shield
     p: 0, // poison
     freeze: 0,
@@ -127,7 +127,7 @@ let player = new Proxy({
 let opponent = new Proxy({
     id: 2,
     m: 15, // max life points
-    l: 0, // currentlifepoints,
+    l: 15, // currentlifepoints,
     sh: 0, // shield
     p: 0, // poison
     freeze: 0,

@@ -10,8 +10,8 @@ function generateMap() {
     stageList.push([{ e: 'm' }, { e: 'm' }, { e: 'm' }]); // First stage encounter is a choice of 3 monsters
     let index = 0;
     while(++index < LEVEL_STAGE_NUMBER) {
-        // TODO: improve stage repartitions. add a treasure in middle of the way?
-        stageList.push(generateStage());
+        console.log(index % 4 ? 'mmmmmmmeeet' : 'mhhss');
+        stageList.push(generateStage(index % 4 ? 'mmmmmmmeeet' : 'mhhss'));
     }
     stageList.push([{ e: 'h' }, { e: 'h' }, { e: 'h' }]); // Adds a heal room before boss
     stageList.push([{ e: 'b' }]); // Last stage is a boss
@@ -20,12 +20,12 @@ function generateMap() {
     requestAnimationFrame(updateMapBackground);
 }
 
-function generateStage() {
+function generateStage(roomPossibilities) {
     var roomNumber = getRandomNumber(3, 4); // 3 or 4 rooms per stage max
     var stage = [];
     let roomIndex = 0;
     while(roomIndex++ < roomNumber) {
-        stage.push({ 'e': getRandomItem(Array.from('mmmmmeetrrrsh')) });
+        stage.push({ 'e': getRandomItem(Array.from(roomPossibilities)) });
     }
     return stage;
 }
@@ -140,7 +140,6 @@ function drawMap() {
                     surroundingsCoordinateList[layoutIndex][index + 1].min = surroundingsCoordinateList[layoutIndex][index + 1].offset - minMax;
                     surroundingsCoordinateList[layoutIndex][index + 1].max = surroundingsCoordinateList[layoutIndex][index + 1].offset + minMax;
                     surroundingsCoordinateList[layoutIndex][index + 1].offset += getRandomNumber(-minMax, minMax);
-                    console.log(surroundingsCoordinateList);
                 }
     
                 surroundingsCoordinateList[layoutIndex][index + 1].offset += surroundingsCoordinateList[layoutIndex][index + 1].direction * surroundingsCoordinateList[layoutIndex][index + 1].speed;
@@ -191,7 +190,9 @@ function drawRooms() {
             if(room.e == 's') { // seller room
                 screenLink = 'screen-seller';
             }
-            $mapWrapper.insertAdjacentHTML('beforeend', `<p style="left:${xPosition - fontSize}px;top:${yPosition - fontSize}px" data-floor="${y}" data-x="${x}" class="js-screen-link" data-screen="${screenLink}">${STAGE_TYPE_LIST[room.e]}</p>`);
+            // Adds some random symbol
+            let roomSymbol = (y > 0 && y < stageList.length - 2 && random() < 0.18) ? STAGE_TYPE_LIST['r'] : STAGE_TYPE_LIST[room.e];
+            $mapWrapper.insertAdjacentHTML('beforeend', `<p style="left:${xPosition - fontSize}px;top:${yPosition - fontSize}px" data-floor="${y}" data-x="${x}" class="js-screen-link" data-screen="${screenLink}">${roomSymbol}</p>`);
             if(x === 0) {
                 firstLineCoordinateList.push({x: xPosition, y: yPosition});
             }

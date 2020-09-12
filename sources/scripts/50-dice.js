@@ -81,7 +81,6 @@ function checkPlayableCards(guy, dieValue, callback) {
 }
 
 function isCardPlayable(cardId, dieValue, dieId = null) {
-    console.log('isCardPlayable', cardId, dieValue, dieId);
     let cardDieList = cardList[cardId].d.split('|');
     let isPlayable = false;
     let isDieChecked = false;

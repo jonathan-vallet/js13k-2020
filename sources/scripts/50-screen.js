@@ -4,24 +4,23 @@ function showScreen(screen) {
     $userBar.style.display = $(screen).classList.contains('-overBar') ? 'none' : '';
     
     if(screen == 'screen-map') {
-        if(player.s != 'map') {
-            player.s = 'map';
-            if(!player.d) {
-                createDeck(player);
-            }
-            if(!isMapGenerated) {
-                generateMap();
-                isMapGenerated = true;
-            }
-            if(player.f == 0) {
-                [...$$$(`[data-floor="${player.f}"]`)].forEach($floor => {
-                    $floor.classList.add('-active');
-                });
-            } else {
-                $lastFloor = $$(`[data-floor="${player.f - 1}"].-selected`);
-                for(let stageX of stageList[player.f - 1][$lastFloor.getAttribute('data-x')].l) {
-                    $$(`[data-floor="${player.f}"][data-x="${stageX}"]`).classList.add('-active');
-                }
+        player.s = 'map';
+        if(!player.d) {
+            createDeck(player);
+        }
+        if(!isMapGenerated) {
+            generateMap();
+            isMapGenerated = true;
+        }
+        if(player.f == 0) {
+            [...$$$(`[data-floor="${player.f}"]`)].forEach($floor => {
+                $floor.classList.add('-active');
+            });
+        } else {
+            console.log('next floor???');
+            $lastFloor = $$(`[data-floor="${player.f - 1}"].-selected`);
+            for(let stageX of stageList[player.f - 1][$lastFloor.getAttribute('data-x')].l) {
+                $$(`[data-floor="${player.f}"][data-x="${stageX}"]`).classList.add('-active');
             }
         }
         setTimeout(() => {
@@ -76,6 +75,9 @@ function showScreen(screen) {
         setMyAvatar('w', 'm');
     }
     if(screen == 'screen-reward') {
+        if(player.s == 'map') { // Reward stage
+            ++player.f;
+        }
         // Get gold reward from mob difficulty
         player.g += opponent.m;
         $('gold-reward').innerText = `💰: ${opponent.m}`;

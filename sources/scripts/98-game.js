@@ -48,9 +48,6 @@ function startFight() {
     ++player.f;
     player.t = 0;
     // Sets life to max at first floor only
-    if(player.f == 1) {
-        updateLifePoints(player, player.m);
-    }
     player.deck = [...player.d]; // Clone deck to get separate instance
     player.hand = [];
     player.discard = [];
@@ -123,7 +120,6 @@ function playOpponentCard() {
         wait(1500, () => {
             let $die = $(dieToPlay);
             let dieRoll = $die.dataset.roll;
-            console.log(opponent.hand, cardToPlay.dataset.hand);
             if(isCardPlayable(opponent.hand[cardToPlay.dataset.hand], dieRoll, dieToPlay)) {
                 playCard(opponent, cardToPlay, dieRoll);
             }

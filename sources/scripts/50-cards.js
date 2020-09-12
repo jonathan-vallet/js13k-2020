@@ -27,7 +27,6 @@ function displaySoldCards() {
     // Adds card price
     [...$sellerCardList.querySelectorAll('.c-card')].forEach(($card, index) => {
         let $price = createElement('p');
-        console.log(soldCardList[index], cardList[soldCardList[index]].r);
         let cardPrice = cardList[soldCardList[index]].r == 1 ? 120 : cardList[soldCardList[index]].r == 2 ? 300: 500;
         $price.classList.add('c-card__price');
         $price.innerText = `💰: ${cardPrice}`;
@@ -38,7 +37,6 @@ function displaySoldCards() {
                     player.g -= cardPrice;
                     player.d.push(soldCardList[index]);
                     soldCardList.splice(index, 1);
-                    console.log(soldCardList);
                     $card.remove();
                     // Update other cards price
                     [...$sellerCardList.querySelectorAll('.c-card')].forEach(($card, index) => {
@@ -257,7 +255,6 @@ function resolveCardEffect(guy, $card, dieValue) {
     effectList.forEach((effect, index) => {
         let split = effect.split('|')
         let effectValue = getEffectValue(split[1], +dieValue, guy, guyOpponent);
-        console.log(guy, guyOpponent, effectValue, '??');
         switch (split[0]) {
             case 'damage':
                 updateLifePoints(guyOpponent, -effectValue);
