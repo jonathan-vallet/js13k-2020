@@ -64,7 +64,7 @@ function startFight() {
 
 function endFight() {
     if(player.l <= 0) {
-        console.log('you lose');
+        showScreen('screen-end');
     } else {
         showScreen('screen-reward');
     }
@@ -80,7 +80,7 @@ function generateOpponent() {
     opponent.discard = [];
     // Draws opponent avatar
     $opponentAvatar.firstChild && $opponentAvatar.firstChild.remove();
-    $opponentAvatar.append(createAvatar(opponent.c[0], opponent.c[1]));
+    $opponentAvatar.append(createAvatar(opponent.c[0], opponent.c[1], false ));
     // Sets opponent life points from stage and monster type (monster, elite, boss)
     let stageType = stageList[player.f - 1][player.fx].e;
     let multiplier = stageType == 'b' ? 3 : stageType == 'e' ? 1.5 : 1;
@@ -140,7 +140,7 @@ function playOpponentCard() {
 
 function showPlayerAvatar() {
     $playerAvatar.firstChild && $playerAvatar.firstChild.remove();
-    $playerAvatar.append(createAvatar(player.c[0], player.c[1]));
+    $playerAvatar.append(createAvatar(player.c[0], player.c[1], false));
 }
 
 function startNextTurn(guyId) {
@@ -159,7 +159,7 @@ function resolveTurnStart(guy) {
     turnDieId = 0; // Resets die id each turn
     guy.sh = 0; // Resets shield
     if(guy.p) { // Apply poison
-        updateLifePoints(guy, -guy.p--);
+        updateLifePoints(guy, -guy.p--, '🤢 poison');
     }
     // Removes all die and generate new ones during 5 firstturns
     $dieList.innerHTML = '';
@@ -167,8 +167,6 @@ function resolveTurnStart(guy) {
         generateDie();
     }
 
-    console.log('free?', guy.freeze);
-    guy.freeze = 2;
     if(guy.freeze) {
         // Reduce highest dice to 1
         for(let i = 0; i < guy.freeze; ++i) {
@@ -199,19 +197,20 @@ function resolveTurnStart(guy) {
             $dieToBurn.dataset.burn = 1;
             $effect = addDieEffect($dieToBurn, '🔥');
         }
-        
         guy.burn = 0;
     }
     if(guy.stun) {
         // Stun a random die
         for(let i = 0; i < guy.stun; ++i) {
-            $notStunedDieList = $dieList.querySelectorAll('.c-die:not([data-burn]');
+            $notStunedDieList = $dieList.querySelectorAll('.c-die:not([data-stun]');
             if(!$notStunedDieList) {
                 break;
             }
             $dieToStun = $notStunedDieList.item(getRandomNumber(0, $notStunedDieList.length - 1));
-            $dieToStun.dataset.stun = 1;
-            $effect = addDieEffect($dieToStun, '😵');
+            if($dieToStun) {
+                $dieToStun.dataset.stun = 1;
+                $effect = addDieEffect($dieToStun, '😵');
+            }
         }
         guy.stun = 0;
     }
@@ -299,8 +298,15 @@ function drawCard(guy) {
             if(!$cardDieTarget.classList.contains('c-card__die')) {
                 $cardDieTarget = $cardDieTarget.closest('.c-card').querySelector('.c-card__die');
             }
+            let isDieBurned = $die.dataset.burn;
             if(isCardPlayable(cardId, dieValue, draggedDieId)) {
+                if(isDieBurned) {
+                    updateLifePoints(guy, -5, '🔥 burn');
+                }
                 playCard(guy, $card, dieValue);
+            } else {
+                showImpact(guy, '😵 stun');
+                $card.classList.remove('-active');
             }
         };
     

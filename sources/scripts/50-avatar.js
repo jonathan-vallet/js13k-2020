@@ -35,7 +35,7 @@ function setMyAvatar(type1, type2) {
     player.c = type1 + type2;
 }
 
-function createAvatar(type1, type2) {
+function createAvatar(type1, type2, withName = true) {
     let canvasWrapper = createElement('div');
     let canvas = createElement('canvas');
     let ctx = canvas.getContext('2d');
@@ -49,7 +49,9 @@ function createAvatar(type1, type2) {
     addHoverEffect(canvasWrapper);
 
     canvasWrapper.append(canvas);
-    canvasWrapper.insertAdjacentHTML('beforeend', `<p>${getClassName(type1 + type2)}</p>`);
+    if(withName) {
+        canvasWrapper.insertAdjacentHTML('beforeend', `<p>${getClassName(type1 + type2)}</p>`);
+    }
     return canvasWrapper;
 }
 

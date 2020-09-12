@@ -64,7 +64,9 @@ body {
 }
 
 #screen-class-choice p,
-.c-die__effect {
+.c-die__effect,
+#playerAvatar p,
+#opponentAvatar p {
   text-shadow: 0 0 2px $color-black, 0 0 1px $color-black, 0 0 1px $color-black, 0 0 1px $color-black;
 }
 
@@ -92,7 +94,7 @@ body {
 }
 
 #rewardCardList {
-  width: 490px;
+  width: #{$card-width * 3 + 10px * 2};
 }
 
 #game-canvas {
@@ -102,4 +104,8 @@ body {
   width: 100%;
   height: 100%; 
   background: #cee;
+}
+
+#screen-game {
+  overflow: hidden;
 }

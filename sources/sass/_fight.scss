@@ -14,14 +14,30 @@
 #opponentAvatar {
     p {
         position: absolute;
-        opacity: 0;
+        opacity: 0.5;
         font-size: 40px;
-        transform: scale(0);
-        transition: all 0.3s ease;
+        white-space: nowrap;
+        transform: scale(0.7);
+        transition: all 0.5s ease-out;
     
         &.-loaded {
             opacity: 1;
             transform: scale(1);
         }
+    }
+}
+
+#playerAvatar {
+    p {
+        bottom: 100%;
+        left: 0;
+    }
+}
+
+
+#opponentAvatar {
+    p {
+        top: 100%;
+        right: 0;
     }
 }

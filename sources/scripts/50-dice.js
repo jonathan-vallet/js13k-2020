@@ -86,6 +86,9 @@ function checkPlayableCards(guy, dieValue, callback) {
 }
 
 function isCardPlayable(cardId, dieValue, dieId = null) {
+    if(!cardId) { // Unknown bug for opponent with undefined id
+        return false;
+    }
     let cardDieList = cardList[cardId].d.split('|');
     let isPlayable = false;
     let isDieChecked = false;
@@ -151,6 +154,9 @@ function isCardPlayable(cardId, dieValue, dieId = null) {
     if(dieId) {
         if(secondRemovedDie) {
             secondRemovedDie.parentNode.remove();
+        }
+        if($(dieId).dataset.stun) { // If die is stunned, half chance to be useless 
+            isPlayable = random() > 0.5;
         }
         $(dieId).parentNode.remove();
     }
