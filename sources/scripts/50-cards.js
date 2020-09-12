@@ -61,7 +61,6 @@ function displayCard(cardId, handCardIndex = -1) {
     });
     cardContent += `</div><p class="c-card__effect">${getCardEffect(card.e)}</p>`;
 
-    // TODO: utiliser createaFromHTML?
     let cardElement = createElement('div');
     cardElement.classList.add('c-card');
     if(handCardIndex >= 0) {
@@ -145,8 +144,8 @@ function getCardEffect(effectCode) {
             case 'reroll':
                 effectText += `Roll a <b>${effectValue == '<' ? 'lower' : effectValue}</b> die`;
                 break;
-            case 'fire':
-                effectText += `Fire 🔥 <b>${effectValue}</b> di${effectValue > 1 ? 'c' : ''}e`;
+            case 'burn':
+                effectText += `Burn 🔥 <b>${effectValue}</b> di${effectValue > 1 ? 'c' : ''}e`;
                 break;
             case 'heal':
                 effectText += `Heal ➕<b>${effectValue}</b> life points`;
@@ -227,15 +226,18 @@ function resolveCardEffect(guy, $card, dieValue) {
                 break;
             case 'stun':
                 ++guyOpponent.stun;
+                console.log('stun?', guyOpponent.stun);
                 break;
             case 'heal':
                 updateLifePoints(guy, effectValue);
                 break;
             case 'freeze':
                 ++guyOpponent.freeze;
+                console.log('freeze?', guyOpponent.freeze);
                 break;
             case 'burn':
                 ++guyOpponent.burn;
+                console.log('burn?', guyOpponent.burn);
                 break;
             case 'reroll':
                 generateDie(effectValue);

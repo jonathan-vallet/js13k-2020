@@ -14,7 +14,7 @@ const CLASS_NAME_LIST = {
     't': 'Thief',
     'a': 'Assassin',
     'p': 'Protector',
-    'h': 'Heal',
+    'h': 'Healer',
     'mw': 'Battlemage',
     'tw': 'Rogue',
     'aw': 'Slayer',
@@ -53,6 +53,7 @@ var $continueButton = $('continueButton');
 // TODO: pour le HTML, peut-être dupliquer tout ce qui est data-player=1 en 2 au chargement du jeu?
 var $playerAvatar = $('playerAvatar');
 var $opponentAvatar = $('opponentAvatar');
+var $userBar = $('c-userBar');
 var $myDeck = $('myDeck');
 var $myHand = $('myHand');
 var $endTurnButton = $('endTurnButton');
@@ -68,16 +69,15 @@ const MAP_Y_SPACE = 130;
 var stageList = [];
 let turnDieId = 0; // increament die id during ach turn to be unique
 
+let isMapGenerated = false;
+
 let playersProxy = {
     set: function(obj, prop, newValue) {
-        // console.log('set', obj, prop, newValue);
+        console.log('set', obj, prop, newValue);
         obj[prop] = newValue;
         let lifeText = `💖 ${obj.l}/${obj.m}`;
         if(obj.sh) {
             lifeText += ` 🛡 ${obj.sh}`;
-        }
-        if(obj.p) {
-            lifeText += ` 🤢 ${obj.p}`;
         }
         if(obj.p) {
             lifeText += ` 🤢 ${obj.p}`;

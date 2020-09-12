@@ -26,15 +26,35 @@ body {
   display: flex;
   justify-content: center;
 
-  > * {
+  > div {
+    position: relative;
     width: (100% / 6);
     max-width: 200px;
     transition: transform 0.3s ease;
     perspective: 1000px;
+    cursor: pointer;
 
     &:hover {
         transform: scale(1.2);
         z-index: 2;
+        
+      &::before {
+        transform: scale(0.8);
+      }
+    }
+    &.-choice0,
+    &.-choice1 {
+      &::before {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        top: 30px;
+        left: 10px;
+        right: 10px;
+        bottom: 0;
+        background: rgba($color-green, 0.5);
+        transition: transform 0.3s ease;
+      }
     }
   }
 
@@ -43,10 +63,16 @@ body {
   }
 }
 
+#screen-class-choice {
+  p {
+    text-shadow: 0 0 2px $color-black, 0 0 1px $color-black, 0 0 1px $color-black, 0 0 1px $color-black;
+  }
+}
+
 #endTurnButton {
   position: absolute;
   bottom: 50px;
-  right: 300px;
+  right: 150px;
 }
 
 #c-dieList {
@@ -65,15 +91,11 @@ body {
   width: 490px;
 }
 
-#screen-game {
-  background: #cee;
-}
-
-#game-background {
-  position: absolute;
+#game-canvas {
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  background: #0bb;
+  height: 100%; 
+  background: #cee;
 }

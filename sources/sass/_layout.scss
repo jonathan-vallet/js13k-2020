@@ -6,14 +6,16 @@
     justify-content: space-around;
     width: 100%;
     min-height: 100vh;
-    background: $background-color;
     z-index: 3;
     &:not(.-active) {
         display: none;
     }
-    &:not(.-underBar) {
+    &:not(.-overBar) {
         z-index: 1;
         padding-top: $user-bar-height;
+    }
+    &.-overlay {
+        background: rgba($color-black, 0.7);
     }
 }
 

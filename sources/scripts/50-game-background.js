@@ -6,8 +6,9 @@ let then = Date.now();
 let fpsInterval = 50;
 
 function initGameBackground() {
-    gameCanvas.width = $screenGame.offsetWidth;
-    gameCanvas.height = $screenGame.offsetHeight - 70;
+    gameCanvas.width = document.body.offsetWidth;
+    gameCanvas.height = document.body.offsetHeight;
+    
     for(let x = 0; x <= gameCanvas.width; x += getRandomNumber(gameCanvas.width / 7, gameCanvas.width / 9)) {
         let sandY = getRandomNumber(195, 205);
         sandCoordinatesList.push({x, y: sandY, direction: random() > 0.5 ? -1 : 1 });
@@ -21,6 +22,9 @@ function initGameBackground() {
 
 function updateGameBackground(timestamp) {
     requestAnimationFrame(updateGameBackground);
+    if(player.s == 'map') {
+        return;
+    }
     let now = Date.now();
     let elapsed = now - then;
 

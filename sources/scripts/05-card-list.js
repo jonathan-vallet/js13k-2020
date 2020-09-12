@@ -19,11 +19,11 @@ let simpleCardList = [
 
     // Mage
     {c: 'm', r: 1, d: 'odd', e: 'damage|X,freeze|1'},
-    {c: 'm', r: 1, d: 'even', e: 'damage|X,fire|1'},
+    {c: 'm', r: 1, d: 'even', e: 'damage|X,burn|1'},
     {c: 'm', r: 1, d: '1', e: 'damage|1,freeze|1'},
-    {c: 'm', r: 2, d: '5', e: 'damage|4,fire|1'},
+    {c: 'm', r: 2, d: '5', e: 'damage|4,burn|1'},
     {c: 'm', r: 3, d: '1|1', e: 'freeze|5'},
-    {c: 'm', r: 3, d: '5|5', e: 'fire|5'},
+    {c: 'm', r: 3, d: '5|5', e: 'burn|5'},
 
     // Thief
     {c: 't', r: 1, d: '-2', e: 'damage|X,reroll|X'},
@@ -63,7 +63,7 @@ let simpleCardList = [
     {c: 'h', r: 3, d: '3|3', e: 'heal|12,damage|3'},
 
     // Warrior + mage
-    {c: 'mw', r: 2, d: '', e: 'damage|3,fire|1,freeze|1'},
+    {c: 'mw', r: 2, d: '', e: 'damage|3,burn|1,freeze|1'},
 
     // Thief + warrior
     {c: 'tw', r: 2, d: '', e: 'damage|X,reroll|<'},
@@ -79,16 +79,16 @@ let simpleCardList = [
     {c: 'hw', r: 2, d: '', e: 'damage|X,shield|3'},
 
     // Mage + thief
-    {c: 'mt', r: 2, d: '', e: 'fire|1,freeze|1,reroll|<'},
+    {c: 'mt', r: 2, d: '', e: 'burn|1,freeze|1,reroll|<'},
 
     // Assassin + mage
-    {c: 'am', r: 2, d: '', e: 'fire|1,freeze|1,poison|2'},
+    {c: 'am', r: 2, d: '', e: 'burn|1,freeze|1,poison|2'},
     
     // Mage + Protector
-    {c: 'mp', r: 2, d: '', e: 'fire|1,freeze|1,shield|4'},
+    {c: 'mp', r: 2, d: '', e: 'burn|1,freeze|1,shield|4'},
 
     // Mage + Heal
-    {c: 'hm', r: 2, d: '', e: 'fire|1,freeze|1,heal|3'},
+    {c: 'hm', r: 2, d: '', e: 'burn|1,freeze|1,heal|3'},
 
     // Assassin + Thief
     {c: 'at', r: 2, d: '', e: 'poison|2,reroll|<'},

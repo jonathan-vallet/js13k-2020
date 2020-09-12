@@ -61,6 +61,16 @@ function rollDie(die, roll) {
     die.querySelector(`[data-side="${roll}"]`).setAttribute('draggable', 'true');
 }
 
+function addDieEffect($die, effect) {
+    let $effect = $die.querySelector('.c-die__effect');
+    if(!$effect) {
+        $effect = createElement('li');
+        $effect.classList.add('c-die__effect');
+        $die.append($effect);
+    }
+    $effect.innerText += effect;
+}
+
 function checkPlayableCards(guy, dieValue, callback) {
     console.log(guy.hand);
     guy.hand.forEach((cardId, handCardIndex) => {

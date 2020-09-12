@@ -1,10 +1,15 @@
 function showScreen(screen) {
     document.querySelector('.l-screen.-active').classList.remove('-active');
     $(screen).classList.add('-active');
-
+    $userBar.style.display = $(screen).classList.contains('-overBar') ? 'none' : '';
+    
     if(screen == 'screen-map') {
-        if(player.f != 'map') {
+        if(player.s != 'map') {
             player.s = 'map';
+            if(!isMapGenerated) {
+                generateMap();
+                isMapGenerated = true;
+            }
             if(player.f == 0) {
                 [...$$$(`[data-floor="${player.f}"]`)].forEach($floor => {
                     $floor.classList.add('-active');
@@ -42,12 +47,13 @@ function showScreen(screen) {
     }
     if(screen == 'screen-class-choice') {
         // new game, inits player data
-        setMyAvatar('w', 'w');
+        setMyAvatar('w', 'm');
         player.g = 100;
         player.f = 0;
     }
     if(screen == 'screen-reward') {
-        // Get gold reward from mob difficulty?
-        player.g += 50;
+        // Get gold reward from mob difficulty
+        player.g += opponent.m;
+        $('gold-reward').innerText = `💰: ${opponent.m}`;
     }
 }

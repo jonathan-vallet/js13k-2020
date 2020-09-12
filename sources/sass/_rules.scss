@@ -1,0 +1,10 @@
+#screen-rules {
+    ul {
+        list-style: none;
+        padding-left: 50px;
+        text-align: left;
+    }
+    > ul > li {
+        margin-bottom: 15px;   
+    }
+}

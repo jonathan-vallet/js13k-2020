@@ -1,6 +1,7 @@
 $die-size: 70px;
 
 .c-die {
+    position: relative;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
@@ -64,6 +65,12 @@ $die-size: 70px;
         border-left: #{$die-size / 17.12} solid #fff;
         border-right: #{$die-size / 17.12} solid #fff;
       }
+}
+.c-die__effect {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    width: 100%;
 }
 
 [data-roll="1"] {

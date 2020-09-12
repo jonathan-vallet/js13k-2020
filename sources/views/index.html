@@ -7,26 +7,8 @@
 </head>
 
 <body>
-  <div class="l-screen -underBar -active" id="screen-menu">
-    <p class="a-title">Cardice</p>
-    <button class="js-screen-link" data-screen="screen-game" id="continueButton">Continue game</button>
-    <button class="js-screen-link" data-screen="screen-class-choice">New game</button>
-    <div id="allCardList" class="c-cardList" style="display: dnone"></div>
-  </div>
-  <div class="l-screen -underBar" id="screen-class-choice">
-    <p class="a-title">Create you hero</p>
-    <p>Pick up 2 classes</p>
-    <div id="avatarChoiceList" data-t0="w" data-t1="w"></div>
-    <p>You are:</p>
-    <div id="myAvatar"></div>
-    <button class="js-screen-link" data-screen="screen-map">Start game</button>
-  </div>
-  <div class="l-screen" id="screen-map">
-    <div id="mapWrapper">
-      <canvas id="map"></canvas>
-    </div>
-  </div>
-  <div id="c-userBar">
+  <canvas id="game-canvas"></canvas>
+  <div id="c-userBar" style="display: none;">
     <ul>
       <li id="playerClass"></li>
       <li id="playerLife"></li>
@@ -38,8 +20,63 @@
       <button class="js-screen-link" data-screen="screen-settings">Settings</button>
     </p>
   </div>
+
+  <div class="l-screen -overBar -active" id="screen-menu">
+    <p class="a-title">Cardice</p>
+    <div>
+      <button class="js-screen-link" data-screen="screen-rules">Rules</button>
+      <button class="js-screen-link" data-screen="screen-game" id="continueButton">Continue game</button>
+      <button class="js-screen-link" data-screen="screen-class-choice">New game</button>
+    </div>
+    <div id="allCardList" class="c-cardList" style="display: none"></div>
+  </div>
+
+  <div class="l-screen -overBar" id="screen-class-choice">
+    <h1 class="a-title">Create you hero</h1>
+    <p>Pick up 2 classes</p>
+    <div id="avatarChoiceList" data-t0="w" data-t1="w"></div>
+    <p>You are:</p>
+    <div id="myAvatar"></div>
+    <button class="js-screen-link" data-screen="screen-map">Start game</button>
+  </div>
+
+  <div class="l-screen" id="screen-map">
+    <div id="mapWrapper">
+      <canvas id="map"></canvas>
+    </div>
+  </div>
+
+  <div class="l-screen -overBar -overlay" id="screen-rules">
+    <p class="a-title">Game rules</p>
+    <ul>
+      <li>Choose your hero. Each combination has special effects. Find your favorite!</li>
+      <li>Find your way on map to achieve encounters:
+        <ul>
+          <li>💀: basic enemy</li>
+          <li>👿: elite enemy</li>
+          <li>😈: Final boss</li>
+          <li>💰: Treasure</li>
+          <li>🤑: merchant to buy/sell cards</li>
+          <li>💖: health recovery</li>
+          <li>❓: random event</li>
+        </ul>
+      </li>
+      <li>Drag and drop dice on cards to play them</li>
+      <li>Each fight will give you gold and new cards</li>
+      <li>Special effects:
+        <ul>
+          <li>😵: stun. 50% die won't work</li>
+          <li>🤢: poison. damage each turn</li>
+          <li>❄: freeze. reduce hight die value to 1</li>
+          <li>🔥: fire. take 5 damages when using die</li>
+          <li>🛡: shield. avoid next damages for one turn</li>
+        </ul>
+      </li>
+    </ul>
+    <button class="js-screen-link" data-screen="screen-menu">Back</button>
+  </div>
+
   <div class="l-screen" id="screen-game">
-    <canvas id="game-canvas"></canvas>
     <div class="c-life" data-p="1">
       <div class="c-life__bar">
         <p></p>
@@ -63,26 +100,29 @@
     <div id="c-dieList"></div>
     <button type="button" id="endTurnButton">End turn</button>
   </div>
-  <div class="l-screen" id="screen-my-deck">
+
+  <div class="l-screen -overlay" id="screen-my-deck">
     <p class="a-title">My deck</p>
     <div id="myDeckList" class="c-cardList"></div>
     <button class="js-screen-link" data-screen="screen-game">Back</button>
   </div>
-  <div class="l-screen" id="screen-reward">
+
+  <div class="l-screen -overlay" id="screen-reward">
     <p class="a-title">Some rewards!</p>
-    <p class="c-reward__gold">💰: 50</p>
+    <p class="c-reward__gold" id="gold-reward"></p>
     <button class="js-screen-link" data-screen="screen-card-add">Add a card to your deck</button>
   </div>
-  <div class="l-screen" id="screen-heal">
+  <div class="l-screen -overlay" id="screen-heal">
     <p class="a-title">You are healed!</p>
     <p class="c-reward__gold">You got 30% of your missing 💖.</p>
     <button class="js-screen-link" data-screen="screen-map">Continue</button>
   </div>
-  <div class="l-screen" id="screen-card-add">
+  <div class="l-screen -overlay" id="screen-card-add">
     <p class="a-title">Choose a card</p>
     <div id="rewardCardList" class="c-cardList"></div>
     <button class="js-screen-link" data-screen="screen-map">Skip</button>
   </div>
+
   <script src="scripts/game.js" inline></script>
 </body>
 

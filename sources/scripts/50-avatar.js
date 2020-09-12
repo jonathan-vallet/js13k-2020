@@ -1,13 +1,25 @@
-var currentAvatarSelected = 1   ;
+var currentAvatarSelected = 0;
 
 function drawAvatars() {
     for (const [type, value] of Object.entries(BASE_CLASS_LIST)) {
         let canvas = createAvatar(type, type);
         canvas.setAttribute('data-type', type);
+        if(type == 'w') {
+            canvas.classList.add('-choice0');
+        }
+        if(type == 'm') {
+            canvas.classList.add('-choice1');
+        }
         canvas.onclick = () => {
+            if(canvas.classList.contains(`-choice0`) || canvas.classList.contains(`-choice1`)) {
+                return;
+            }
             var newType = canvas.getAttribute(`data-type`);
             $avatarChoiceList.setAttribute(`data-t${++currentAvatarSelected % 2}`, newType);
             setMyAvatar($avatarChoiceList.dataset.t0, $avatarChoiceList.dataset.t1);
+            [...$avatarChoiceList.childNodes].forEach(($div) => {
+                $div.classList.remove(`-choice${currentAvatarSelected % 2}`);
+            });
             canvas.classList.add(`-choice${currentAvatarSelected % 2}`);
         };
 
@@ -21,9 +33,6 @@ function setMyAvatar(type1, type2) {
     $myAvatar.innerHTML = '';
     $myAvatar.append(canvas);
     player.c = type1 + type2;
-
-    // TODO: do this when saving
-    //TODO: set player in LS in generic methodsetFromLS('avatar', type1 + type2);
 }
 
 function createAvatar(type1, type2) {
@@ -58,11 +67,11 @@ function drawBaseAvatar(canvas, ctx, backgroundColor1, backgroundColor2) {
     drawCircle(ctx, gradient, canvasSize * 0.5, canvasSize * 0.6, canvasSize * 0.4, 0, CIRCLE_ANGLE);
 
     //Head
-    drawCircle(ctx, '#b87', canvasSize * 0.45, canvasSize * 0.5, canvasSize * 0.25, 0, CIRCLE_ANGLE);
+    drawCircle(ctx, '#c98', canvasSize * 0.45, canvasSize * 0.5, canvasSize * 0.25, 0, CIRCLE_ANGLE);
 
     // Eyes
-    drawCircle(ctx, '#124', canvasSize / 1.7, canvasSize / 2.2, canvasSize / 35, 0, CIRCLE_ANGLE);
-    drawCircle(ctx, '#124', canvasSize / 2.2, canvasSize / 2.2, canvasSize / 35, 0, CIRCLE_ANGLE);
+    drawCircle(ctx, '#235', canvasSize / 1.7, canvasSize / 2.2, canvasSize / 35, 0, CIRCLE_ANGLE);
+    drawCircle(ctx, '#235', canvasSize / 2.2, canvasSize / 2.2, canvasSize / 35, 0, CIRCLE_ANGLE);
 }   
 
 
@@ -70,9 +79,9 @@ function drawAvatarArmor(canvas, ctx, type) {
     const canvasSize = canvas.width;
     switch(type) {
         case 'w':
-            drawCircle(ctx, '#999', canvasSize *0.45, canvasSize * 0.5, canvasSize * 0.26, PI * 1.05, PI * 1.9);
-            drawTriangle(ctx, '#999', canvasSize * 0.33, canvasSize * 0.3, canvasSize * 0.2, canvasSize * 0.2, canvasSize * 0.28, canvasSize * 0.4);
-            drawTriangle(ctx, '#999', canvasSize * 0.56, canvasSize * 0.3, canvasSize * 0.7, canvasSize * 0.2, canvasSize * 0.62, canvasSize * 0.4);
+            drawCircle(ctx, '#aaa', canvasSize *0.45, canvasSize * 0.5, canvasSize * 0.26, PI * 1.05, PI * 1.9);
+            drawTriangle(ctx, '#aaa', canvasSize * 0.33, canvasSize * 0.3, canvasSize * 0.2, canvasSize * 0.2, canvasSize * 0.28, canvasSize * 0.4);
+            drawTriangle(ctx, '#aaa', canvasSize * 0.56, canvasSize * 0.3, canvasSize * 0.7, canvasSize * 0.2, canvasSize * 0.62, canvasSize * 0.4);
         break;
         case 'm':
             drawTriangle(ctx, '#138', canvasSize * 0.2, canvasSize * 0.3, canvasSize * 0.75, canvasSize * 0.38, canvasSize * 0.5, canvasSize * 0.1);
@@ -86,8 +95,8 @@ function drawAvatarArmor(canvas, ctx, type) {
             drawCircle(ctx, '#333', canvasSize * 0.45, canvasSize * 0.5, canvasSize * 0.25, PI * 2, PI);
         break;
         case 'p':
-            drawCircle(ctx, '#999', canvasSize * 0.45, canvasSize * 0.5, canvasSize * 0.3, PI * 1.05, PI * 1.95);
-            drawCircle(ctx, '#999', canvasSize * 0.45, canvasSize * 0.5, canvasSize * 0.27, PI * 2, PI);
+            drawCircle(ctx, '#aaa', canvasSize * 0.45, canvasSize * 0.5, canvasSize * 0.3, PI * 1.05, PI * 1.95);
+            drawCircle(ctx, '#aaa', canvasSize * 0.45, canvasSize * 0.5, canvasSize * 0.27, PI * 2, PI);
         break;
         case 'h':
             drawTriangle(ctx, '#242', canvasSize * 0.2, canvasSize * 0.3, canvasSize * 0.75, canvasSize * 0.38, canvasSize * 0.5, canvasSize * 0.1);
