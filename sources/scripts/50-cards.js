@@ -76,7 +76,6 @@ function displayRewardCards() {
     let secondReward = getRandomItem(secondRewardList);
     thirdRewardList = thirdRewardList.filter(cardId => [firstReward, secondReward].indexOf(cardId) < 0); // Removes selected rewards from choices
     displayCardList([firstReward, secondReward, getRandomItem(thirdRewardList)], $rewardCardList, (cardId) => {
-        console.log('rewarded', cardId);
         player.d.push(cardId);
         showScreen('screen-map');
     });
