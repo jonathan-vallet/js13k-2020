@@ -200,8 +200,10 @@ function resolveTurnStart(guy) {
                 break;
             }
             $dieToBurn = $notBurnedDieList.item(getRandomNumber(0, $notBurnedDieList.length - 1));
-            $dieToBurn.dataset.burn = 1;
-            $effect = addDieEffect($dieToBurn, '🔥');
+            if($dieToBurn) {
+                $dieToBurn.dataset.burn = 1;
+                $effect = addDieEffect($dieToBurn, '🔥');
+            }
         }
         guy.burn = 0;
     }

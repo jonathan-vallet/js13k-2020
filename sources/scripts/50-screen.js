@@ -130,6 +130,7 @@ function showScreen(screen) {
         score += bossScore;
         
         $(getRandomNumber(0, 1) ? 'js-victory-content' : 'js-defeat-content').style.display = 'none';
+        $('js-end-score-list').innerHTML = '';
         $('js-end-score-list').insertAdjacentHTML('beforeend', scoreText);
         $('js-end-score').innerText = `Score: ${score}`;
     }

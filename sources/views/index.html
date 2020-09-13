@@ -23,7 +23,7 @@
 
   <div class="l-screen -overBar -active" id="screen-main-menu">
     <p class="a-title">Cardice</p>
-    <p>We cannot find the princess Page... Find your way to defeat the evil monster 😈 and take her back!</p>
+    <p>Princess Page is missing.<br />Find your way to defeat the evil monster 😈 and bring her back!</p>
     <div class="c-linkList">
       <button class="js-screen-link" data-screen="screen-class-choice">New game</button>
       <button class="js-screen-link" data-screen="screen-rules">Rules</button>
@@ -57,27 +57,26 @@
   <div class="l-screen -overBar -overlay" id="screen-rules">
     <p class="a-title">Game rules</p>
     <ul>
-      <li>Choose your hero. Each combination has special effects. Find your favorite!</li>
-      <li>Find your way on map to achieve encounters:
+      <li>Pick a hero</li>
+      <li>Drag and drop dice on cards to play them</li>
+      <li>Several types of encounters:
         <ul>
-          <li>💀: basic enemy</li>
-          <li>👿: elite enemy</li>
+          <li>💀: Basic enemy</li>
+          <li>👿: Elite enemy</li>
           <li>😈: Final boss</li>
           <li>💰: Treasure</li>
-          <li>🤑: Merchant</li>
-          <li>💖: Health recovery</li>
+          <li>🤑: Card dealer</li>
+          <li>💖: Healing spot</li>
           <li>❓: Random event</li>
         </ul>
       </li>
-      <li>Drag and drop dice on cards to play them</li>
-      <li>Each fight will give you gold and new cards</li>
-      <li>Special effects:
+      <li>Several special effects:
         <ul>
-          <li>😵: stun. 50% die won't work</li>
-          <li>🤢: poison. damage each turn</li>
-          <li>❄: freeze. reduce hight die value to 1</li>
-          <li>🔥: fire. take 5 damages when using die</li>
-          <li>🛡: shield. avoid next damages for one turn</li>
+          <li>😵 Stun: 50% chance for the dice not to work</li>
+          <li>🤢 Poison: Damage every round</li>
+          <li>❄ Freeze: Highest dice value recuced to 1</li>
+          <li>🔥 Fire: 5 damage when the dice is played</li>
+          <li>🛡 Shield: Prevent next damage for one turn</li>
         </ul>
       </li>
     </ul>
@@ -111,7 +110,7 @@
 
   <div class="l-screen -overlay" id="screen-my-deck">
     <p class="a-title">My deck</p>
-    <p id="my-deck-remove-mention">Click a card to remove it (💰: 100)</p>
+    <p id="my-deck-remove-mention">To remove a card, click on it (💰: 100)</p>
     <div id="myDeckList" class="c-cardList"></div>
     <button class="js-screen-link" data-screen="back">Back</button>
   </div>
@@ -129,7 +128,7 @@
   </div>
 
   <div class="l-screen -overlay" id="screen-card-add">
-    <p class="a-title">Choose a card</p>
+    <p class="a-title">Pick up a card</p>
     <div id="rewardCardList" class="c-cardList"></div>
     <button class="js-screen-link" data-screen="screen-map">Skip</button>
   </div>

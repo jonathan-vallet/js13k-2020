@@ -182,13 +182,13 @@ function getCardEffect(effectCode) {
                 effectText += `Do 🤢<b>${effectValue}</b> poison`;
                 break;
             case 'stun':
-                effectText += `Stun 😵 <b>${effectValue}</b> di${effectValue > 1 ? 'c' : ''}e`;
+                effectText += `Stun 😵 <b>${effectValue}</b> dice`;
                 break;
             case 'reroll':
                 effectText += `Roll a <b>${effectValue == '<' ? 'lower' : effectValue}</b> die`;
                 break;
             case 'burn':
-                effectText += `Burn 🔥 <b>${effectValue}</b> di${effectValue > 1 ? 'c' : ''}e`;
+                effectText += `Burn 🔥 <b>${effectValue}</b> dice`;
                 break;
             case 'heal':
                 effectText += `Heal ➕<b>${effectValue}</b> life points`;
@@ -203,7 +203,7 @@ function getCardEffect(effectCode) {
                 effectText += `Add 🛡 <b>${effectValue}</b> shield`;
                 break;
             case 'freeze':
-                effectText += `Freeze ❄ <b>${effectValue}</b> di${effectValue > 1 ? 'c' : ''}e`;
+                effectText += `Freeze ❄ <b>${effectValue}</b> dice`;
                 break;
         }
     });
@@ -311,10 +311,10 @@ function getEffectValue(effectTextValue, dieValue, guy, guyOpponent) {
         if(char == 'X') {
             effectValue += dieValue;
         }
-        if(char == 's') { // shield damages
+        if(char == 's') { // shield damage
             effectValue += guy.s;
         }
-        if(char == 'p') { // poison damages
+        if(char == 'p') { // poison damage
             effectValue += guyOpponent.p;
         }
         if(char == '-') {
