@@ -13,7 +13,7 @@ function showScreen(screen) {
         player.burn = 0;
         player.freeze = 0;
         player.f = 0;
-        player.g = 100;
+        player.g = 150;
         player.s = '';
     }
     if(screen == 'screen-map') {

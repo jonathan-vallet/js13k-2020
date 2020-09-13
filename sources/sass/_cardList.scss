@@ -1,7 +1,8 @@
 .c-cardList {
     display: grid;
     width: 80%;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    margin: 50px 0;
+    grid-template-columns: repeat(auto-fill, minmax($card-width, 1fr));
     grid-gap: 20px;
     .c-card {
         transition: transform 0.3s ease;

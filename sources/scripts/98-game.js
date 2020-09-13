@@ -86,6 +86,7 @@ function generateOpponent() {
     let multiplier = stageType == 'b' ? 3 : stageType == 'e' ? 1.5 : 1;
     // TODO: ajouter "l'acte" en plus
     opponent.m = ~~(Math.log2(player.f + 1) * 14 * multiplier);
+    opponent.m = 0;
     updateLifePoints(opponent, opponent.m);
 }
 

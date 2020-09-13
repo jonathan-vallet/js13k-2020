@@ -27,7 +27,7 @@ function displaySoldCards() {
     // Adds card price
     [...$sellerCardList.querySelectorAll('.c-card')].forEach(($card, index) => {
         let $price = createElement('p');
-        let cardPrice = cardList[soldCardList[index]].r == 1 ? 120 : cardList[soldCardList[index]].r == 2 ? 300: 500;
+        let cardPrice = cardList[soldCardList[index]].r == 1 ? 60 : cardList[soldCardList[index]].r == 2 ? 150: 250;
         $price.classList.add('c-card__price');
         $price.innerText = `💰: ${cardPrice}`;
         if(player.g >= cardPrice) {
@@ -40,7 +40,7 @@ function displaySoldCards() {
                     $card.remove();
                     // Update other cards price
                     [...$sellerCardList.querySelectorAll('.c-card')].forEach(($card, index) => {
-                        let cardPrice = cardList[soldCardList[index]].r == 1 ? 120 : cardList[soldCardList[index]].r == 2 ? 300: 500;
+                        let cardPrice = cardList[soldCardList[index]].r == 1 ? 60 : cardList[soldCardList[index]].r == 2 ? 150: 250;
                         if(player.g < cardPrice) {
                             $card.classList.remove('-buyable');
                         }
@@ -75,7 +75,8 @@ function displayRewardCards() {
     secondRewardList = secondRewardList.filter(cardId => cardId != firstReward); // In case player selected a single class, removes first reward from choices
     let secondReward = getRandomItem(secondRewardList);
     thirdRewardList = thirdRewardList.filter(cardId => [firstReward, secondReward].indexOf(cardId) < 0); // Removes selected rewards from choices
-    displayCardList([firstReward, secondReward, getRandomItem(thirdRewardList)], $rewardCardList, () => {
+    displayCardList([firstReward, secondReward, getRandomItem(thirdRewardList)], $rewardCardList, (cardId) => {
+        console.log('rewarded', cardId);
         player.d.push(cardId);
         showScreen('screen-map');
     });

@@ -79,9 +79,9 @@ let simpleCardList = [
     {c: 'mw', r: 3, d: '5|6', e: 'damage|10,burn|5'},
 
     // Thief + warrior
-    {c: 'mw', r: 1, d: '', e: 'odd:damage|3,even:freeze|1'},
-    {c: 'mw', r: 2, d: '', e: 'damage|3,freeze|1'},
-    {c: 'mw', r: 3, d: '1|6', e: 'damage|10,freeze|5'},
+    {c: 'tw', r: 1, d: '', e: 'odd:damage|3,even:freeze|1'},
+    {c: 'tw', r: 2, d: '', e: 'damage|3,freeze|1'},
+    {c: 'tw', r: 3, d: '1|6', e: 'damage|10,freeze|5'},
 
     // Assassin + warrior
     {c: 'aw', r: 1, d: '', e: 'odd:damage|3,even:poison|2'},

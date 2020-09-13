@@ -114,7 +114,7 @@ let player = new Proxy({
     freeze: 0,
     burn: 0,
     stun: 0,
-    g: 100, // gold
+    g: 150, // gold
     f: 0, // current floor
     s: '' // screen (if step is game, class selection, floor selection...)
     /*
