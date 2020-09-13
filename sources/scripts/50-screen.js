@@ -3,6 +3,19 @@ function showScreen(screen) {
     $(screen).classList.add('-active');
     $userBar.style.display = $(screen).classList.contains('-overBar') ? 'none' : '';
     
+    if(screen == 'screen-class-choice') {
+        // Inits player data
+        setMyAvatar('w', 'm');
+        player.p = 0;
+        player.l = player.m;
+        player.sh = 0;
+        player.stun = 0;
+        player.burn = 0;
+        player.freeze = 0;
+        player.f = 0;
+        player.g = 100;
+        player.s = '';
+    }
     if(screen == 'screen-map') {
         player.s = 'map';
         if(!player.d) {
@@ -16,6 +29,9 @@ function showScreen(screen) {
             [...$$$(`[data-floor="${player.f}"]`)].forEach($floor => {
                 $floor.classList.add('-active');
             });
+        } else if(player.f >= LEVEL_STAGE_NUMBER + 2) {
+            showScreen('screen-end');
+            return;
         } else {
             $lastFloor = $$(`[data-floor="${player.f - 1}"].-selected`);
             for(let stageX of stageList[player.f - 1][$lastFloor.getAttribute('data-x')].l) {
@@ -68,10 +84,6 @@ function showScreen(screen) {
     }
     if(screen == 'screen-card-add') {
         displayRewardCards();
-    }
-    if(screen == 'screen-class-choice') {
-        // new game, inits player data
-        setMyAvatar('w', 'm');
     }
     if(screen == 'screen-reward') {
         if(player.s == 'map') { // Reward stage

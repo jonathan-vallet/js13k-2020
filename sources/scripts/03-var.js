@@ -1,17 +1,17 @@
 // Base class list with colors
 var BASE_CLASS_LIST = {
-    'w': '#e43',
-    'm': '#249',
-    't': '#0a6',
+    'w': '#f33',
+    'm': '#f72',
+    't': '#38f',
     'a': '#a28',
-    'p': '#f82',
-    'h': '#162'
+    'p': '#fc3',
+    'h': '#7d2'
 };
 
 const CLASS_NAME_LIST = {
     'w': 'Warrior',
-    'm': 'Mage',
-    't': 'Thief',
+    'm': 'Fire mage',
+    't': 'Ice mage',
     'a': 'Assassin',
     'p': 'Protector',
     'h': 'Healer',
@@ -50,8 +50,6 @@ var $avatarChoiceList = $('avatarChoiceList');
 var $myAvatar = $('myAvatar');
 var $map = $('map');
 // var $continueButton = $('continueButton');
-// TODO: comme pour les life bar, faire 1 par joueur
-// TODO: pour le HTML, peut-être dupliquer tout ce qui est data-player=1 en 2 au chargement du jeu?
 var $playerAvatar = $('playerAvatar');
 var $opponentAvatar = $('opponentAvatar');
 var $userBar = $('c-userBar');
@@ -68,7 +66,7 @@ let $dieList = $('c-dieList');
 let dieList = [];
 
 // Map
-const LEVEL_STAGE_NUMBER = 15;
+const LEVEL_STAGE_NUMBER = 12;
 const MAP_Y_SPACE = 130;
 let stageList = [];
 let turnDieId = 0; // increament die id during ach turn to be unique
@@ -116,7 +114,7 @@ let player = new Proxy({
     freeze: 0,
     burn: 0,
     stun: 0,
-    g: 1000, // gold
+    g: 100, // gold
     f: 0, // current floor
     s: '' // screen (if step is game, class selection, floor selection...)
     /*

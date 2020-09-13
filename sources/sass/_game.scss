@@ -66,7 +66,8 @@ body {
 #screen-class-choice p,
 .c-die__effect,
 #playerAvatar p,
-#opponentAvatar p {
+#opponentAvatar p,
+.c-card__effect {
   text-shadow: 0 0 2px $color-black, 0 0 1px $color-black, 0 0 1px $color-black, 0 0 1px $color-black;
 }
 

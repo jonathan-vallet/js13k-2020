@@ -86,12 +86,12 @@ function drawAvatarArmor(canvas, ctx, type) {
             drawTriangle(ctx, '#aaa', canvasSize * 0.56, canvasSize * 0.3, canvasSize * 0.7, canvasSize * 0.2, canvasSize * 0.62, canvasSize * 0.4);
         break;
         case 'm':
-            drawTriangle(ctx, '#138', canvasSize * 0.2, canvasSize * 0.3, canvasSize * 0.75, canvasSize * 0.38, canvasSize * 0.5, canvasSize * 0.1);
-            drawTriangle(ctx, '#138', canvasSize * 0.28, canvasSize * 0.3, canvasSize * 0.7, canvasSize * 0.38, canvasSize * 0.52, canvasSize * 0);
+            drawTriangle(ctx, '#a31', canvasSize * 0.2, canvasSize * 0.3, canvasSize * 0.75, canvasSize * 0.38, canvasSize * 0.5, canvasSize * 0.1);
+            drawTriangle(ctx, '#a31', canvasSize * 0.28, canvasSize * 0.3, canvasSize * 0.7, canvasSize * 0.38, canvasSize * 0.52, canvasSize * 0);
         break;
         case 't':
-            drawCircle(ctx, '#124', canvasSize * 0.45, canvasSize * 0.5, canvasSize * 0.25, - PI * 1.9, - PI * 1.1);
-            drawTriangle(ctx, '#124', canvasSize * 0.55, canvasSize * 0.5, canvasSize * 0.7, canvasSize * 0.58, canvasSize * 0.2, canvasSize * 0.58);
+            drawCircle(ctx, '#128', canvasSize * 0.45, canvasSize * 0.5, canvasSize * 0.25, - PI * 1.9, - PI * 1.1);
+            drawTriangle(ctx, '#128', canvasSize * 0.55, canvasSize * 0.5, canvasSize * 0.7, canvasSize * 0.58, canvasSize * 0.2, canvasSize * 0.58);
         break;
         case 'a':
             drawCircle(ctx, '#333', canvasSize * 0.45, canvasSize * 0.5, canvasSize * 0.25, PI * 2, PI);
@@ -116,14 +116,14 @@ function drawAvatarWeapon(canvas, ctx, type) {
         break;
         case 'm':
             drawTriangle(ctx, '#421', canvasSize * 0.6, canvasSize, canvasSize * 0.8, canvasSize * 0.4, canvasSize * 0.68, canvasSize);
-            drawCircle(ctx, '#822', canvasSize * 0.8, canvasSize * 0.42, canvasSize * 0.1, 0, CIRCLE_ANGLE);
+            drawCircle(ctx, '#a22', canvasSize * 0.8, canvasSize * 0.42, canvasSize * 0.1, 0, CIRCLE_ANGLE);
         break;
         case 't':
-            drawTriangle(ctx, '#999', canvasSize * 0.6, canvasSize, canvasSize * 0.72, canvasSize * 0.6, canvasSize * 0.68, canvasSize);
+            drawTriangle(ctx, '#421', canvasSize * 0.6, canvasSize, canvasSize * 0.8, canvasSize * 0.4, canvasSize * 0.68, canvasSize);
+            drawCircle(ctx, '#22a', canvasSize * 0.8, canvasSize * 0.42, canvasSize * 0.1, 0, CIRCLE_ANGLE);
         break;
         case 'a':
-            drawCircle(ctx, '#111', canvasSize * 0.7, canvasSize * 0.8, canvasSize * 0.1, 0, CIRCLE_ANGLE);
-            drawTriangle(ctx, '#111', canvasSize * 0.7, canvasSize * 0.6, canvasSize * 0.65, canvasSize * 0.8, canvasSize * 0.75, canvasSize * 0.8);
+            drawTriangle(ctx, '#999', canvasSize * 0.6, canvasSize, canvasSize * 0.72, canvasSize * 0.6, canvasSize * 0.68, canvasSize);
         break;
         case 'p':
             drawCircle(ctx, '#444', canvasSize * 0.67, canvasSize * 0.75, canvasSize * 0.14, 0, CIRCLE_ANGLE);

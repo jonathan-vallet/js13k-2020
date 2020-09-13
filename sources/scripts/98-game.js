@@ -92,13 +92,16 @@ function generateOpponent() {
 function setOpponentTurn() {
     resolveTurnStart(opponent);
     if(opponent.l > 0) {
-        wait(1000, () => playOpponentCard());
+        wait(800, () => playOpponentCard());
     }
 }
 
 function playOpponentCard() {
     let playableMoveList = {};
     [...$dieList.querySelectorAll('.c-die')].forEach(die => {
+        if(die.dataset.burn && opponent.l <= 5) { // Ignores burning die if going to die
+            return;
+        }
         playableMoveList[die.id] = [];
         checkPlayableCards(opponent, die.getAttribute('data-roll'), $card => {
             playableMoveList[die.id].push($card);
@@ -106,7 +109,7 @@ function playOpponentCard() {
     });
 
     if(!Object.keys(playableMoveList).length) {
-        wait(1500, () => endTurn(opponent));
+        wait(1000, () => endTurn(opponent));
         return;
     }
 
@@ -121,15 +124,18 @@ function playOpponentCard() {
     }
     if(shortestCardList.length) {
         let cardToPlay = getRandomItem(shortestCardList);
-        wait(1500, () => {
+        wait(1000, () => {
             let $die = $(dieToPlay);
             let dieRoll = $die.dataset.roll;
             if(isCardPlayable(opponent.hand[cardToPlay.dataset.hand], dieRoll)) {
                 moveDieToCard($die, cardToPlay);
                 wait(400, () => {
+                    if($die.dataset.burn) {
+                        updateLifePoints(opponent, -5);
+                    }
                     $die.parentNode.remove();
                     playCard(opponent, cardToPlay, dieRoll);
-                })
+                });
             }
             wait(500, playOpponentCard);
         });
@@ -299,15 +305,17 @@ function drawCard(guy) {
                 $cardDieTarget = $cardDieTarget.closest('.c-card').querySelector('.c-card__die');
             }
             let isDieBurned = $die.dataset.burn;
-            if(isCardPlayable(cardId, dieValue, draggedDieId)) {
-                if(isDieBurned) {
-                    updateLifePoints(guy, -5, '🔥 burn');
+            if(isCardPlayable(cardId, dieValue)) { // Check if card is playable, then playble and consume dice
+                if(isCardPlayable(cardId, dieValue, draggedDieId)) {
+                    if(isDieBurned) {
+                        updateLifePoints(guy, -5, '🔥 burn');
+                    }
+                    playCard(guy, $card, dieValue);
+                } else {
+                    showImpact(guy, '😵 stun');
+                    $card.classList.remove('-active');
                 }
-                playCard(guy, $card, dieValue);
-            } else {
-                showImpact(guy, '😵 stun');
-                $card.classList.remove('-active');
-            }
+            } 
         };
     
         $card.ondragover = (event) => {

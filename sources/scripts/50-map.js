@@ -10,7 +10,7 @@ function generateMap() {
     stageList.push([{ e: 'm' }, { e: 'm' }, { e: 'm' }]); // First stage encounter is a choice of 3 monsters
     let index = 0;
     while(++index < LEVEL_STAGE_NUMBER) {
-        stageList.push(generateStage(index % 4 ? 'mmmmmmmeeet' : 'mhhss'));
+        stageList.push(generateStage(index % 4 ? 'mmmmmmmeeet' : 'mhhssss'));
     }
     stageList.push([{ e: 'h' }, { e: 'h' }, { e: 'h' }]); // Adds a heal room before boss
     stageList.push([{ e: 'b' }]); // Last stage is a boss
@@ -187,6 +187,9 @@ function drawRooms() {
             }
             if(room.e == 's') { // seller room
                 screenLink = 'screen-seller';
+            }
+            if(room.e == 't') { // treasure room
+                screenLink = 'screen-reward';
             }
             // Adds some random symbol
             let roomSymbol = (y > 0 && y < stageList.length - 2 && random() < 0.18) ? STAGE_TYPE_LIST['r'] : STAGE_TYPE_LIST[room.e];

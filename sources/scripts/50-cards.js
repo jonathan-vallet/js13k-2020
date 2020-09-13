@@ -170,7 +170,7 @@ function getCardEffect(effectCode) {
         effectValue = effectValue.replace('*', 'x');
         let effectCondition = split2.length > 1 ? split2[0] : '';
         let effectType = split2[split2.length - 1 ];
-        effectText += effectCondition ? `${effectCondition}: `: '';
+        effectText += effectCondition ? `On ${effectCondition}: `: '';
         switch (effectType) {
             case 'damage':
                 effectText += `Do 💢<b>${effectValue}</b> damage`;
@@ -253,46 +253,52 @@ function resolveCardEffect(guy, $card, dieValue) {
     let effectCode = cardList[cardId].e;
     let effectList = effectCode.split(',');
     effectList.forEach((effect, index) => {
-        let split = effect.split('|')
+        let split = effect.split('|');
+        let split2 = split[0].split(':');
+        let effectCondition = split2.length > 1 ? split2[0] : '';
+        let effectType = split2[split2.length - 1 ];
+
         let effectValue = getEffectValue(split[1], +dieValue, guy, guyOpponent);
-        switch (split[0]) {
-            case 'damage':
-                updateLifePoints(guyOpponent, -effectValue);
-                break;
-            case 'reflect':
-                updateLifePoints(guy, -effectValue);
-                break;
-            case 'shield':
-                guy.sh += effectValue;
-                break;
-            case 'poison':
-                guyOpponent.p += effectValue;
-                break;
-            case 'stun':
-                ++guyOpponent.stun;
-                break;
-            case 'heal':
-                updateLifePoints(guy, effectValue);
-                break;
-            case 'freeze':
-                ++guyOpponent.freeze;
-                break;
-            case 'burn':
-                ++guyOpponent.burn;
-                break;
-            case 'reroll':
-                generateDie(effectValue);
-                break;
-            case 'split':
-                let firstNumber = getRandomNumber(1, effectValue - 1);
-                let secondNumber = effectValue - firstNumber;
-                generateDie(firstNumber);
-                generateDie(secondNumber);
-                break;
-            case 'duplicate':
-                generateDie(effectValue);
-                generateDie(effectValue);
-                break;
+        if(isDiePlayable(effectCondition, dieValue)) {
+            switch (effectType) {
+                case 'damage':
+                    updateLifePoints(guyOpponent, -effectValue);
+                    break;
+                case 'reflect':
+                    updateLifePoints(guy, -effectValue);
+                    break;
+                case 'shield':
+                    guy.sh += effectValue;
+                    break;
+                case 'poison':
+                    guyOpponent.p += effectValue;
+                    break;
+                case 'stun':
+                    ++guyOpponent.stun;
+                    break;
+                case 'heal':
+                    updateLifePoints(guy, effectValue);
+                    break;
+                case 'freeze':
+                    ++guyOpponent.freeze;
+                    break;
+                case 'burn':
+                    ++guyOpponent.burn;
+                    break;
+                case 'reroll':
+                    generateDie(effectValue);
+                    break;
+                case 'split':
+                    let firstNumber = getRandomNumber(1, effectValue - 1);
+                    let secondNumber = effectValue - firstNumber;
+                    generateDie(firstNumber);
+                    generateDie(secondNumber);
+                    break;
+                case 'duplicate':
+                    generateDie(effectValue);
+                    generateDie(effectValue);
+                    break;
+            }
         }   
     });
 }

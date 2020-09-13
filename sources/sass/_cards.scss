@@ -74,10 +74,10 @@ $card-rarity-size: 14px;
     &.-w { // warrior
         background: $warrior-color;
     }
-    &.-m { // mage
+    &.-m { // fire mage
         background: $mage-color;
     }
-    &.-t { // thief
+    &.-t { // ice mage (ex thief)
         background: $thief-color;
     }
     &.-a { // assassin
@@ -145,7 +145,7 @@ $card-rarity-size: 14px;
     transform: translateY(-50%);
     left: 20px;
     right: 20px;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.5;
 
     br {
