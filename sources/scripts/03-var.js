@@ -116,7 +116,7 @@ let player = new Proxy({
     stun: 0,
     g: 150, // gold
     f: 0, // current floor
-    s: '' // screen (if step is game, class selection, floor selection...)
+    s: 'main-menu' // screen (if step is game, class selection, floor selection...)
     /*
     c: class
     d: deck

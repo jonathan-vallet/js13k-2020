@@ -53,6 +53,8 @@ function startFight() {
     player.deck = [...player.d]; // Clone deck to get separate instance
     player.hand = [];
     player.discard = [];
+    player.p = 0;
+    player.sh = 0;
     $myHand.innerHTML = '';
     shuffleDeck(player);
     displayDeck(player);
@@ -78,6 +80,8 @@ function generateOpponent() {
     opponent.deck = [...opponent.d]; // Clone deck to get separate instance
     opponent.hand = [];
     opponent.discard = [];
+    opponent.sh = 0;// Resets shield
+    opponent.p = 0; // Resets poison
     // Draws opponent avatar
     $opponentAvatar.firstChild && $opponentAvatar.firstChild.remove();
     $opponentAvatar.append(createAvatar(opponent.c[0], opponent.c[1], false ));
