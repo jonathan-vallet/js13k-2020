@@ -40,11 +40,6 @@ module.exports = function() {
         '-odd-roll': 'or',
         '-rarity': 'r',
         '-played': 'p',
-        // Screens
-        'screen-class-choice': 'scc',
-        'screen-game': 'sg',
-        'screen-map': 'sm',
-        'data-screen': 'data-sc',
         'l-screen': 'ls',
         // Avatar
         'js-screen-link': 'jsl',
