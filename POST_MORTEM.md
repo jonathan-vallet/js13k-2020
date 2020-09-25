@@ -6,7 +6,7 @@ Hi there! Here is a little post mortem, mixing game design and code about Cardic
 
 I already got good feedbacks about this game, and I'd like to develop a much more complete and beautiful version without size limit.
 
-Follow me on [https://twitter.com/JoeVallet] if you want to get more information and news about the next steps!
+Follow me on https://twitter.com/JoeVallet if you want to get more information and news about the next steps!
 
 ## Game design
 
@@ -132,4 +132,4 @@ The idea is to get some Paper-Scissor-Stone synergies:
 
 I had a lot of fun to develop this game! It was really intense to save place as I have lot of features! And I wanted to get consistent graphics and visual effects.
 
-If you loved the gameplay of cards + dice, don't forget that more is to come! Follow the news on [https://twitter.com/JoeVallet] :)
+If you loved the gameplay of cards + dice, don't forget that more is to come! Follow the news on https://twitter.com/JoeVallet :)
